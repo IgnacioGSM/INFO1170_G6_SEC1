@@ -3,18 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="registropersonal.css">
     <title>Registro usuario </title>
-    <link rel="stylesheet" href="registro.css">
 </head>
 <body>
     <div class="container">
         <h1>Bienvenido a Hospitrack</h1>
         <form>
+            <label for="Nombre">Ingrese su Nombre:</label>
+            <input type="text" id="Nombre" name="Nombre" required>
+
+
             <label for="rut">Ingrese su RUT:</label>
             <input type="text" id="rut" name="rut" required>
 
             <label for="correo">Ingrese su correo electronico:</label>
             <input type="correo" id="correo" name="correo" required>
+            <button type="submit">Registrarme</button>
+
+            <a href="iniciosesion.html">Volver al inicio</a>
         </form>
     </div>
     
