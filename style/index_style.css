@@ -11,6 +11,8 @@ body {
     min-height: 100vh;  
 }
 
+/* ---------------------------HEADER------------------------------- */
+
 header {
     background-color: #A0D6B4;
     width: 100%;
@@ -53,6 +55,44 @@ header {
 .header-list a:visited {
     color: white;
 }
+
+/* ---------------------------MAIN------------------------------- */
+
+.index-main {
+    background-color: #1B4D3E;
+    color: white;
+    display: flex;
+    flex-flow: nowrap row;
+    justify-content: space-between;
+}
+
+.index-derecha-mapa {
+    width: 30%;
+    display: flex;
+    flex-flow: nowrap column;
+}
+
+.index-hospital-name {
+    background-color: #2E8B57;
+    font-size: 2em;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.index-hospital-secciones {
+    background-color:rgb(187, 214, 205);
+    color: #1B4D3E;
+    margin: 20px;
+    border-radius: 30px;
+}
+
+.index-hospital-secciones-lista {
+    list-style: none;
+    padding: 0;
+}
+
+/* ---------------------------FOOTER------------------------------- */
 
 footer {
     width: 100%;
