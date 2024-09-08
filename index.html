@@ -24,15 +24,22 @@
         </div>
         <article class="index-derecha-mapa">
             <h1 class="index-hospital-name">Nombre del hospital</h1>
+            
             <div class="index-hospital-info">
-                <div class="index-hospital-secciones">
-                    <h2 class="index-hospital-secciones-titulo">Secciones</h2>
-                    <ul class="index-hospital-secciones-lista">
-                        <li>Emergencia</li>
-                        <li>Consulta</li>
-                        <li>Exámenes</li>
+
+                <div class="index-secciones">
+                    <h2 class="index-secciones-titulo">Secciones</h2>
+                    <ul class="index-secciones-lista">      <!-- Elementos clickeables, actualizarán la fila de espera a su sección correspondiente-->
+                        <li class="index-secciones-item">Emergencia</li>
+                        <li class="index-secciones-item">Consulta</li>
+                        <li class="index-secciones-item">Exámenes</li>
                     </ul>
                 </div>
+
+                <div class="index-filas">
+                    <h2 class="index-filas-titulo">Fila de espera en: </h2>
+                    <h3 class="index-filas-subtitulo">Emergencia</h3>   <!-- Aquí se debe mostrar la sección en la que se encuentra la persona -->
+                    <h1 class="index-filas-value">5 personas</h1> <!-- Aquí se debe mostrar el número de personas en la fila de espera -->
             </div>
         </article>
     </main>
