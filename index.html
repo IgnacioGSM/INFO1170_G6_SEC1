@@ -18,9 +18,10 @@
                 <li><a href="registropersona.html">Registrarse</a></li>
             </ul>
     </header>
+
     <main class="index-main">
         <div class="map-container">
-            ejemplo
+            soy un mapa
         </div>
         <article class="index-derecha-mapa">
             <h1 class="index-hospital-name">Nombre del hospital</h1>
@@ -41,8 +42,19 @@
                     <h2 class="index-filas-subtitulo">Emergencia</h2>   <!-- Aquí se debe mostrar la sección en la que se encuentra la persona -->
                     <h1 class="index-filas-value">5 personas</h1> <!-- Aquí se debe mostrar el número de personas en la fila de espera -->
             </div>
+
+            <div class="index-reservacion">
+                <h2 class="index-reservacion-titulo">Reservar puesto</h2>
+                <form class="index-reservacion-form">
+                    <input type="text" class="index-reservacion-input" placeholder="Rut" required>
+                    <input type="text" class="index-reservacion-input" placeholder="Correo" required>
+                    <textarea class="index-reservacion-textarea" name="motivo-consulta" id="motivo-consulta" rows="3" placeholder="Motivo de consulta" required></textarea>
+                    <input type="submit" class="index-reservacion-submit" value="Reservar">
+                </form>
+            </div>
         </article>
     </main>
+
     <footer>
         <div class="footer-content">
             <p>© 2024 Hospitrack. Todos los derechos reservados.</p>
