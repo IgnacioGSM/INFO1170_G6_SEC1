@@ -7,6 +7,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/index_style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
     <title>HospiTrack</title>
 </head>
 <body>
@@ -20,9 +26,8 @@
     </header>
 
     <main class="index-main">
-        <div class="map-container">
-            soy un mapa
-        </div>
+        <div id="map"></div>
+        
         <article class="index-derecha-mapa">
             <h1 class="index-hospital-name">Nombre del hospital</h1>
             
@@ -61,5 +66,7 @@
             <p>© 2024 Hospitrack. Todos los derechos reservados.</p>
         </div>
     </footer>
+
+    <script src="script_mapa.js"></script>
 </body>
 </html>
