@@ -109,6 +109,7 @@ header {
 .index-secciones-item:hover {
     background-color: #669685;
     color: white;
+    cursor: pointer;
 }
 
 .index-secciones-item:last-child:hover {
