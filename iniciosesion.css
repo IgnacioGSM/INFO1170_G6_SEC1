@@ -76,3 +76,8 @@ footer {
   padding-bottom: 200px;
   margin-top: auto; 
 }
+.header-logo {
+  display: inline-block;
+  margin-left: 20px;
+  height: 80px;
+}
