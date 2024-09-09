@@ -35,3 +35,6 @@ var map = L.map('map').setView([-38.734547, -72.589724], 13);   // Creacion del 
         var marker = L.marker([-38.736703, -72.610633], {icon: MarcadorRojo}).addTo(map);  // Creacion de un marcador
 
         marker.bindPopup("<b>Clinica Alemana</b>");  // Popup del marcador
+        marker.on('click', function(marker){
+            console.log(marker.latlng);{
+        }})
