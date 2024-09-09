@@ -49,12 +49,12 @@
                 </div>
             </div>
 
-            <div class="index-reservacion">
+            <div class="index-reservacion" onsubmit="validarForm()">
                 <h2 class="index-reservacion-titulo">Reservar puesto</h2>
-                <form class="index-reservacion-form">
-                    <input type="text" class="index-reservacion-input" placeholder="Rut" required>
-                    <input type="text" class="index-reservacion-input" placeholder="Correo" required>
-                    <textarea class="index-reservacion-textarea" name="motivo-consulta" id="motivo-consulta" rows="3" placeholder="Motivo de consulta" required></textarea>
+                <form id="index-reservacion-form">
+                    <input id="rut" onchange="formatearRUT(this)" maxlength="9" type="text" class="index-reservacion-input" placeholder="Rut" required>
+                    <input id="correo" type="text" class="index-reservacion-input" placeholder="Correo" required>
+                    <textarea id="motivo-consulta" class="index-reservacion-textarea" name="motivo-consulta" rows="3" placeholder="Motivo de consulta" required></textarea>
                     <input type="submit" class="index-reservacion-submit" value="Reservar">
                 </form>
             </div>
@@ -68,5 +68,6 @@
     </footer>
 
     <script src="script_mapa.js"></script>
+    <script src="validacion_reserva.js"></script>
 </body>
 </html>

@@ -177,7 +177,7 @@ header {
     margin-top: -20px;
 }
 
-.index-reservacion-form {
+#index-reservacion-form {
     display: flex;
     flex-flow: nowrap column;
     padding: 0 20px 0px 20px;
