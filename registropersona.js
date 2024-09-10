@@ -1,49 +1,75 @@
-function validaRegistro(){
-    var nombre = document.getElementById('Nombre').value;
-    var rut = document.getElementById('rut').value;
-    var correo = document.getElementById('correo').value;
-
+function validanombre(nombre){
     var nombrePattern = /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s'-]+$/;
-    var rutPattern = /^[0-9]{1,8}-[0-9Kk]{1}$/;
-    var correoPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    document.getElementById('Nombre').style.border = "";
-    document.getElementById('rut').style.border = "";
-    document.getElementById('correo').style.border = "";
-
     if (nombre === ""){
-        alert("No puedes dejar este campo Vacio");
-        document.getElementById('Nombre').style.border = "1px solid red";
-        return false;
+        return "No puedes dejar este campo Vacio";
     }
     if (!nombrePattern.test(nombre)){
-        alert("Ingresa un nombre valido");
-        document.getElementById('Nombre').style.border = "1px solid red";
-        return false;
+        return "Ingresa un nombre valido";
     }
+    return null;
+}
 
+function validarut(rut){
+    var rutPattern = /^[0-9]{1,8}-[0-9Kk]{1}$/;
     if (rut === ""){
-        alert("No puedes dejar este campo Vacio");
-        document.getElementById('rut').style.border = "1px solid red";
-        return false;
+        return "No puedes dejar este campo Vacio";
     }
     if (!rutPattern.test(rut)){
-        alert("Ingresa un RUT valido");
-        document.getElementById('rut').style.border = "1px solid red";
-        return false;
+        return "Ingresa un RUT valido";
     }
+    return null;
+}
 
+function validacorreo(correo){
+    var correoPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (correo === ""){
-        alert("No puedes dejar este campo Vacio");
-        document.getElementById('correo').style.border = "1px solid red";
-        return false;
+        return "No puedes dejar este campo Vacio";
     }
     if (!correoPattern.test(correo)){
-        alert("Ingresa un correo valido");
-        document.getElementById('correo').style.border = "1px solid red";
+        return "Ingresa un correo valido";
+    }
+    return null;
+}
+
+function muestraError(inputElement, message){
+    var ElementoError = document.getElementById(inputElement.id + "-error");
+    inputElement.style.border = "1px solid red";
+    ElementoError.innerHTML = message;
+    ElementoError.style.display = "block";
+}
+
+function limpiaError(inputElement){
+    var ElementoError = document.getElementById(inputElement.id + "-error");
+    inputElement.style.border = "";
+    ElementoError.innerHTML = "";
+    ElementoError.style.display = "none";
+}
+
+function validaRegistro(){
+    var nombre = document.getElementById('nombre');
+    var rut = document.getElementById('rut');
+    var correo = document.getElementById('correo');
+
+    limpiaError(nombre);
+    limpiaError(rut);
+    limpiaError(correo);
+
+    var nombreError = validanombre(nombre.value);
+    var rutError = validarut(rut.value);
+    var correoError = validacorreo(correo.value);
+
+    if (nombreError){
+        muestraError(nombre, nombreError);
         return false;
     }
-
+    if (rutError){
+        muestraError(rut, rutError);
+        return false;
+    }
+    if (correoError){
+        muestraError(correo, correoError);
+        return false;
+    }
+    
     return true;
-
 }

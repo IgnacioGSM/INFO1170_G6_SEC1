@@ -14,9 +14,11 @@
         <form onsubmit="return validateform();">
             <label for="rut">Ingrese su RUT:</label>
             <input type="text" id="rut" name="rut" required>
+            <span id="rut-error" style="color: red; display: none;"></span>
 
             <label for="password">Ingrese su contraseña:</label>
             <input type="password" id="password" name="password" required>
+            <span id="password-error" style="color: red; display: none;"></span>
 
             <a href="olvidadopassword.html">¿Ha olvidado su contraseña?</a>
             <button type="submit">Iniciar Sesión</button>

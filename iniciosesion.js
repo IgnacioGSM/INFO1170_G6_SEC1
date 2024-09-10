@@ -1,32 +1,55 @@
-function validateform(){
-    var rut = document.getElementById('rut').value;
-    var password = document.getElementById('password').value;
-
+function validarut(rut){
     var rutPattern = /^[0-9]{1,8}-[0-9Kk]{1}$/;
-    var passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-    document.getElementById('rut').style.border = "";
-    document.getElementById('password').style.border = "";
-
     if (rut === ""){
-        alert("No puedes dejar este campo vacio");
-        document.getElementById('rut').style.border = "1px solid red";
-        return false;
+        return "No puedes dejar este campo vacio";
     }
     if (!rutPattern.test(rut)){
-        alert("Por favor, ingresar un rut valido");
-        document.getElementById('rut').style.border = "1px solid red";
-        return false;
+        return "Por favor, ingresar un rut valido";
     }
+    return null;
+}
 
+function validapassword(password){
+    var passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (password === ""){
-        alert("No puedes dejar este campo vacio");
-        document.getElementById('password').style.border = "1px solid red";
-        return false;
+        return "No puedes dejar este campo vacio";
     }
     if (!passwordPattern.test(password)){
-        alert("La contraseña debe contener al menos 8 caracteres, una letra mayuscula, un miniscula y un numero y un caracter especial");
-        document.getElementById('password').style.border = "1px solid red";
+        return "La contraseña debe contener al menos 8 caracteres, una letra mayuscula, un miniscula y un numero y un caracter especial";
+    }
+    return null;
+}
+
+function muestraError(inputElement, message){
+    var ElementoError = document.getElementById(inputElement.id + "-error");
+    inputElement.style.border = "1px solid red";
+    ElementoError.innerHTML = message;
+    ElementoError.style.display = "block";
+}
+
+function limpiaError(inputElement){
+    var ElementoError = document.getElementById(inputElement.id + "-error");
+    inputElement.style.border = "";
+    ElementoError.innerHTML = "";
+    ElementoError.style.display = "none";
+}
+
+function validateform(){
+    var rut = document.getElementById('rut');
+    var password = document.getElementById('password');
+
+    limpiaError(rut);
+    limpiaError(password);
+
+    var rutERROR = validarut(rut.value);
+    var passwordERROR = validapassword(password.value);
+
+    if (rutERROR){
+        muestraError(rut, rutERROR);
+        return false;
+    }
+    if (passwordERROR){
+        muestraError(password, passwordERROR);
         return false;
     }
 
