@@ -1,0 +1,5 @@
+Caladon (#A0D6B4): Usado en el header, las tablas, y algunas secciones para destacar.
+Mint (#E8F5E9): Utilizado como fondo de la página y en las celdas de las tablas.
+Dark Spring Green (#1B4D3E): Utilizado en el texto principal y los títulos para darle contraste.
+Olivine (#C5E1A5): Aplicado en los formularios para darles un tono suave y acogedor.
+Jade (#2E8B57): Usado en los botones y otros elementos interactivos.
