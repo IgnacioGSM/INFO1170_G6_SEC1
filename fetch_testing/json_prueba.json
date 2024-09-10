@@ -1,7 +1,19 @@
-{
-  "nombre" : "Clinica alemana",
-  "latitud" : -38.734547,
-  "longitud" : -72.589724,
-  "secciones" : ["consultas, urgencia, algo"],
-  "filas" : [12,4,6]
-}
+[
+  {
+    "id" : 1,
+    "nombre" : "Clinica Alemana",
+    "latitud" : -38.736703,
+    "longitud" : -72.610633,
+    "secciones" : ["consultas, urgencia, algo"],
+    "filas" : [12,4,6]
+  },
+
+  {  
+    "id" : 2,
+    "nombre" : "Hospital Regional",
+    "latitud" : -38.739812,
+    "longitud" : -72.598456,
+    "secciones" : ["consultas", "urgencia", "cirugía"],
+    "filas" : [8, 5, 10]
+  }
+]

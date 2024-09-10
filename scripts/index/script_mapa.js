@@ -44,16 +44,49 @@ var MarcadorRojo = new HospitalIcon({iconUrl: "imagenes/marcador_rojo.png"});
 var MarcadorVerde = new HospitalIcon({iconUrl: "imagenes/marcador_verde.png"});
 var MarcadorAmarillo = new HospitalIcon({iconUrl: "imagenes/marcador_amarillo.png"});
 
+var hospitales_en_json = {};
+
+console.log("Fetching json");
+fetch("fetch_testing/json_prueba.json")
+    .then((response) => {
+        console.log("Json found")
+        return response.json();
+    })
+    .then((data) => {
+        console.log("Json loaded");
+        console.log(data);
+        return data;
+    })
+    .then((hospitales) => {
+        console.log("Adding hospital");
+        hospitales.forEach(hospital => {
+            console.log("adding " + hospital.nombre);
+            hospitales_en_json[hospital.id] = hospital;
+        });
+    })
+    .then(() => {
+        console.log("Creating markers");
+        for (let i = 1; i < Object.keys(hospitales_en_json).length + 1; i++) {
+            var marker = L.marker([hospitales_en_json[i].latitud, hospitales_en_json[i].longitud], {icon: MarcadorRojo}).addTo(map);
+            marker.bindPopup("<b>" + hospitales_en_json[i].nombre + "</b>");
+            marker.on('click', function(marker){
+                document.getElementById("index-hospital-name").innerHTML = hospitales_en_json[i].nombre;
+                current_hospital = hospitales_en_json[i].nombre;
+                selectingHospital();
+            });
+            hospitales_en_json[i].marker = marker;
+        }
+    })
 
 
 
-var marker = L.marker([-38.736703, -72.610633], {icon: MarcadorRojo}).addTo(map);  // Creacion de un marcador
+// var marker = L.marker([-38.736703, -72.610633], {icon: MarcadorRojo}).addTo(map);  // Creacion de un marcador
 var current_hospital = 0;
 
         
 selectingHospital();
 
-marker.bindPopup("<b>Clinica Alemana</b>");  // Popup del marcador
+/* marker.bindPopup("<b>Clinica Alemana</b>");  // Popup del marcador
 marker.on('click', function(marker){        // Al clickear un hospital se recolecta se información en el servidor y se muestra en la pagina
 fetch("fetch_testing/json_prueba.json")
     .then((response) => {
@@ -64,5 +97,5 @@ fetch("fetch_testing/json_prueba.json")
         current_hospital = data.nombre;
         selectingHospital();
     });
-})
+}) */
         
