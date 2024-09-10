@@ -8,7 +8,8 @@ body {
     /* Para poder dejar el footer abajo */
     display: flex;
     flex-flow: column nowrap;
-    min-height: 100vh;  
+    min-height: 100vh;
+    overflow-x: hidden;     /* Arrastrar el mapa podía causar desbordamiento */
 }
 
 /* ---------------------------HEADER------------------------------- */
@@ -74,6 +75,10 @@ header {
     overflow: scroll;
 }
 
+#no-hospital{
+    justify-content: center;
+}
+
 .index-hospital-name {
     background-color: #2E8B57;
     font-size: 2em;
@@ -82,6 +87,9 @@ header {
     border-radius: 30px;
 }
 
+#no-hospital .index-hospital-name {
+    background-color: #1B4D3E;
+}
 
 /* ---------------------------MAPA------------------------------- */
 

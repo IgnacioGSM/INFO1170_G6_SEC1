@@ -2,9 +2,9 @@ function validarForm() {
 
     // Mas adelante se necesitará revisión de estos campos en el backend
 
-    let rut = document.getElementById("rut").value;
+    // let rut = document.getElementById("rut").value;
     let correo = document.getElementById("correo").value;
-    let motivo_consulta = document.getElementById("motivo-consulta").value;
+    // let motivo_consulta = document.getElementById("motivo-consulta").value;
 
     let regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     // Email debe comenzar con letras, números, puntos, guiones bajos o guiones, seguido de un @, 
@@ -42,6 +42,11 @@ document.getElementById("rut").addEventListener("input", function() {
     this.value = this.value.trimStart();
     this.value = this.value.replace(/[^\dkK.-]/g, ''); // Elimina caracteres no permitidos
 }); // Elimina los espacios al inicio del campo rut mientras se escribe
+
+document.getElementById("rut").addEventListener("blur", function() {
+    formatearRUT(this);
+}); // Formatea el rut al salir del campo
+
 
 document.getElementById("correo").addEventListener("input", function() {
     this.value = this.value.trimStart();

@@ -28,8 +28,12 @@
 
     <main class="index-main">
         <div id="map"></div>
+
+        <article id="no-hospital" class="index-derecha-mapa">
+            <h1 class="index-hospital-name">Seleccione un hospital</h1>
+        </article>
         
-        <article class="index-derecha-mapa">
+        <article id="hospital-seleccionado" class="index-derecha-mapa">
             <h1 id="index-hospital-name" class="index-hospital-name">Nombre del hospital</h1>
             
             <div class="index-hospital-info">
@@ -53,7 +57,7 @@
             <div class="index-reservacion" onsubmit="validarForm()">
                 <h2 class="index-reservacion-titulo">Reservar puesto</h2>
                 <form id="index-reservacion-form">
-                    <input id="rut" onchange="formatearRUT(this)" maxlength="9" type="text" class="index-reservacion-input" placeholder="Rut" required>
+                    <input id="rut" maxlength="9" type="text" class="index-reservacion-input" placeholder="Rut" required>
                     <input id="correo" type="text" class="index-reservacion-input" placeholder="Correo" required>
                     <textarea id="motivo-consulta" class="index-reservacion-textarea" name="motivo-consulta" rows="3" placeholder="Motivo de consulta" required></textarea>
                     <input type="submit" class="index-reservacion-submit" value="Reservar">
