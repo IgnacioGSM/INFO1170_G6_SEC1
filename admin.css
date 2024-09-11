@@ -8,6 +8,7 @@
     --white: #FFFFFF;
 }
 
+
 body {
     font-family: Arial, sans-serif;
     background-color: var(--mint);
@@ -39,6 +40,14 @@ h1 {
     margin: 0;
     font-size: 2em;
     text-align: center;
+}
+
+/* Botón en el header */
+.header-btn {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 
