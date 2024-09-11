@@ -67,19 +67,37 @@ fetch("fetch_testing/json_prueba.json")
         for (let i = 1; i < Object.keys(hospitales_en_json).length + 1; i++) {
             var marker = L.marker([hospitales_en_json[i].latitud, hospitales_en_json[i].longitud], {icon: MarcadorRojo}).addTo(map);
             marker.bindPopup("<b>" + hospitales_en_json[i].nombre + "</b>");
+
             marker.on('click', function(marker){
                 document.getElementById("index-hospital-name").innerHTML = hospitales_en_json[i].nombre;
+
                 let secciones_list = document.getElementById("index-secciones-lista");
+
                 while (secciones_list.firstChild) {
                     secciones_list.removeChild(secciones_list.lastChild);       // mata a todos los hijos de la lista de secciones
                 }
-                current_hospital = hospitales_en_json[i].nombre;
+
+                current_hospital = hospitales_en_json[i].id;
+
                 hospitales_en_json[i].secciones.forEach(seccion => {
                     let seccion_element = document.createElement("li");
                     seccion_element.className = "index-secciones-item";
                     seccion_element.innerHTML = seccion;
                     secciones_list.appendChild(seccion_element);
                 })
+
+                for (let j = 0; j < hospitales_en_json[i].secciones.length; j++) {
+                    let lista_secciones = document.getElementById("index-secciones-lista");
+                    lista_secciones.childNodes[j].addEventListener("click", function() {
+                        for (let k = 0; k < hospitales_en_json[i].secciones.length; k++) {
+                            lista_secciones.childNodes[k].style.backgroundColor = "#bbd6cd";
+                            lista_secciones.childNodes[k].style.color = "#1B4D3E";
+                        }
+                        this.style.backgroundColor = "#22a17b";
+                        this.style.color = "white";
+                    })
+                }
+
                 selectingHospital();
             });
             hospitales_en_json[i].marker = marker;
@@ -93,6 +111,8 @@ var current_hospital = 0;
 
         
 selectingHospital();
+
+
 
 /* marker.bindPopup("<b>Clinica Alemana</b>");  // Popup del marcador
 marker.on('click', function(marker){        // Al clickear un hospital se recolecta se información en el servidor y se muestra en la pagina

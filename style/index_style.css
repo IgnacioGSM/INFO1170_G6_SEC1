@@ -132,6 +132,10 @@ header {
     cursor: pointer;
 }
 
+.index-secciones-item:last-child {
+    border-radius: 0 0 30px 30px;
+}
+
 .index-secciones-item:last-child:hover {
     border-radius: 0 0 30px 30px;
 }

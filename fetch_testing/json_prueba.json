@@ -4,7 +4,7 @@
     "nombre" : "Clinica Alemana",
     "latitud" : -38.736703,
     "longitud" : -72.610633,
-    "secciones" : ["consultas", "urgencia"],
+    "secciones" : ["Consultas", "Urgencia"],
     "filas" : [12,4]
   },
 
