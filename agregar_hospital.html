@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Hospital - Hospitrack</title>
+    <link rel="stylesheet" href="agregar_hospital.css">
+</head>
+<body>
+    <header>
+        <img src="imagenes/logo.png" class="header-logo" alt="Logo de Hospitrack">
+        <h1>Agregar Hospital</h1>
+    </header>
+
+    <main class="admin-main">
+        <section id="agregar-hospital">
+            <h2>Formulario para Agregar Hospital</h2>
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="nombre">Nombre del Hospital:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" id="direccion" name="direccion" required>
+                </div>
+                <div class="form-group">
+                    <label for="contacto">Contacto:</label>
+                    <input type="text" id="contacto" name="contacto" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <button type="submit" class="btn">Agregar Hospital</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Hospitrack. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
