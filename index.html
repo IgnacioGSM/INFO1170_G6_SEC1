@@ -40,21 +40,20 @@
 
                 <div class="index-secciones">
                     <h2 class="index-secciones-titulo">Secciones</h2>
-                    <ul class="index-secciones-lista">      <!-- Elementos clickeables, actualizarán la fila de espera a su sección correspondiente-->
-                        <li class="index-secciones-item">Emergencia</li>
-                        <li class="index-secciones-item">Consulta</li>
-                        <li class="index-secciones-item">Exámenes</li>
+                    <ul id="index-secciones-lista" class="index-secciones-lista">      <!-- Elementos clickeables, actualizarán la fila de espera a su sección correspondiente-->
+                        <!-- <li class="index-secciones-item">Emergencia</li> ejemplo, al clickear un hospital el script generara estos -->
+
                     </ul>
                 </div>
 
                 <div class="index-filas">
                     <h3 class="index-filas-titulo">Fila de espera en: </h3>
-                    <h2 class="index-filas-subtitulo">Emergencia</h2>   <!-- Aquí se debe mostrar la sección en la que se encuentra la persona -->
-                    <h1 class="index-filas-value">5 personas</h1> <!-- Aquí se debe mostrar el número de personas en la fila de espera -->
+                    <h2 class="index-filas-subtitulo">-------</h2>   <!-- Aquí se debe mostrar la sección en la que se encuentra la persona -->
+                    <h1 class="index-filas-value">Escoja una sección...</h1> <!-- Aquí se debe mostrar el número de personas en la fila de espera -->
                 </div>
             </div>
 
-            <div class="index-reservacion" onsubmit="validarForm()">
+            <div class="index-reservacion" onsubmit="event.preventDefault(); validarForm();">   <!-- preventDefault evita que se recargue la pagina si el formulario no es valido -->
                 <h2 class="index-reservacion-titulo">Reservar puesto</h2>
                 <form id="index-reservacion-form">
                     <input id="rut" maxlength="9" type="text" class="index-reservacion-input" placeholder="Rut" required>

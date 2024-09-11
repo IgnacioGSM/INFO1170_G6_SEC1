@@ -49,16 +49,14 @@ var hospitales_en_json = {};
 console.log("Fetching json");
 fetch("fetch_testing/json_prueba.json")
     .then((response) => {
-        console.log("Json found")
         return response.json();
     })
     .then((data) => {
-        console.log("Json loaded");
         console.log(data);
         return data;
     })
     .then((hospitales) => {
-        console.log("Adding hospital");
+        console.log("Adding hospitals from json");
         hospitales.forEach(hospital => {
             console.log("adding " + hospital.nombre);
             hospitales_en_json[hospital.id] = hospital;
@@ -71,7 +69,17 @@ fetch("fetch_testing/json_prueba.json")
             marker.bindPopup("<b>" + hospitales_en_json[i].nombre + "</b>");
             marker.on('click', function(marker){
                 document.getElementById("index-hospital-name").innerHTML = hospitales_en_json[i].nombre;
+                let secciones_list = document.getElementById("index-secciones-lista");
+                while (secciones_list.firstChild) {
+                    secciones_list.removeChild(secciones_list.lastChild);       // mata a todos los hijos de la lista de secciones
+                }
                 current_hospital = hospitales_en_json[i].nombre;
+                hospitales_en_json[i].secciones.forEach(seccion => {
+                    let seccion_element = document.createElement("li");
+                    seccion_element.className = "index-secciones-item";
+                    seccion_element.innerHTML = seccion;
+                    secciones_list.appendChild(seccion_element);
+                })
                 selectingHospital();
             });
             hospitales_en_json[i].marker = marker;
