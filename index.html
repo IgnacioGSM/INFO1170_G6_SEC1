@@ -20,11 +20,24 @@
         <img src="imagenes/logo.png" class="header-logo">
         <nav class="header-nav">
             <ul class="header-list">
-                <li><a href="index.html">Mapa</a></li>
-                <li><a href="iniciosesion.html">Iniciar Sesión</a></li>
-                <li><a href="registropersona.html">Registrarse</a></li>
+                <li><a class="header-link" href="iniciosesion.html">Iniciar Sesión</a></li>
+                <li><a class="header-link" href="registropersona.html">Registrarse</a></li>
             </ul>
     </header>
+
+    <div id="overlay">      <!-- Overlay para escoger un tipo de usuario con el que entrar -->
+        <div>
+            <h1>Seleccione con que tipo de usuario va a ingresar</h1>
+            <select name="usertype" id="index-seleccion-usertype" autocomplete="off">
+                <option disabled selected hidden>Seleccionar</option>
+                <option value="invitado">invitado</option>
+                <option value="usuario">usuario</option>
+                <option value="recepcionista">recepcionista</option>
+                <option value="admin">admin</option>
+                <option value="suspendido">usuario suspendido</option>
+            </select>
+        </div>
+    </div>
 
     <main class="index-main">
         <div id="map"></div>
@@ -53,9 +66,15 @@
                 </div>
             </div>
 
-            <div class="index-reservacion" onsubmit="event.preventDefault(); validarForm();">   <!-- preventDefault evita que se recargue la pagina si el formulario no es valido -->
+            <div class="index-reservacion">
+                <div id="index-formulario-bloqueado">
+                    <h1>Inicie sesión para poder solicitar una reserva</h1>
+                    <a class="header-link" href="iniciosesion.html">Iniciar Sesión</a>
+                    <a class="header-link" href="registropersona.html">Registrarse</a>
+                </div>
+
                 <h2 class="index-reservacion-titulo">Reservar puesto</h2>
-                <form id="index-reservacion-form">
+                <form id="index-reservacion-form" onsubmit="event.preventDefault(); validarForm();">     <!-- preventDefault evita que se recargue la pagina si el formulario no es valido -->
                     <input id="rut" maxlength="9" type="text" class="index-reservacion-input" placeholder="Rut" required>
                     <input id="correo" type="text" class="index-reservacion-input" placeholder="Correo" required>
                     <textarea id="motivo-consulta" class="index-reservacion-textarea" name="motivo-consulta" rows="3" placeholder="Motivo de consulta" required></textarea>
@@ -70,7 +89,8 @@
             <p>© 2024 Hospitrack. Todos los derechos reservados.</p>
         </div>
     </footer>
-
+    
+    <script src="scripts/index/seleccion_usertype.js"></script>
     <script src="scripts/index/script_mapa.js"></script>
     <script src="scripts/index/validacion_reserva.js"></script>
 </body>

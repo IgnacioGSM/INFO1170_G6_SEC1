@@ -40,8 +40,9 @@ header {
     list-style: none;
 }
 
-.header-list a {
+.header-link{
     padding: 10px 20px;
+    margin-bottom: 10px;
     background-color: #2E8B57;
     border-radius: 50px;
     text-decoration: none;
@@ -49,13 +50,42 @@ header {
     font-size: larger;
 }
 
-.header-list a:hover {
+.header-link:hover {
     background-color: #1B4D3E;
 }
 
-.header-list a:visited {
+.header-link:visited {
     color: white;
 }
+
+
+/* -----------------------SELECCION USERTYPE--------------------------- */
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#overlay div {
+    background-color: #3f3f3f;
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+#overlay select {
+    padding: 10px;
+    border-radius: 10px;
+}
+
 
 /* ---------------------------MAIN------------------------------- */
 
@@ -177,7 +207,22 @@ header {
     color: #1B4D3E;
     margin: 20px;
     border-radius: 30px;
+    position: relative;
+}
 
+#index-formulario-bloqueado {
+    display: none;
+    flex-flow: column nowrap;
+    justify-content: center;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    height: calc(100% + 20px);
+    width: 100%;
+    z-index: 1000;
+    margin-top: -20px;
+    border-radius: 30px;
+    color: white;
+    
 }
 
 .index-reservacion-titulo {
