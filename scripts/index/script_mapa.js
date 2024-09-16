@@ -47,7 +47,7 @@ var MarcadorAmarillo = new HospitalIcon({iconUrl: "imagenes/marcador_amarillo.pn
 var hospitales_en_json = {};
 
 console.log("Fetching json");
-fetch("fetch_testing/json_prueba.json")
+fetch("fetch_testing/json_prueba.json")     // este fetch crea los marcadores en relación a los hospitales en el json, además de configurar listeners que actualizaran la información de la pagina al hacer click en un marcador
     .then((response) => {
         return response.json();
     })
@@ -56,9 +56,9 @@ fetch("fetch_testing/json_prueba.json")
         return data;
     })
     .then((hospitales) => {
-        console.log("Adding hospitals from json");
+        console.log("añadiendo hospitales del json");
         hospitales.forEach(hospital => {
-            console.log("adding " + hospital.nombre);
+            console.log("añadiendo " + hospital.nombre);
             hospitales_en_json[hospital.id] = hospital;
         });
     })
@@ -79,22 +79,33 @@ fetch("fetch_testing/json_prueba.json")
 
                 current_hospital = hospitales_en_json[i].id;
 
-                hospitales_en_json[i].secciones.forEach(seccion => {
+                hospitales_en_json[i].secciones.forEach(seccion => {        // añade las secciones del hospital al html
                     let seccion_element = document.createElement("li");
                     seccion_element.className = "index-secciones-item";
                     seccion_element.innerHTML = seccion;
                     secciones_list.appendChild(seccion_element);
                 })
 
+                document.getElementById("index-filas-subtitulo").innerHTML = "-------";  // valor default antes de seleccionar seccion
+                document.getElementById("index-filas-value").innerHTML = "Escoja una sección...";
+
+
                 for (let j = 0; j < hospitales_en_json[i].secciones.length; j++) {
                     let lista_secciones = document.getElementById("index-secciones-lista");
-                    lista_secciones.childNodes[j].addEventListener("click", function() {
+                    lista_secciones.childNodes[j].addEventListener("click", function() {        // cambia el color de la seccion seleccionada
                         for (let k = 0; k < hospitales_en_json[i].secciones.length; k++) {
                             lista_secciones.childNodes[k].style.backgroundColor = "#bbd6cd";
                             lista_secciones.childNodes[k].style.color = "#1B4D3E";
                         }
                         this.style.backgroundColor = "#22a17b";
                         this.style.color = "white";
+
+                        document.getElementById("index-filas-subtitulo").innerHTML = this.innerHTML;    // muestra el nombre de la seccion seleccionada en el cuadro de filas
+                        for (let k = 0; k < hospitales_en_json[i].secciones.length; k++) {          // busca el numero de fila correspondiente a la seccion seleccionada
+                            if (hospitales_en_json[i].secciones[k] == this.innerHTML) {
+                                document.getElementById("index-filas-value").innerHTML = hospitales_en_json[i].filas[k] + " personas";
+                            }
+                        }
                     })
                 }
 

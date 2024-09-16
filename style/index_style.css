@@ -158,14 +158,14 @@ header {
     margin-bottom: -20px;
 }
 
-.index-filas-subtitulo {
+#index-filas-subtitulo {
     background-color: #2E8B57;
     color: white;
     padding: 10px;
     border-bottom: 1px solid #1B4D3E;
 }
 
-.index-filas-value {
+#index-filas-value {
     padding-bottom: 20px;
 }
 
