@@ -13,27 +13,81 @@
             <h1>Bienvenido a tu Perfil</h1>
         </header>
 
-        <main>
+        <main class="perfil-main">
             <section class="Perfil">
                 <div class="foto-perfil">
                     <img src="" alt="Foto de perfil">
                     <p>Usuario</p>
                 </div>
                 <div class="Cuenta">
-                    <button><i class="fas fa-user"></i>Cuenta</button>
+                    <button id="boton-cuenta"><i class="fas fa-user"></i>Cuenta</button>
                 </div>
                 <div class="Cambia-contra">
-                    <button><i class="fas fa-key"></i>Cambiar contraseña</button>
+                    <button id="boton-contra"><i class="fas fa-key"></i>Cambiar contraseña</button>
                 </div>
                 <div class="Privacidad">
-                    <button><i class="fas fa-shield-alt"></i>Privacidad</button>
+                    <button id="boton-privacidad"><i class="fas fa-shield-alt"></i>Privacidad</button>
                 </div>
                 <div class="borra-cuenta">
-                    <button><i class="fas fa-trash-alt"></i>Borrar Cuenta</button>
+                    <button id="boton-borrar"><i class="fas fa-trash-alt"></i>Borrar Cuenta</button>
                 </div>
+            </section>
+
+            <section id="contenidoCuenta" class="ContenidoDinamico" style="display:none;">
+                <h2>Configuracion de la cuenta</h2>
+                <div class="foto-perfil">
+                    <img src="" alt="foto-perfil">
+                    <p>Usuario</p>
+                </div>
+                <div class="ContenidoCU">
+                    <h3>Informacion General</h3>
+                    <p>
+                        Nombre: San martin<br>
+                        Correo: snMartin@gmail.com<br>
+                        RUT: 23654356-9<br>
+                        Telefono: +56 9 6752 8472<br>
+                        Direccion: Calle falsa 123 
+                    </p>
+                </div>
+                <div class="cambiarNombre">
+                    <h3>Cambiar Nombre de Usuario</h3>
+                    <form id="nombreUSR">
+                        <label for="nuevoNombre">Nuevo nombre de Usuario</label>
+                        <input type="text" name="nuevoNombre" id="nuevoNombre" placeholder="Ingrese un nuevo nombre de Usuario" required>
+                        <button type="submit">Actulizar Nombre</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="contenidoCambiarContra" class="ContenidoDinamico" style="display:none;">
+                <h2>Cambia contraseña</h2>
+                <div class="cambiarContra">
+                    <h3>Actualiza tu contraseña</h3>
+                    <form id="CambiarContraseña">
+                        <label for="contraseñaActual">Contraseña Actual</label>
+                        <input type="text" name="contraseñaActual" id="contraseñaActual" placeholder="Ingrese su contraseña actual" required>
+                    
+                        <label for="nuevaContraseña">Nueva Contraseña</label>
+                        <input type="text" name="nuevaContraseña" id="nuevaContraseña" placeholder="Ingrese su nueva contraseña" required>
+
+                        <label for="confirmarContraseña">Confirme Su Nueva Contraseña</label>
+                        <input type="text" name="confirmarContraseña" id="confirmarContraseña" placeholder="Confirme su nueva contraseña" required>
+
+                        <button type="submit">Actulizar Contraseña</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="contenidoPrivacidad" class="ContenidoDinamico" style="display:none;">
+                <h2>Privacidad</h2>
+            </section>
+
+            <section id="contenidoBorrarCuenta" class="ContenidoDinamico" style="display:none;">
+                <h2>Borrar Cuenta</h2>
             </section>
         </main>
     </div>
+    <script src="perfilUsuario.js"></script>
     <footer>
         <p>&copy; 2024 Hospitrack</p>
     </footer>
