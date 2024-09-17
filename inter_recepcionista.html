@@ -1,148 +1,134 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Interfaz Recepción</title>
-    <link rel="icon" href="hospitrackicono.png" type="image/png">
-    <link rel="stylesheet" href="estilo_recep.css">
-</head>
-<body>
+    <link rel="icon" href="hospitrackicono.png" type="image/png" />
+    <link rel="stylesheet" href="estilo_recep.css" />
+  </head>
+  <body>
     <header>
-        <img src="hospitracklogo.png" alt="Logo Hospitrack" class="header-logo-grande">
-        <h1>Interfaz de Recepción</h1>
-        <nav>
-            <button id="btn-inicio">Inicio</button>
-            <button id="btn-gestion">Gestión de Registros</button>
-            <button id="btn-solicitudes">Solicitudes</button>
-        </nav>
+      <img
+        src="hospitracklogo.png"
+        alt="Logo Hospitrack"
+        class="header-logo-grande"
+      />
+      <h1>Interfaz de Recepción</h1>
+      <nav>
+        <button id="btn-home">Home</button>
+        <button id="btn-inicio">Inicio</button>
+        <button id="btn-gestion">Gestión de Registros</button>
+        <button id="btn-solicitudes">Solicitudes</button>
+        <button id="btn-historial">Historial</button>
+      </nav>
     </header>
 
     <main>
-        <section id="gestion-registros" class="menu-principal">
-            <h2>Gestión de Registros de Espera</h2>
+      <!-- Primera vista (Home) -->
+      <section id="home-view" class="menu-principal">
+        <div class="profile-container">
+          <img src="perfil_recepcionista.jpg" alt="Perfil Recepcionista" class="profile-image" />
+          <div class="profile-info">
+            <p>Aca va el nombre</p>
+            <button id="btn-settings">
+              <img src="settings-icon.png" alt="Configuración" class="settings-icon">
+            </button>
+          </div>
+        </div>
 
-            <!-- Agregar Registro de Espera -->
-            <form id="add-waiting">
-                <h3>Agregar Registro de Espera</h3>
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
+        <h2>Bienvenido a la Interfaz de Recepción</h2>
+        <p>Aquí podrás gestionar las solicitudes y registros de los pacientes.</p>
+      </section>
 
-                <label for="apellidos">Apellidos:</label>
-                <input type="text" id="apellidos" name="apellidos" required>
+      <!-- Interfaz desplegable para configuración -->
+      <div id="settings-menu" class="settings-menu" style="display: none;">
+        <ul>
+          <li>Cambiar contraseña</li>
+          <li>Cambiar imagen</li>
+          <li>Cambiar nombre</li>
+          <li>Cerrar sesión</li>
+          <li>Opción adicional 1</li>
+          <li>Opción adicional 2</li>
+        </ul>
+      </div>
 
-                <label for="rut">RUT:</label>
-                <input type="text" id="rut" name="rut" required>
+      <!-- Sección de Gestión de Registros de Espera -->
+      <section id="gestion-registros" class="menu-principal" style="display: none;">
+        <h2>Gestión de Registros de Espera</h2>
+        <!-- Aquí van los formularios de agregar, editar y eliminar registros -->
+      </section>
 
-                <label for="telefono">Número de Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" required>
+      <!-- Sección de Recepción de Solicitudes -->
+      <section id="recepcion-solicitudes" style="display: none;">
+        <h2>Recepción de Solicitudes</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Servicio</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Juan Pérez</td>
+              <td>Traumatología</td>
+              <td>
+                <button>Aceptar</button>
+                <button>Rechazar</button>
+                <button>Comentar</button>
+                <button>Asignar Puesto</button>
+              </td>
+            </tr>
+            <tr>
+              <td>María López</td>
+              <td>Pediatría</td>
+              <td>
+                <button>Aceptar</button>
+                <button>Rechazar</button>
+                <button>Comentar</button>
+                <button>Asignar Puesto</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Carlos García</td>
+              <td>Cardiología</td>
+              <td>
+                <button>Aceptar</button>
+                <button>Rechazar</button>
+                <button>Comentar</button>
+                <button>Asignar Puesto</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
 
-                <label for="sexo">Sexo:</label>
-                <select id="sexo" name="sexo" required>
-                    <option value="hombre">Hombre</option>
-                    <option value="mujer">Mujer</option>
-                    <option value="otro">Otro</option>
-                </select>
-
-                <label for="servicio">Servicio:</label>
-                <input type="text" id="servicio" name="servicio" required>
-
-                <button type="submit">Agregar</button>
-            </form>
-
-            <!-- Editar Registro de Espera -->
-            <form id="edit-waiting">
-                <h3>Editar Registro de Espera</h3>
-                <label for="nombre-edit">Nombre:</label>
-                <input type="text" id="nombre-edit" name="nombre-edit" required>
-
-                <label for="apellidos-edit">Apellidos:</label>
-                <input type="text" id="apellidos-edit" name="apellidos-edit" required>
-
-                <label for="rut-edit">RUT:</label>
-                <input type="text" id="rut-edit" name="rut-edit" required>
-
-                <label for="telefono-edit">Número de Teléfono:</label>
-                <input type="tel" id="telefono-edit" name="telefono-edit" required>
-
-                <label for="sexo-edit">Sexo:</label>
-                <select id="sexo-edit" name="sexo-edit" required>
-                    <option value="hombre">Hombre</option>
-                    <option value="mujer">Mujer</option>
-                    <option value="otro">Otro</option>
-                </select>
-
-                <label for="servicio-edit">Servicio:</label>
-                <input type="text" id="servicio-edit" name="servicio-edit" required>
-
-                <button type="submit">Editar</button>
-            </form>
-
-            <!-- Eliminar Registro de Espera -->
-            <form id="delete-waiting">
-                <h3>Eliminar Registro de Espera</h3>
-                <label for="rut-delete">RUT:</label>
-                <input type="text" id="rut-delete" name="rut-delete" required>
-
-                <button type="submit">Eliminar</button>
-            </form>
-        </section>
-
-        <!-- Previsualización de solicitudes pegada al lado derecho -->
-        <aside id="preview-solicitudes" class="previsualizacion">
-            <h3>Previsualización de Solicitudes</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Servicio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Juan Pérez</td>
-                        <td>Traumatología</td>
-                    </tr>
-                    <tr>
-                        <td>María López</td>
-                        <td>Pediatría</td>
-                    </tr>
-                </tbody>
-            </table>
-        </aside>
-
-        <!-- Menú completo de solicitudes -->
-        <section id="menu-solicitudes" class="menu-solicitudes" style="display:none;">
-            <h2>Registro de Solicitudes</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>RUT</th>
-                        <th>Número de Teléfono</th>
-                        <th>Sexo</th>
-                        <th>Servicio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Juan</td>
-                        <td>Pérez</td>
-                        <td>12.345.678-9</td>
-                        <td>+569 12345678</td>
-                        <td>Hombre</td>
-                        <td>Traumatología</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+      <!-- Historial de Solicitudes Atendidas -->
+      <section id="historial-solicitudes" style="display: none;">
+        <h2>Historial de Solicitudes Atendidas</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Servicio</th>
+              <th>Estado</th>
+              <th>Comentarios</th>
+              <th>Puesto Asignado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Aquí se agregarían las solicitudes atendidas -->
+          </tbody>
+        </table>
+      </section>
     </main>
 
     <footer>
-        <p>Interfaz para Recepción uwu</p>
+      <p>Interfaz para Recepción uwu</p>
     </footer>
 
     <script src="scripts_recep.js"></script>
-</body>
+  </body>
 </html>
