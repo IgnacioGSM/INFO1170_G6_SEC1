@@ -17,12 +17,16 @@
 </head>
 <body>
     <header>
-        <img src="imagenes/logo.png" class="header-logo">
+        <img src="imagenes/logo.png" class="header-logo" alt="logo">
         <nav class="header-nav">
             <ul class="header-list">
-                <li><a class="header-link" href="iniciosesion.html">Iniciar Sesión</a></li>
-                <li><a class="header-link" href="registropersona.html">Registrarse</a></li>
+                <li class="invitado-only"><a class="header-link" href="iniciosesion.html">Iniciar Sesión</a></li>
+                <li class="invitado-only"><a class="header-link" href="registropersona.html">Registrarse</a></li>
+                <li class="sesion-iniciada"><a class="header-link" href="#"><img src="imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
+                <li class="sesion-iniciada admin-only"><a class="header-link" href="#">Panel de administrador</a></li>
+                <li class="sesion-iniciada recepcionista-only"><a class="header-link" href="#">Panel de recepcionista</a></li>
             </ul>
+        </nav>
     </header>
 
     <div id="overlay">      <!-- Overlay para escoger un tipo de usuario con el que entrar -->
@@ -67,13 +71,13 @@
             </div>
 
             <div class="index-reservacion">
-                <div id="index-formulario-invitado" class="index-formulario-bloqueado">           <!-- Visible solo para usuario invitado -->
+                <div id="index-formulario-invitado" class="index-formulario-bloqueado invitado-only">           <!-- Visible solo para usuario invitado -->
                     <h1>Inicie sesión para poder solicitar una reserva</h1>
                     <a class="header-link" href="iniciosesion.html">Iniciar Sesión</a>
                     <a class="header-link" href="registropersona.html">Registrarse</a>
                 </div>
 
-                <div id="index-formulario-suspendido" class="index-formulario-bloqueado">
+                <div id="index-formulario-suspendido" class="index-formulario-bloqueado suspendido-only">
                     <h1>Se han deshabilitado las solicitudes de reserva en tu cuenta</h1>
                     <h2>Más información en:</h2>
                     <a class="header-link" href="#">suspensión de cuentas</a>
