@@ -7,6 +7,11 @@ document.getElementById("index-seleccion-usertype").addEventListener("change", f
     document.getElementById("overlay").style.display = "none";
     if (usertype == "invitado"){
         console.log("invitado");
-        document.getElementById("index-formulario-bloqueado").style.display = "flex";
+        document.getElementById("index-formulario-invitado").style.display = "flex";
+    }
+
+    if (usertype == "suspendido"){
+        console.log("suspendido");
+        document.getElementById("index-formulario-suspendido").style.display = "flex";
     }
 });
