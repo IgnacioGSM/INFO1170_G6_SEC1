@@ -16,6 +16,10 @@ document.getElementById("index-seleccion-usertype").addEventListener("change", f
                 invitado_elements[i].style.display = "flex";
             }
         }
+        let usuario_elements = document.getElementsByClassName("sesion-iniciada");
+        for (let i = 0; i < usuario_elements.length; i++){
+            usuario_elements[i].style.display = "none";
+        }
     }
     else if (usertype == "recepcionista"){
         console.log("recepcionista");
