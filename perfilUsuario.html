@@ -10,7 +10,11 @@
 <body>
     <div class="Perfil-contenedor">
         <header>
-            <h1>Bienvenido a tu Perfil</h1>
+            <div id="HeaderContenedor">
+                <img src="imagenes/logo.png" class="header-logo" alt="logo">
+                <h1>Bienvenido a tu Perfil</h1>
+                <button id="BotonIndex" onclick="window.location.href='index.html';">Ir al Inicio</button>
+            </div>
         </header>
 
         <main class="perfil-main">
@@ -25,8 +29,8 @@
                 <div class="Cambia-contra">
                     <button id="boton-contra"><i class="fas fa-key"></i>Cambiar contraseña</button>
                 </div>
-                <div class="Privacidad">
-                    <button id="boton-privacidad"><i class="fas fa-shield-alt"></i>Privacidad</button>
+                <div class="Expedientes">
+                    <button id="boton-expedientes"><i class="fas fa-shield-alt"></i>Expedientes Medicos</button>
                 </div>
                 <div class="borra-cuenta">
                     <button id="boton-borrar"><i class="fas fa-trash-alt"></i>Borrar Cuenta</button>
@@ -54,36 +58,121 @@
                     <form id="nombreUSR">
                         <label for="nuevoNombre">Nuevo nombre de Usuario</label>
                         <input type="text" name="nuevoNombre" id="nuevoNombre" placeholder="Ingrese un nuevo nombre de Usuario" required>
-                        <button type="submit">Actulizar Nombre</button>
+                        <button type="submit">Actualizar Nombre</button>
+                    </form>
+                </div>
+                <h3>Valora HospiTrack</h3>
+                <div class="valoracion">
+                    <form id="valor">
+                        <label>Valora nuestro servicio</label>
+                        <div class="estrellas">
+                            <input type="radio" name="rating" id="estrella1" value="1">
+                            <label for="estrella1" title="1 estrella">&#9733;</label>
+                            <input type="radio" name="rating" id="estrella2" value="2">
+                            <label for="estrella2" title="2 estrellas">&#9733;</label>
+                            <input type="radio" name="rating" id="estrella3" value="3">
+                            <label for="estrella3" title="3 estrellas">&#9733;</label>
+                            <input type="radio" name="rating" id="estrella4" value="4">
+                            <label for="estrella4" title="4 estrellas">&#9733;</label>
+                            <input type="radio" name="rating" id="estrella5" value="5">
+                            <label for="estrella5" title="5 estrellas">&#9733;</label>
+                        </div>
+                        <button type="submit">Enviar valoracion</button>
                     </form>
                 </div>
             </section>
 
             <section id="contenidoCambiarContra" class="ContenidoDinamico" style="display:none;">
-                <h2>Cambia contraseña</h2>
+                <h2>Cambiar contraseña</h2>
                 <div class="cambiarContra">
                     <h3>Actualiza tu contraseña</h3>
                     <form id="CambiarContraseña">
                         <label for="contraseñaActual">Contraseña Actual</label>
-                        <input type="text" name="contraseñaActual" id="contraseñaActual" placeholder="Ingrese su contraseña actual" required>
+                        <input type="password" name="contraseñaActual" id="contraseñaActual" placeholder="Ingrese su contraseña actual" required>
                     
                         <label for="nuevaContraseña">Nueva Contraseña</label>
-                        <input type="text" name="nuevaContraseña" id="nuevaContraseña" placeholder="Ingrese su nueva contraseña" required>
+                        <input type="password" name="nuevaContraseña" id="nuevaContraseña" placeholder="Ingrese su nueva contraseña" required>
 
                         <label for="confirmarContraseña">Confirme Su Nueva Contraseña</label>
-                        <input type="text" name="confirmarContraseña" id="confirmarContraseña" placeholder="Confirme su nueva contraseña" required>
+                        <input type="password" name="confirmarContraseña" id="confirmarContraseña" placeholder="Confirme su nueva contraseña" required>
 
-                        <button type="submit">Actulizar Contraseña</button>
+                        <button type="submit">Actualizar Contraseña</button>
                     </form>
                 </div>
             </section>
 
-            <section id="contenidoPrivacidad" class="ContenidoDinamico" style="display:none;">
-                <h2>Privacidad</h2>
+            <section id="contenidoExpedientes" class="ContenidoDinamico" style="display:none;">
+                <h2>Expedientes Medicos</h2>
+                <div class="MedExp">
+                    <h3>Historial de consultas</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Medico a Cargo</th>
+                                <th>Diagnostico</th>
+                                <th>Tratamiento Prescrito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>17/09/2024</td>
+                                <td>Dr. Luis Jimenes</td>
+                                <td>COVID</td>
+                                <td>Reposo e hidratacion</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Historial Medicamentos</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre del Medicamento</th>
+                                <th>Dosis</th>
+                                <th>Duracion del tratamiento</th>
+                                <th>Fecha de inicio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ibuprofeno</td>
+                                <td>400mg</td>
+                                <td>5 dias</td>
+                                <td>18/09/2024</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            
+                    <h3>Resultado de examenes</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo de examen</th>
+                                <th>Fecha</th>
+                                <th>Resultados y observaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sanguineo</td>
+                                <td>17/09/2024</td>
+                                <td>Azucar baja</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
             <section id="contenidoBorrarCuenta" class="ContenidoDinamico" style="display:none;">
                 <h2>Borrar Cuenta</h2>
+                <p>¿Seguro de borrar tu cuenta? Todos tus datos y registros se perderan y no podras recuperarlos</p>
+                <form id="BorrarCuenta">
+                    <label for="confirmarContra">Ingrese su contraseña para confirmar:</label>
+                    <input type="password" name="confirmarContra" id="confirmarContra" placeholder="Contraseña" required>
+
+                    <button type="submit">Borrar Cuenta</button>
+                </form>
             </section>
         </main>
     </div>

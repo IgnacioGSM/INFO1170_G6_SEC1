@@ -6,8 +6,8 @@ document.getElementById('boton-contra').addEventListener('click', function() {
     mostrarSeccion('contenidoCambiarContra');
 });
 
-document.getElementById('boton-privacidad').addEventListener('click', function() {
-    mostrarSeccion('contenidoPrivacidad');
+document.getElementById('boton-expedientes').addEventListener('click', function() {
+    mostrarSeccion('contenidoExpedientes');
 });
 
 document.getElementById('boton-borrar').addEventListener('click', function() {

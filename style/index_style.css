@@ -1,0 +1,310 @@
+body {
+    background-color: #E8F5E9;
+    color: #1B4D3E;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+
+    /* Para poder dejar el footer abajo */
+    display: flex;
+    flex-flow: column nowrap;
+    min-height: 100vh;
+    overflow-x: hidden;     /* Arrastrar el mapa podía causar desbordamiento */
+}
+
+/* ---------------------------HEADER------------------------------- */
+
+header {
+    background-color: #A0D6B4;
+    width: 100%;
+
+    display: flex;
+    flex-flow: wrap row;
+    justify-content:space-evenly;
+    padding: 20px;
+}
+
+.header-logo {
+    display: inline-block;
+    margin-left: 20px;
+    height: 80px;
+}
+.header-nav {
+    display: flex;
+    align-items: center;
+}
+
+.header-list {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    list-style: none;
+}
+
+.header-link{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    background-color: #2E8B57;
+    border-radius: 50px;
+    text-decoration: none;
+    color: white;
+    font-size: larger;
+}
+
+.header-link:hover {
+    background-color: #1B4D3E;
+}
+
+.header-link:visited {
+    color: white;
+}
+
+#profile-icon {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+/* -----------------------SELECCION USERTYPE--------------------------- */
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#overlay div {
+    background-color: #3f3f3f;
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+#overlay select {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+/* ---------------------------MAIN------------------------------- */
+
+.index-main {
+    background-color: #1B4D3E;
+    color: white;
+    display: flex;
+    flex-flow: nowrap row;
+    justify-content: space-between;
+    height: calc(100vh - 120px);
+}
+
+.index-derecha-mapa {
+    width: 30%;
+    display: flex;
+    flex-flow: nowrap column;
+    overflow: scroll;
+}
+
+#no-hospital{
+    justify-content: center;
+}
+
+.index-hospital-name {
+    background-color: #2E8B57;
+    font-size: 2em;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+#no-hospital .index-hospital-name {
+    background-color: #1B4D3E;
+}
+
+/* ---------------------------MAPA------------------------------- */
+
+#map {
+    width: 70%;
+
+}
+
+/* ---------------------------SECCIONES------------------------------- */
+
+.index-secciones {
+    background-color:#bbd6cd;
+    color: #1B4D3E;
+    margin: 0 20px 20px 20px;
+    border-radius: 30px;
+}
+
+.index-secciones-titulo {
+    background-color: #2E8B57;
+    color: white;
+    padding: 10px;
+    border-radius: 30px 30px 0 0;
+    border-bottom: solid 1px #1B4D3E;
+    margin-bottom: -20px;
+}
+
+.index-secciones-lista {
+    list-style: none;
+    padding: 0;
+}
+
+.index-secciones-item {
+    padding: 10px;
+    border-bottom: 1px solid #1B4D3E;
+}
+
+.index-secciones-item:hover {
+    background-color: #669685;
+    color: white;
+    cursor: pointer;
+}
+
+.index-secciones-item:last-child {
+    border-radius: 0 0 30px 30px;
+}
+
+.index-secciones-item:last-child:hover {
+    border-radius: 0 0 30px 30px;
+}
+
+
+/* ---------------------------FILAS------------------------------- */
+
+.index-filas {
+    background-color: #bbd6cd;
+    color: #1B4D3E;
+    margin: 20px;
+    border-radius: 30px;
+}
+
+.index-filas-titulo {
+    background-color: #2E8B57;
+    color: white;
+    padding: 10px;
+    border-radius: 30px 30px 0 0;
+    margin-bottom: -20px;
+}
+
+#index-filas-subtitulo {
+    background-color: #2E8B57;
+    color: white;
+    padding: 10px;
+    border-bottom: 1px solid #1B4D3E;
+}
+
+#index-filas-value {
+    padding-bottom: 20px;
+}
+
+
+/* ---------------------------FORMULARIO------------------------------- */
+
+.index-reservacion {
+    background-color: #C5E1A5;
+    color: #1B4D3E;
+    margin: 20px;
+    border-radius: 30px;
+    position: relative;
+}
+
+.index-formulario-bloqueado {
+    flex-flow: column nowrap;
+    justify-content: center;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    height: calc(100% + 20px);
+    width: 100%;
+    z-index: 1000;
+    margin-top: -20px;
+    border-radius: 30px;
+    color: white;
+}
+
+.index-reservacion-titulo {
+    background-color: #2E8B57;
+    color: white;
+    padding: 10px;
+    border-radius: 30px 30px 0 0;
+    border-bottom: solid 1px #1B4D3E;
+    margin-top: -20px;
+}
+
+#index-reservacion-form {
+    display: flex;
+    flex-flow: nowrap column;
+    padding: 0 20px 0px 20px;
+    margin-top: -10px;
+}
+
+.index-reservacion-input {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #1B4D3E;
+}
+
+.index-reservacion-textarea {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #1B4D3E;
+}
+
+.index-reservacion-submit {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #1B4D3E;
+    background-color: #2E8B57;
+    color: white;
+    font-size: large;
+}
+
+.index-reservacion-submit:hover {
+    background-color: #1B4D3E;
+}   
+
+/* ---------------------------FOOTER------------------------------- */
+
+footer {
+    width: 100%;
+    background-color: #A0D6B4;
+    padding-bottom: 200px;
+
+    /* Para poder dejar el footer abajo */
+    margin-top: auto;
+}
+
+
+
+/* ---------------------EXCLUSIVO USUARIOS-------------------------- */
+
+.invitado-only {
+    display: none;
+}
+
+.admin-only {
+    display: none;
+}
+
+.recepcionista-only {
+    display: none;
+}
+
+.suspendido-only {
+    display: none;
+}

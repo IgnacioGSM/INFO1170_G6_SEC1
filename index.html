@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="keywords" content="hospital cercano, consulta, hora medica, hospital, Hospitrack">
+    <meta name="description" content="HospiTrack es una aplicación web que te permite visualizar las filas de espera en hospitales cercanos y reservar tu puesto en la fila.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/index_style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <title>HospiTrack</title>
+</head>
+<body>
+    <header>
+        <img src="imagenes/logo.png" class="header-logo" alt="logo">
+        <nav class="header-nav">
+            <ul class="header-list">
+                <li class="invitado-only"><a class="header-link" href="iniciosesion.html">Iniciar Sesión</a></li>
+                <li class="invitado-only"><a class="header-link" href="registropersona.html">Registrarse</a></li>
+                <li class="sesion-iniciada"><a class="header-link" href="#"><img src="imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
+                <li class="sesion-iniciada"><a class="header-link" href="mis_solicitudes.html">Mis solicitudes</a></li>
+                <li class="sesion-iniciada admin-only"><a class="header-link" href="#">Panel de administrador</a></li>
+                <li class="sesion-iniciada recepcionista-only"><a class="header-link" href="#">Panel de recepcionista</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="overlay">      <!-- Overlay para escoger un tipo de usuario con el que entrar -->
+        <div>
+            <h1>Seleccione con que tipo de usuario va a ingresar</h1>
+            <select name="usertype" id="index-seleccion-usertype" autocomplete="off">
+                <option disabled selected hidden>Seleccionar</option>
+                <option value="invitado">invitado</option>
+                <option value="usuario">usuario</option>
+                <option value="recepcionista">recepcionista</option>
+                <option value="admin">admin</option>
+                <option value="suspendido">usuario suspendido</option>
+            </select>
+        </div>
+    </div>
+
+    <main class="index-main">
+        <div id="map"></div>
+
+        <article id="no-hospital" class="index-derecha-mapa">
+            <h1 class="index-hospital-name">Seleccione un hospital</h1>
+        </article>
+        
+        <article id="hospital-seleccionado" class="index-derecha-mapa">
+            <h1 id="index-hospital-name" class="index-hospital-name">Nombre del hospital</h1>
+            
+            <div class="index-hospital-info">
+
+                <div class="index-secciones">
+                    <h2 class="index-secciones-titulo">Secciones</h2>
+                    <ul id="index-secciones-lista" class="index-secciones-lista">      <!-- Elementos clickeables, actualizarán la fila de espera a su sección correspondiente-->
+                        <!-- <li class="index-secciones-item">Emergencia</li> ejemplo, al clickear un hospital el script generara estos -->
+
+                    </ul>
+                </div>
+
+                <div class="index-filas">
+                    <h3 class="index-filas-titulo">Personas en espera en: </h3>
+                    <h2 id="index-filas-subtitulo">-------</h2>   <!-- Aquí se debe mostrar la sección en la que se encuentra la persona -->
+                    <h1 id="index-filas-value">Escoja una sección...</h1> <!-- Aquí se debe mostrar el número de personas en la fila de espera -->
+                </div>
+            </div>
+
+            <div class="index-reservacion">
+                <div id="index-formulario-invitado" class="index-formulario-bloqueado invitado-only">           <!-- Visible solo para usuario invitado -->
+                    <h1>Inicie sesión para poder solicitar una reserva</h1>
+                    <a class="header-link" href="iniciosesion.html">Iniciar Sesión</a>
+                    <a class="header-link" href="registropersona.html">Registrarse</a>
+                </div>
+
+                <div id="index-formulario-suspendido" class="index-formulario-bloqueado suspendido-only">
+                    <h1>Se han deshabilitado las solicitudes de reserva en tu cuenta</h1>
+                    <h2>Más información en:</h2>
+                    <a class="header-link" href="#">suspensión de cuentas</a>
+                </div>
+
+                <h2 class="index-reservacion-titulo">Reservar puesto</h2>
+                <form id="index-reservacion-form" onsubmit="event.preventDefault(); validarForm();">     <!-- preventDefault evita que se recargue la pagina si el formulario no es valido -->
+                    <input id="rut" maxlength="9" type="text" class="index-reservacion-input" placeholder="Rut" required>
+                    <input id="correo" type="text" class="index-reservacion-input" placeholder="Correo" required>
+                    <textarea id="motivo-consulta" class="index-reservacion-textarea" name="motivo-consulta" rows="3" placeholder="Motivo de consulta" required></textarea>
+                    <input type="submit" class="index-reservacion-submit" value="Reservar">
+                </form>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2024 Hospitrack. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    
+    <script src="scripts/index/seleccion_usertype.js"></script>
+    <script src="scripts/index/script_mapa.js"></script>
+    <script src="scripts/index/validacion_reserva.js"></script>
+</body>
+</html>
