@@ -74,15 +74,48 @@ button[type="submit"]:hover {
   background-color: #1B4D3E;
 }
 
+/* Estilos para el footer */
 footer {
-  width: 100%;
   background-color: #A0D6B4;
-  padding: 20px;
-  margin-top: auto; /* Mantener el footer en la parte inferior */
+  padding: 40px 20px;
   text-align: center;
 }
 
-footer p {
-  margin: 0;
+footer h2 {
   color: #1B4D3E;
+  margin-bottom: 20px;
+}
+
+.footer-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 0 auto 20px;
+}
+
+.footer-contact-form input,
+.footer-contact-form textarea {
+  padding: 10px;
+  border: 1px solid #1B4D3E;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.footer-contact-form button {
+  background-color: #2E8B57;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.footer-contact-form button:hover {
+  background-color: #1B4D3E;
+}
+
+footer p {
+  color: #1B4D3E;
+  margin-top: 20px;
 }
