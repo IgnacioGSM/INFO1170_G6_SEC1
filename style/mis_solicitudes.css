@@ -10,34 +10,41 @@ main {
 }
 
 #lista-solicitudes {
-    display: flex;
-    flex-flow: nowrap column;
-    justify-content: space-around;
-    align-items: center;
-    height: 100%;
-    overflow: scroll;
+    display: inline;
 
+    height: 100%;
+    width: 100%;
+    overflow: scroll;
     list-style: none;
     padding: 0;
 }
 
 .lista-solicitudes-item {
+    width: 90%;
     background-color: #bbd6cd;
     color: #1B4D3E;
-    width: 90%;
     border-radius: 30px;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-#solicitud {
+.solicitud {
     display: flex;
-    flex-flow: row nowrap;
-    justify-content: stretch;
+    flex-flow: nowrap row;
     list-style: none;
     padding: 0;
+    height: 80px;
+}
+
+.solicitud:hover {
+    cursor: pointer;
 }
 
 .solicitud-info {
+    overflow-y: scroll;
     border-left: #1B4D3E solid 1px;
+    width: 25vh;
     padding: 30px;
 }
 
