@@ -27,7 +27,7 @@
                     <button id="boton-cuenta"><i class="fas fa-user"></i>Cuenta</button>
                 </div>
                 <div class="Cambia-contra">
-                    <button id="boton-contra"><i class="fas fa-key"></i>Cambiar contraseña</button>
+                    <button id="boton-confCU"><i class="fas fa-key"></i>Configurar Cuenta</button>
                 </div>
                 <div class="Expedientes">
                     <button id="boton-expedientes"><i class="fas fa-shield-alt"></i>Expedientes Medicos</button>
@@ -82,8 +82,39 @@
                 </div>
             </section>
 
-            <section id="contenidoCambiarContra" class="ContenidoDinamico" style="display:none;">
-                <h2>Cambiar contraseña</h2>
+            <section id="contenidoConfCuenta" class="ContenidoDinamico" style="display:none;">
+                <h2>Configuracion de tu Cuenta</h2>
+
+                <div class="cambiarCor">
+                    <h3>Actualiza tu Correo</h3>
+                    <form id="CambiarCorreo">
+                        <label for="nuevoCorreo">Nuevo Correo</label>
+                        <input type="email" name="nuevoCorreo" id="nuevoCorreo" placeholder="Ingrese su nuevo correo">
+
+                        <button type="submit">Actualizar correo</button>
+                    </form>
+                </div>
+
+                <div class="cambiarTel">
+                    <h3>Actualiza tu Telefono</h3>
+                    <form id="CambiarTelefono">
+                        <label for="nuevoTelefono">Nuevo Telefono</label>
+                        <input type="tel" name="nuevoTelefono" id="nuevoTelefono" placeholder="Ingrese su nuevo telefono">
+
+                        <button type="submit">Actualizar telefono</button>
+                    </form>
+                </div>
+
+                <div class="cambiarDir">
+                    <h3>Actualiza tu Direccion</h3>
+                    <form id="CambiarDireccion">
+                        <label for="nuevaDireccion">Nueva Direccion</label>
+                        <input type="text" name="nuevaDireccion" id="nuevaDireccion" placeholder="Ingrese su nueva direccion">
+
+                        <button type="submit">Actualizar direccion</button>
+                    </form>
+                </div>
+
                 <div class="cambiarContra">
                     <h3>Actualiza tu contraseña</h3>
                     <form id="CambiarContraseña">

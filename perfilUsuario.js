@@ -2,8 +2,8 @@ document.getElementById('boton-cuenta').addEventListener('click', function() {
     mostrarSeccion('contenidoCuenta');
 });
 
-document.getElementById('boton-contra').addEventListener('click', function() {
-    mostrarSeccion('contenidoCambiarContra');
+document.getElementById('boton-confCU').addEventListener('click', function() {
+    mostrarSeccion('contenidoConfCuenta');
 });
 
 document.getElementById('boton-expedientes').addEventListener('click', function() {

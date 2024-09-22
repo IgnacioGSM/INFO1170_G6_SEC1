@@ -231,27 +231,27 @@ footer{
     color: gold;
 }
 
-.cambiarContra{
+.cambiarCor, .cambiarTel, .cambiarDir, .cambiarContra{
     margin-top: 20px;
 }
 
-.cambiarContra h3{
+.cambiarCor h3, .cambiarTel h3, .cambiarDir h3, .cambiarContra h3{
     font-size: 1.5rem;
     margin-bottom: 15px;
 }
 
-.cambiarContra form{
+.cambiarCor form, .cambiarTel form, .cambiarDir form, .cambiarContra form{
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.cambiarContra label{
+.cambiarCor label, .cambiarTel label, .cambiarDir label, .cambiarContra label{
     font-size: 1rem;
     font-weight: bold;
 }
 
-.cambiarContra input{
+.cambiarCor input, .cambiarTel input, .cambiarDir input, .cambiarContra input{
     padding: 10px;
     font-size: 1rem;
     border-radius: 5px;
@@ -259,7 +259,7 @@ footer{
     width: 90%;
 }
 
-.cambiarContra button{
+.cambiarCor button, .cambiarTel button, .cambiarDir button, .cambiarContra button{
     padding: 10px;
     font-size: 1rem;
     background-color: #026d43;
@@ -270,7 +270,7 @@ footer{
     transition: background-color 0.3s ease;
 }
 
-.cambiarContra button:hover{
+.cambiarCor button:hover, .cambiarTel button:hover, .cambiarDir button:hover, .cambiarContra button:hover{
     background-color: #038f54;
 }
 
