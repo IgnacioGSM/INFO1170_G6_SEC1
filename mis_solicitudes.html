@@ -29,43 +29,52 @@
         <ul id="lista-solicitudes">
             <h2>Solicitudes pendientes</h2>
             <li class="lista-solicitudes-item">
-                <ul class="solicitud">
-                    <li class="solicitud-info">Hospital: Hospital 3</li>
-                    <li class="solicitud-info">Sección: Emergencia</li>
-                    <li class="solicitud-info">Fecha: 01/01/2021</li>
-                    <li class="solicitud-info">Hora: 12:00</li>
-                    <li class="solicitud-info">Estado: Pendiente</li>
+                <ul class="solicitud soli-pendiente">
+                    <li class="lista-solicitud-info">Hospital: Hospital 3</li>
+                    <li class="lista-solicitud-info">Sección: Emergencia</li>
+                    <li class="lista-solicitud-info">Fecha: 01/01/2021</li>
+                    <li class="lista-solicitud-info">Hora: 12:00</li>
+                    <li class="lista-solicitud-info">Estado: Pendiente</li>
                 </ul>
             </li>
             
             <br>
             <h2>Solicitudes pasadas</h2>
             <li class="lista-solicitudes-item">
-                <ul class="solicitud">
-                    <li class="solicitud-info">Hospital: Hospital 1</li>
-                    <li class="solicitud-info">Sección: Emergencia</li>
-                    <li class="solicitud-info">Fecha: 01/01/2021</li>
-                    <li class="solicitud-info">Hora: 12:00</li>
-                    <li class="solicitud-info">Estado: Aceptada</li>
+                <ul class="solicitud soli-pasada">
+                    <li class="lista-solicitud-info">Hospital: Hospital 1</li>
+                    <li class="lista-solicitud-info">Sección: Emergencia</li>
+                    <li class="lista-solicitud-info">Fecha: 01/01/2021</li>
+                    <li class="lista-solicitud-info">Hora: 12:00</li>
+                    <li class="lista-solicitud-info">Estado: Aceptada</li>
                 </ul>
             </li>
             <li class="lista-solicitudes-item">
-                <ul class="solicitud">
-                    <li class="solicitud-info">Hospital: Hospital 2</li>
-                    <li class="solicitud-info">Sección: Consultas</li>
-                    <li class="solicitud-info">Fecha: 04/12/2024</li>
-                    <li class="solicitud-info">Hora: 4:00</li>
-                    <li class="solicitud-info">Estado: Rechazada</li>
+                <ul class="solicitud soli-pasada">
+                    <li class="lista-solicitud-info">Hospital: Hospital 2</li>
+                    <li class="lista-solicitud-info">Sección: Consultas</li>
+                    <li class="lista-solicitud-info">Fecha: 04/12/2024</li>
+                    <li class="lista-solicitud-info">Hora: 4:00</li>
+                    <li class="lista-solicitud-info">Estado: Rechazada</li>
                 </ul>
             </li>
             <li class="lista-solicitudes-item">
-                <ul class="solicitud">
-                    <li class="solicitud-info">Hospital: Hospital 4</li>
-                    <li class="solicitud-info">Sección: uwu</li>
-                    <li class="solicitud-info">Fecha: 01/01/2021</li>
-                    <li class="solicitud-info">Hora: 12:00</li>
-                    <li class="solicitud-info">Estado: Aceptada</li>
+                <ul class="solicitud soli-pasada">
+                    <li class="lista-solicitud-info">Hospital: Hospital 4</li>
+                    <li class="lista-solicitud-info">Sección: uwu</li>
+                    <li class="lista-solicitud-info">Fecha: 01/01/2021</li>
+                    <li class="lista-solicitud-info">Hora: 12:00</li>
+                    <li class="lista-solicitud-info">Estado: Aceptada</li>
                 </ul>                
+            </li>
+            <li class="lista-solicitudes-item">
+                <ul class="solicitud soli-pasada">
+                    <li class="lista-solicitud-info">Hospital: Hospital 5</li>
+                    <li class="lista-solicitud-info">Sección: uwu</li>
+                    <li class="lista-solicitud-info">Fecha: 01/01/2021</li>
+                    <li class="lista-solicitud-info">Hora: 12:00</li>
+                    <li class="lista-solicitud-info">Estado: Aceptada</li>
+                </ul>
             </li>
         </ul>
     </main>
@@ -75,5 +84,19 @@
             <p>© 2024 Hospitrack. Todos los derechos reservados.</p>
         </div>
     </footer>
+    <script>
+        let solicitudes_pendientes = document.getElementsByClassName("soli-pendiente");
+        for (let i = 0; i < solicitudes_pendientes.length; i++) {       // Agregar evento a cada solicitud pendiente
+            solicitudes_pendientes[i].addEventListener("click", function() {
+                window.location.href = "solicitud_pendiente.html";  // Cambiar a la pagina de la solicitud pendiente
+            });
+        }
+        let solicitudes_pasadas = document.getElementsByClassName("soli-pasada");
+        for (let i = 0; i < solicitudes_pasadas.length; i++) {       // Agregar evento a cada solicitud pasada
+            solicitudes_pasadas[i].addEventListener("click", function() {
+                window.location.href = "solicitud_pasada.html";  // Cambiar a la pagina de la solicitud pasada
+            });
+        }
+    </script>
 </body>
 </html>

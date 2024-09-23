@@ -1,0 +1,31 @@
+#volver-lista-solicitudes {
+    background-color: #2E8B57;
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    width: fit-content;
+    padding: 0 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#soli-info-container {
+    background-color: green;    /* color provisional obviamente que feo es para ver los bordes */
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
+#soli-info {                    /* Por ahora es una lista, probablemente pasará a ser tabla */
+    list-style: none;
+}
+
+#soli-info li {
+    display: flex;
+    flex-flow: nowrap column;
+    align-items: start;
+    padding: 10px;
+    border: 1px solid #1B4D3E;
+}
