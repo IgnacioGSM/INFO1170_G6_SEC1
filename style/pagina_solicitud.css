@@ -1,5 +1,5 @@
 #volver-lista-solicitudes {
-    background-color: #2E8B57;
+    background-color: #2e8b57;
     color: white;
     border-radius: 30px;
     cursor: pointer;
@@ -9,8 +9,12 @@
     margin-right: auto;
 }
 
+#volver-lista-solicitudes:hover {
+    background-color:#1b683c;
+}
+
 #soli-info-container {
-    background-color: green;    /* color provisional obviamente que feo es para ver los bordes */
+    background-color: #0b7037;    /* color provisional obviamente que feo es para ver los bordes */
     width: 90%;
     margin-left: auto;
     margin-right: auto;
@@ -42,4 +46,29 @@ tfoot th {
 
 tfoot td {
     border-bottom-right-radius: 20px;
+}
+
+/* ----------------------- BOTONES -------------------------------- */
+
+#boton-cancelar {
+    background-color: #d9534f;
+    color: white;
+    border: 3px solid #520503;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size:xx-large;
+    width: 300px;
+    padding: 0 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#boton-cancelar:hover {
+    background-color: #881a17;
+    border: 3px solid #4e0d0a;
+}
+
+#boton-cancelar:active {
+    background-color: #4e0d0a;
+    border: 3px solid #881a17;
 }
