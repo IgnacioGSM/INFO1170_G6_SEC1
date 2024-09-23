@@ -15,22 +15,22 @@
     <main class="admin-main">
         <section id="agregar-hospital">
             <h2>Formulario para Agregar Hospital</h2>
-            <form action="#" method="POST">
+            <form id="hospitalForm" action="#" method="POST">
                 <div class="form-group">
                     <label for="nombre">Nombre del Hospital:</label>
-                    <input type="text" id="nombre" name="nombre" required>
+                    <input type="text" id="nombre" name="nombre" required minlength="3" maxlength="100">
                 </div>
                 <div class="form-group">
                     <label for="direccion">Dirección:</label>
-                    <input type="text" id="direccion" name="direccion" required>
+                    <input type="text" id="direccion" name="direccion" required minlength="5" maxlength="150">
                 </div>
                 <div class="form-group">
                     <label for="contacto">Contacto:</label>
-                    <input type="text" id="contacto" name="contacto" required>
+                    <input type="text" id="contacto" name="contacto" required minlength="3" maxlength="50">
                 </div>
                 <div class="form-group">
                     <label for="telefono">Teléfono:</label>
-                    <input type="tel" id="telefono" name="telefono" required>
+                    <input type="tel" id="telefono" name="telefono" required pattern="[0-9]{9,15}" placeholder="Ej: +56 9 1234 5678">
                 </div>
                 <div class="form-group">
                     <label for="email">Correo Electrónico:</label>

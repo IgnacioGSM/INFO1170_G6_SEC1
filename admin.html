@@ -16,14 +16,29 @@
     <main class="admin-main">
         <section id="hospitales">
             <h2>Gestionar Hospitales</h2>
+            <div class="hospital-grid">
+                <!-- Ejemplo de hospital registrado -->
+                <div class="hospital-card">
+                    <a href="editar_hospital.html?id=1">
+                        <p>Hospital 1</p>
+                    </a>
+                </div>
+                <div class="hospital-card">
+                    <a href="editar_hospital.html?id=2">
+                        <p>Hospital 2</p>
+                    </a>
+                </div>
+            </div>
             <a href="agregar_hospital.html" class="btn">Agregar Hospital</a>
-            <a href="#" class="btn">Eliminar Hospital</a>
+            <a href="#" class="btn" id="eliminar-btn">Eliminar Hospital</a>
         </section>
 
         <section id="cuentas">
             <h2>Gestionar Cuentas</h2>
-            <a href="#" class="btn">Crear Cuenta de Recepcionista</a>
+            <a href="#" class="btn">Agregar Cuenta de Recepcionista</a>
+            <a href="#" class="btn">Eliminar Permisos de Recepcionista</a>
             <a href="#" class="btn">Suspender Usuario</a>
+            <a href="#" class="btn">Eliminar Cuenta</a>
         </section>
     </main>
 
