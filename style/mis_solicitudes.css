@@ -19,26 +19,27 @@ main {
     padding: 0;
 }
 
-.lista-solicitudes-item {
+.lista-solicitudes-item {       /* Posicionamiento de cada solicitud */
     width: 90%;
-    background-color: #bbd6cd;
     color: #1B4D3E;
-    border-radius: 30px;
     margin-bottom: 15px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.solicitud {
+.solicitud {                    /* Estilo de cada solicitud */
     display: flex;
     flex-flow: nowrap row;
     list-style: none;
+    background-color: #bbd6cd;
+    border-radius: 30px;
     padding: 0;
     height: 80px;
 }
 
 .solicitud:hover {
     cursor: pointer;
+    filter: brightness(80%);
 }
 
 .lista-solicitud-info {
@@ -47,6 +48,7 @@ main {
     width: 25vh;
     padding: 30px;
 }
+
 
 .lista-solicitud-info:first-child {
     border-left: none;
