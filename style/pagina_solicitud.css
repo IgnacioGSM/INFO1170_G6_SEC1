@@ -17,15 +17,29 @@
     margin-top: 20px;
     border-radius: 20px;
 }
+/* ----------------------- TABLA -------------------------------- */
 
-#soli-info {                    /* Por ahora es una lista, probablemente pasará a ser tabla */
-    list-style: none;
+th, td {
+    border-bottom: 2px solid #1B4D3E;
 }
 
-#soli-info li {
-    display: flex;
-    flex-flow: nowrap column;
-    align-items: start;
+th {
+    background-color: #2E8B57;
+    color: white;
     padding: 10px;
-    border: 1px solid #1B4D3E;
+}
+
+td {
+    background-color: #C5E1A5;
+    padding: 10px;
+    text-align: start;
+    color: black;
+}
+
+tfoot th {
+    border-bottom-left-radius: 20px;
+}
+
+tfoot td {
+    border-bottom-right-radius: 20px;
 }
