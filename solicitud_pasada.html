@@ -57,7 +57,7 @@
         <h3>Respuesta recibida:</h3>
         <div class="soli-info-container">
             <div id="respuesta-rating-container">
-                <button class="boton-rojo boton-mediano">Reportar Respuesta inadecuada</button>
+                <button id="reportar-respuesta-boton" class="boton-rojo boton-mediano">Reportar Respuesta inadecuada</button>
                 <form class="estrellas">
                     <input id="enviar-estrellas-respuesta" type="button" value="Valorar respuesta">
 
@@ -105,6 +105,9 @@
             window.location.href = "mis_solicitudes.html";
         });
 
+
+        // Estrellitas
+
         document.getElementById("enviar-estrellas-respuesta").addEventListener("click", () => {   // Enviar la valoración de la respuesta
             if (document.querySelector('input[name="rating"]:checked') == null) {
                 alert("Por favor seleccione una valoración");
@@ -118,6 +121,19 @@
         let rating_value = document
         document.getElementsByName("rating").forEach((radio) => {       // Deseleccionar todas las estrellas al iniciar la página
             radio.checked = false;
+        });
+
+        // Boton de reportar
+        var reportado = false;
+        document.getElementById("reportar-respuesta-boton").addEventListener("click", () => {   // Reportar respuesta inadecuada
+            if (reportado) {
+                alert("Ya ha reportado esta respuesta");
+                return;
+            }
+            if (confirm("¿Está seguro que desea reportar esta respuesta?")) {
+                alert("Se ha reportado la respuesta");
+                reportado = true;    
+            }
         });
     </script>
 </body>

@@ -246,8 +246,12 @@ header {
 #index-reservacion-form {
     display: flex;
     flex-flow: nowrap column;
-    padding: 0 20px 0px 20px;
+    padding: 0 20px;
     margin-top: -10px;
+}
+
+#index-reservacion-form h5 {
+    margin: 0;
 }
 
 .index-reservacion-input {
@@ -262,6 +266,7 @@ header {
     padding: 10px;
     border-radius: 10px;
     border: 1px solid #1B4D3E;
+    resize: vertical;
 }
 
 .index-reservacion-submit {

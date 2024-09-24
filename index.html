@@ -86,9 +86,10 @@
 
                 <h2 class="index-reservacion-titulo">Reservar puesto</h2>
                 <form id="index-reservacion-form" onsubmit="event.preventDefault(); validarForm();">     <!-- preventDefault evita que se recargue la pagina si el formulario no es valido -->
-                    <input id="rut" maxlength="9" type="text" class="index-reservacion-input" placeholder="Rut" required>
-                    <input id="correo" type="text" class="index-reservacion-input" placeholder="Correo" required>
-                    <textarea id="motivo-consulta" class="index-reservacion-textarea" name="motivo-consulta" rows="3" placeholder="Motivo de consulta" required></textarea>
+                    <h5>Esta información será visible solo para el recepcionista de la sección</h5>
+                    <input id="rut" maxlength="9" type="text" class="index-reservacion-input" placeholder="Rut" value="11.111.111-1" required>
+                    <input id="correo" type="text" class="index-reservacion-input" placeholder="Correo" value="correousuario@email.com" required>
+                    <textarea id="motivo-consulta" class="index-reservacion-textarea" name="motivo-consulta" rows="2" placeholder="Motivo de consulta" required></textarea>
                     <input type="submit" class="index-reservacion-submit" value="Reservar">
                 </form>
             </div>
