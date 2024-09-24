@@ -91,18 +91,19 @@ header {
     color: white;
 }
 
-/* ---------------------------HOME PROFILE------------------------------- */
+/* ---------------------------vista de la pagina del perfil------------------------------- */
 .profile-container {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    position: relative;
+    position: center;
     margin-bottom: 20px;
 }
 
 .profile-image {
-    width: 60px;
-    height: 60px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     border: 2px solid #1B4D3E;
     cursor: pointer;
@@ -112,6 +113,7 @@ header {
     display: flex;
     align-items: center;
     gap: 10px;
+    position: center;
     margin-left: 10px;
 }
 
