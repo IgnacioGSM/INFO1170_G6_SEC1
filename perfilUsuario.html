@@ -20,7 +20,7 @@
         <main class="perfil-main">
             <section class="Perfil">
                 <div class="foto-perfil">
-                    <img src="" alt="Foto de perfil">
+                    <img src="imagenes/default_profile.png" alt="Foto de perfil">
                     <p>Usuario</p>
                 </div>
                 <div class="Cuenta">
@@ -40,7 +40,7 @@
             <section id="contenidoCuenta" class="ContenidoDinamico" style="display:none;">
                 <h2>Configuracion de la cuenta</h2>
                 <div class="foto-perfil">
-                    <img src="" alt="foto-perfil">
+                    <img src="imagenes/default_profile.png" alt="foto-perfil">
                     <p>Usuario</p>
                 </div>
                 <div class="ContenidoCU">
@@ -91,6 +91,9 @@
                         <label for="nuevoCorreo">Nuevo Correo</label>
                         <input type="email" name="nuevoCorreo" id="nuevoCorreo" placeholder="Ingrese su nuevo correo">
 
+                        <label for="confirmarCorreo">Contraseña Actual</label>
+                        <input type="password" name="confirmarCorreo" id="confirmarCorreo" placeholder="Ingrese su contraseña actual" required>
+
                         <button type="submit">Actualizar correo</button>
                     </form>
                 </div>
@@ -101,6 +104,9 @@
                         <label for="nuevoTelefono">Nuevo Telefono</label>
                         <input type="tel" name="nuevoTelefono" id="nuevoTelefono" placeholder="Ingrese su nuevo telefono">
 
+                        <label for="confirmarTelefono">Contraseña Actual</label>
+                        <input type="password" name="confirmarTelefono" id="confirmarTelefono" placeholder="Ingrese su contraseña actual" required>
+
                         <button type="submit">Actualizar telefono</button>
                     </form>
                 </div>
@@ -110,6 +116,9 @@
                     <form id="CambiarDireccion">
                         <label for="nuevaDireccion">Nueva Direccion</label>
                         <input type="text" name="nuevaDireccion" id="nuevaDireccion" placeholder="Ingrese su nueva direccion">
+
+                        <label for="confirmarDireccion">Contraseña Actual</label>
+                        <input type="password" name="confirmarDireccion" id="confirmarDireccion" placeholder="Ingrese su contraseña actual" required>
 
                         <button type="submit">Actualizar direccion</button>
                     </form>
@@ -196,14 +205,17 @@
             </section>
 
             <section id="contenidoBorrarCuenta" class="ContenidoDinamico" style="display:none;">
-                <h2>Borrar Cuenta</h2>
-                <p>¿Seguro de borrar tu cuenta? Todos tus datos y registros se perderan y no podras recuperarlos</p>
-                <form id="BorrarCuenta">
-                    <label for="confirmarContra">Ingrese su contraseña para confirmar:</label>
-                    <input type="password" name="confirmarContra" id="confirmarContra" placeholder="Contraseña" required>
 
-                    <button type="submit">Borrar Cuenta</button>
-                </form>
+                <div class="borrarcuenta">
+                    <h3>Borrar Cuenta</h3>
+                    <p>¿Seguro de borrar tu cuenta? Todos tus datos y registros se perderan y no podras recuperarlos</p>
+                    <form id="BorrarCuenta">
+                        <label for="confirmarContra">Ingrese su contraseña para confirmar:</label>
+                        <input type="password" name="confirmarContra" id="confirmarContra" placeholder="Contraseña" required>
+
+                        <button type="submit">Borrar Cuenta</button>
+                    </form>
+                </div>
             </section>
         </main>
     </div>

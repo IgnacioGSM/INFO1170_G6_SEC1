@@ -298,3 +298,20 @@ table tr:nth-child(even){
 table tr:hover{
     background-color: #6fca5d;
 }
+
+.borrarcuenta h3{
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.borrarcuenta p{
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.borrarcuenta input{
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
