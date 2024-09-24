@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Interfaz Recepción</title>
+    <title>Interfaz Recepción Mejorada</title>
     <link rel="icon" href="hospitrackicono.png" type="image/png" />
     <link rel="stylesheet" href="estilo_recep.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
@@ -15,16 +15,17 @@
       
       <!-- Botón principal que despliega el menú -->
       <button id="toggle-menu-button" class="main-button">
-        <i class="fa-solid fa-user-nurse"></i>
+        <i class="fa-solid fa-bars"></i> Menú
       </button>
 
       <!-- Menú desplegable con los botones de navegación -->
       <nav id="nav-menu" class="nav-menu" style="display: none;">
-        <button id="btn-inicio">Index</button>
+        <button id="btn-inicio">Inicio</button>
         <button id="btn-home">Home</button>
         <button id="btn-gestion">Gestión de Registros</button>
         <button id="btn-solicitudes">Solicitudes</button>
         <button id="btn-historial">Historial</button>
+        <button id="btn-perfil">Perfil</button>
       </nav>
     </header>
 
@@ -34,7 +35,7 @@
         <div class="profile-container">
           <img src="perfil_recepcionista.jpg" alt="Perfil Recepcionista" class="profile-image" id="profile-button" />
           <div class="profile-info">
-            <p>Aca va el nombre</p>
+            <p id="profile-name">Nombre del usuario</p>
           </div>
         </div>
 
@@ -44,23 +45,32 @@
             <li><i class="fas fa-user"></i>Cuenta</li>
             <li><i class="fas fa-key"></i>Cambiar contraseña</li>
             <li><i class="fas fa-shield-alt"></i>Expedientes Médicos</li>
-            <li><i class="fas fa-trash-alt"></i>Borrar Cuenta</li>
+            <li><i class="fas fa-sign-out-alt"></i>Salir</li>
           </ul>
         </div>
 
-        <h2>Bienvenido a la Interfaz de Recepción</h2>
-        <p>Aquí podrás gestionar las solicitudes y registros de los pacientes.</p>
+        <h2>Bienvenido a la Interfaz de Recepción Mejorada</h2>
+        <p>Aquí podrás gestionar las solicitudes y registros de los pacientes de manera eficiente.</p>
       </section>
 
       <!-- Sección de Gestión de Registros de Espera -->
       <section id="gestion-registros" class="menu-principal" style="display: none;">
         <h2>Gestión de Registros de Espera</h2>
-        <!-- Aquí van los formularios de agregar, editar y eliminar registros -->
+        <form id="gestion-form">
+          <label for="nombre-paciente">Nombre del paciente:</label>
+          <input type="text" id="nombre-paciente" name="nombre" placeholder="Juan Pérez" required>
+          
+          <label for="servicio-paciente">Servicio:</label>
+          <input type="text" id="servicio-paciente" name="servicio" placeholder="Cardiología" required>
+          
+          <button type="submit">Agregar Registro</button>
+        </form>
       </section>
 
       <!-- Sección de Recepción de Solicitudes -->
       <section id="recepcion-solicitudes" style="display: none;">
         <h2>Recepción de Solicitudes</h2>
+        <input type="text" id="search-solicitudes" placeholder="Buscar solicitud...">
         <table>
           <thead>
             <tr>
@@ -69,7 +79,7 @@
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="solicitudes-list">
             <tr>
               <td>Juan Pérez</td>
               <td>Traumatología</td>
@@ -77,7 +87,6 @@
                 <button>Aceptar</button>
                 <button>Rechazar</button>
                 <button>Comentar</button>
-                <button>Asignar Puesto</button>
               </td>
             </tr>
             <tr>
@@ -87,7 +96,6 @@
                 <button>Aceptar</button>
                 <button>Rechazar</button>
                 <button>Comentar</button>
-                <button>Asignar Puesto</button>
               </td>
             </tr>
             <tr>
@@ -97,7 +105,6 @@
                 <button>Aceptar</button>
                 <button>Rechazar</button>
                 <button>Comentar</button>
-                <button>Asignar Puesto</button>
               </td>
             </tr>
           </tbody>
@@ -117,15 +124,29 @@
               <th>Puesto Asignado</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="historial-list">
             <!-- Aquí se agregarían las solicitudes atendidas -->
           </tbody>
         </table>
       </section>
+
+      <!-- Sección de Perfil -->
+      <section id="perfil-view" style="display: none;">
+        <h2>Perfil del Recepcionista</h2>
+        <form id="perfil-form">
+          <label for="perfil-nombre">Nombre:</label>
+          <input type="text" id="perfil-nombre" name="nombre" value="Nombre del usuario">
+
+          <label for="perfil-email">Email:</label>
+          <input type="email" id="perfil-email" name="email" value="email@dominio.com">
+
+          <button type="submit">Guardar Cambios</button>
+        </form>
+      </section>
     </main>
 
     <footer>
-      <p>Interfaz para Recepción uwu</p>
+      <p>Interfaz para Recepción Mejorada © 2024</p>
     </footer>
 
     <script src="scripts_recep.js"></script>
