@@ -54,15 +54,24 @@
       </section>
 
       <!-- Sección de Gestión de Registros de Espera -->
-      <section id="gestion-registros" class="menu-principal" style="display: none;">
+      <section id="gestion-registros" class="gestion-registros" style="display: none;">
         <h2>Gestión de Registros de Espera</h2>
         <form id="gestion-form">
           <label for="nombre-paciente">Nombre del paciente:</label>
           <input type="text" id="nombre-paciente" name="nombre" placeholder="Juan Pérez" required>
           
+          <label for="rut-paciente">Servicio:</label>
+          <input type="text" id="rut-paciente" name="rut" placeholder="12345678-9" required>
+          
+          <label for="correo-paciente">Servicio:</label>
+          <input type="text" id="correo-paciente" name="correo" placeholder="ejemplo@gmail.com" required>
+
+          <label for="celular-paciente">Servicio:</label>
+          <input type="text" id="celular-paciente" name="celular" placeholder="9 12345678" required>
+
           <label for="servicio-paciente">Servicio:</label>
           <input type="text" id="servicio-paciente" name="servicio" placeholder="Cardiología" required>
-          
+
           <button type="submit">Agregar Registro</button>
         </form>
       </section>
