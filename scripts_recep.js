@@ -1,3 +1,20 @@
+// Mostrar/Ocultar el menú de navegación
+document.getElementById("toggle-menu-button").addEventListener("click", function() {
+    const navMenu = document.getElementById("nav-menu");
+    const isVisible = navMenu.style.display === "block";
+    navMenu.style.display = isVisible ? "none" : "block";
+});
+
+// Ocultar el menú desplegable si se hace clic fuera del botón o del menú
+document.addEventListener("click", function(event) {
+    const navMenu = document.getElementById("nav-menu");
+    const mainButton = document.getElementById("toggle-menu-button");
+
+    if (!navMenu.contains(event.target) && event.target !== mainButton) {
+        navMenu.style.display = "none";
+    }
+});
+
 // Función para ocultar todas las secciones
 function hideAllSections() {
     document.getElementById("home-view").style.display = "none";
@@ -34,20 +51,20 @@ document.getElementById("btn-historial").addEventListener("click", function() {
     showSection("historial-solicitudes");
 });
 
-// Función para mostrar/ocultar el menú desplegable de configuración
-document.getElementById("btn-settings").addEventListener("click", function() {
-    const settingsMenu = document.getElementById("settings-menu");
-    const isVisible = settingsMenu.style.display === "block";
-    settingsMenu.style.display = isVisible ? "none" : "block";
+// Función para mostrar/ocultar el menú desplegable de configuración de usuario
+document.getElementById("profile-button").addEventListener("click", function() {
+    const profileMenu = document.getElementById("profile-menu");
+    const isVisible = profileMenu.style.display === "block";
+    profileMenu.style.display = isVisible ? "none" : "block";
 });
 
-// Ocultar el menú desplegable si se hace clic fuera del botón o del menú
+// Ocultar el menú de perfil si se hace clic fuera del botón o del menú
 document.addEventListener("click", function(event) {
-    const settingsMenu = document.getElementById("settings-menu");
-    const settingsButton = document.getElementById("btn-settings");
+    const profileMenu = document.getElementById("profile-menu");
+    const profileButton = document.getElementById("profile-button");
 
-    if (!settingsMenu.contains(event.target) && event.target !== settingsButton) {
-        settingsMenu.style.display = "none"; // Ocultar el menú
+    if (!profileMenu.contains(event.target) && event.target !== profileButton) {
+        profileMenu.style.display = "none";
     }
 });
 
@@ -89,31 +106,6 @@ function validarFormulario(formulario) {
         valid = false;
     }
 
-    valid = validarCampoVacio(nombre, "Nombre") && valid;
-    valid = validarCampoVacio(apellidos, "Apellidos") && valid;
-    valid = validarCampoVacio(servicio, "Servicio") && valid;
-    valid = validarSoloNumeros(telefono, "Teléfono") && valid;
+    valid = validarCampoVacio(nombre, "
 
-    return valid;
-}
-
-document.getElementById("add-waiting").addEventListener("submit", function(event) {
-    if (!validarFormulario(this)) {
-        event.preventDefault();
-    }
-});
-
-document.getElementById("edit-waiting").addEventListener("submit", function(event) {
-    if (!validarFormulario(this)) {
-        event.preventDefault();
-    }
-});
-
-document.getElementById("delete-waiting").addEventListener("submit", function(event) {
-    const rut = document.getElementById("rut-delete").value;
-    if (!validarRUT(rut)) {
-        alert("El RUT ingresado no es válido.");
-        event.preventDefault();
-    }
-});
 */
