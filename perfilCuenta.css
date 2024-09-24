@@ -203,7 +203,8 @@ footer{
 
 .estrellas{
     display: flex;
-    direction: ltr;
+    flex-direction: row-reverse;
+    justify-content: start;
     font-size: 2rem;
     color: #ddd;
 }
