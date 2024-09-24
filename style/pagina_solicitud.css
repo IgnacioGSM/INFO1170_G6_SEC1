@@ -57,25 +57,86 @@ tfoot td {
 
 /* ----------------------- BOTONES -------------------------------- */
 
-#boton-cancelar {
-    background-color: #d9534f;
+.boton-rojo {
+    background-color: #e4160f;
     color: white;
     border: 3px solid #520503;
     border-radius: 10px;
     cursor: pointer;
-    font-size:xx-large;
-    width: 300px;
     padding: 0 10px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-#boton-cancelar:hover {
+.boton-rojo:hover {
     background-color: #881a17;
     border: 3px solid #4e0d0a;
 }
 
-#boton-cancelar:active {
+.boton-rojo:active {
     background-color: #4e0d0a;
     border: 3px solid #881a17;
+}
+
+.boton-grande {
+    width: 300px;
+    font-size: xx-large;
+}
+
+.boton-mediano {
+    font-size: large;
+}
+
+#boton-cancelar-solicitud {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ------------------------ RATING RESPUESTA ----------------------- */
+
+#respuesta-rating-container {
+    display: flex;
+    flex-flow: nowrap row;
+    justify-content: space-evenly;
+    margin: 5px;
+}
+
+#enviar-estrellas-respuesta {
+    background-color:#68ac85;
+    color: white;
+    border-radius: 30px;
+    border: #1B4D3E solid 2px;
+}
+
+#enviar-estrellas-respuesta:hover {
+    background-color:#2e8b57;
+}
+
+#enviar-estrellas-respuesta:active {
+    background-color:#1b683c;
+}
+
+.estrellas {
+    display: flex;
+    flex-flow: nowrap row;
+    flex-direction: row-reverse;
+}
+
+.estrellas input[type="radio"] {
+    display: none;
+}
+
+.estrellas label {
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.estrellas input:checked ~ label {
+    color: gold;
+}
+
+.estrellas label:hover, .estrellas label:hover ~ label {        /* Cambio de color al pasar el ratón por encima */
+    color: #b6a338;
+}
+
+.estrellas input:checked ~ label:hover, .estrellas input:checked ~ label:hover ~ label {    /* Cambio de color al pasar el ratón por encima para el que está checkeado igual */
+    color: #b6a338;
 }

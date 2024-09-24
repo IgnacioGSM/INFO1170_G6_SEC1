@@ -56,6 +56,23 @@
         </div>
         <h3>Respuesta recibida:</h3>
         <div class="soli-info-container">
+            <div id="respuesta-rating-container">
+                <button class="boton-rojo boton-mediano">Reportar Respuesta inadecuada</button>
+                <form class="estrellas">
+                    <input id="enviar-estrellas-respuesta" type="button" value="Valorar respuesta">
+
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">★</label>
+                </form>
+            </div>
             <table>
                 <thead>
                     <th>Recepcionista</th>
@@ -84,8 +101,23 @@
         
     </footer>
     <script>
-        document.getElementById("volver-lista-solicitudes").addEventListener("click", () => {
+        document.getElementById("volver-lista-solicitudes").addEventListener("click", () => {   // Volver a la lista de solicitudes al presionar el botón
             window.location.href = "mis_solicitudes.html";
+        });
+
+        document.getElementById("enviar-estrellas-respuesta").addEventListener("click", () => {   // Enviar la valoración de la respuesta
+            if (document.querySelector('input[name="rating"]:checked') == null) {
+                alert("Por favor seleccione una valoración");
+                return;
+            }
+            let rating_value = document.querySelector('input[name="rating"]:checked').value;
+            console.log(rating_value);
+            alert("Se ha enviado la valoración de la respuesta: " + rating_value);
+        });
+
+        let rating_value = document
+        document.getElementsByName("rating").forEach((radio) => {       // Deseleccionar todas las estrellas al iniciar la página
+            radio.checked = false;
         });
     </script>
 </body>
