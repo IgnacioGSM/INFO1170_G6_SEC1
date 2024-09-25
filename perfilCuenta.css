@@ -275,29 +275,28 @@ footer{
     background-color: #038f54;
 }
 
-table{
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
+.MedExp{
+    margin-top: 20px;
 }
 
-table th, table td{
-    border: 1px solid #dddddd;
-    padding: 0.5rem;
-    text-align: left;
+.MedExp h3{
+    margin-bottom: 10px;
 }
 
-table th{
-    background-color: #038f54;
-    color: white;
+.MedExp label{
+    font-size: 1rem;
+    margin-bottom: 5px;
+    font-weight: bold;
+    display: block;
 }
 
-table tr:nth-child(even){
-    background-color: #1fa00e;
-}
-
-table tr:hover{
-    background-color: #6fca5d;
+.MedExp input[type='file']{
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    width: 70%;
 }
 
 .borrarcuenta h3{

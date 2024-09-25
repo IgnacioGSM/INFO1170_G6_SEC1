@@ -148,63 +148,36 @@
             <section id="contenidoExpedientes" class="ContenidoDinamico" style="display:none;">
                 <h2>Expedientes Medicos</h2>
                 <div class="MedExp">
-                    <h3>Historial de consultas</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Medico a Cargo</th>
-                                <th>Diagnostico</th>
-                                <th>Tratamiento Prescrito</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>17/09/2024</td>
-                                <td>Dr. Luis Jimenes</td>
-                                <td>COVID</td>
-                                <td>Reposo e hidratacion</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h3>Sube tus expedientes aqui</h3>
+                    <form id="formulario">
+                        <label for="archivo">Seleccione un archivo:</label>
+                        <input type="file" id="archivo" accept=".pdf, .doc" multiple required>
+                        <br><br>
+                        <button type="submit">Subir archivo</button>
+                    </form>
 
-                    <h3>Historial Medicamentos</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nombre del Medicamento</th>
-                                <th>Dosis</th>
-                                <th>Duracion del tratamiento</th>
-                                <th>Fecha de inicio</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Ibuprofeno</td>
-                                <td>400mg</td>
-                                <td>5 dias</td>
-                                <td>18/09/2024</td>
-                            </tr>
-                        </tbody>
-                    </table>
-            
-                    <h3>Resultado de examenes</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Tipo de examen</th>
-                                <th>Fecha</th>
-                                <th>Resultados y observaciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Sanguineo</td>
-                                <td>17/09/2024</td>
-                                <td>Azucar baja</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div id="resultado"></div>
+
+                    <script>
+                        document.getElementById('formulario').addEventListener('submit', function(event){
+                            event.preventDefault();
+
+                            const archivoInput = document.getElementById('archivo');
+                            const archivos = archivoInput.files;
+                            const resultadoDiv = document.getElementById('resultado')
+
+                            if (archivos.length > 0){
+                                resultadoDiv.innerHTML = '<h3>Archivos seleccionados</h3><ul>';
+                                for (let i = 0; i < archivos.length; i++){
+                                    resultadoDiv.innerHTML += `<li>${archivos[i].name}</li>`;
+                                }
+                                resultadoDiv.innerHTML += '</ul>';
+                            }else{
+                                resultadoDiv.innerHTML += '<p>no se seleccionaron archivos</p>'
+                            }
+                        });
+                    </script>
+
                 </div>
             </section>
 
