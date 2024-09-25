@@ -60,14 +60,14 @@
           <label for="nombre-paciente">Nombre del paciente:</label>
           <input type="text" id="nombre-paciente" name="nombre" placeholder="Juan Pérez" required>
           
-          <label for="rut-paciente">Rut:</label>
-          <input type="text" id="rut-paciente" name="rut" placeholder="12345678-9" required>
+          <label for="rut-paciente">RUT:</label>
+          <input type="text" id="rut-paciente" name="rut" placeholder="12345678-9" pattern="\d{7,8}-[\dkK]" required>
           
           <label for="correo-paciente">Correo:</label>
-          <input type="text" id="correo-paciente" name="correo" placeholder="ejemplo@gmail.com" required>
+          <input type="email" id="correo-paciente" name="correo" placeholder="ejemplo@gmail.com" required>
 
           <label for="celular-paciente">Celular:</label>
-          <input type="text" id="celular-paciente" name="celular" placeholder="9 12345678" required>
+          <input type="tel" id="celular-paciente" name="celular" placeholder="9 12345678" required>
 
           <label for="servicio-paciente">Servicio:</label>
           <input type="text" id="servicio-paciente" name="servicio" placeholder="Cardiología" required>
@@ -77,68 +77,70 @@
       </section>
 
       <!-- Sección de Recepción de Solicitudes -->
+      <!-- Sección de Recepción de Solicitudes -->
       <section id="recepcion-solicitudes" style="display: none;">
         <h2>Recepción de Solicitudes</h2>
         <input type="text" id="search-solicitudes" placeholder="Buscar solicitud...">
-        <table>
+        <table border="1" cellspacing="0" cellpadding="10">
           <thead>
             <tr>
               <th>Nombre</th>
               <th>Servicio</th>
               <th>Acciones</th>
             </tr>
-          </thead>
-          <tbody id="solicitudes-list">
-            <tr>
-              <td>Juan Pérez</td>
-              <td>Traumatología</td>
-              <td>
-                <button>Aceptar</button>
-                <button>Rechazar</button>
-                <button>Comentar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>María López</td>
-              <td>Pediatría</td>
-              <td>
-                <button>Aceptar</button>
-                <button>Rechazar</button>
-                <button>Comentar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Carlos García</td>
-              <td>Cardiología</td>
-              <td>
-                <button>Aceptar</button>
-                <button>Rechazar</button>
-                <button>Comentar</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+        </thead>
+        <tbody id="solicitudes-list">
+          <tr>
+            <td>Juan Pérez</td>
+            <td>Traumatología</td>
+            <td>
+              <button>Aceptar</button>
+              <button>Rechazar</button>
+              <button>Comentar</button>
+            </td>
+          </tr>
+          <tr>
+            <td>María López</td>
+            <td>Pediatría</td>
+            <td>
+              <button>Aceptar</button>
+              <button>Rechazar</button>
+              <button>Comentar</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Carlos García</td>
+            <td>Cardiología</td>
+            <td>
+              <button>Aceptar</button>
+              <button>Rechazar</button>
+              <button>Comentar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-      <!-- Historial de Solicitudes Atendidas -->
-      <section id="historial-solicitudes" style="display: none;">
-        <h2>Historial de Solicitudes Atendidas</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Servicio</th>
-              <th>Estado</th>
-              <th>Comentarios</th>
-              <th>Puesto Asignado</th>
-            </tr>
-          </thead>
-          <tbody id="historial-list">
-            <!-- Aquí se agregarían las solicitudes atendidas -->
-          </tbody>
-        </table>
-      </section>
+    <!-- Historial de Solicitudes Atendidas -->
+    <section id="historial-solicitudes" style="display: none;">
+      <h2>Historial de Solicitudes Atendidas</h2>
+      <table border="1" cellspacing="0" cellpadding="10">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Servicio</th>
+            <th>Estado</th>
+            <th>Comentarios</th>
+            <th>Puesto Asignado</th>
+          </tr>
+        </thead>
+        <tbody id="historial-list">
+          <!-- Aquí se agregarían las solicitudes atendidas -->
+        </tbody>
+      </table>
+    </section>
 
+      
       <!-- Sección de Perfil -->
       <section id="perfil-view" style="display: none;">
         <h2>Perfil del Recepcionista</h2>
