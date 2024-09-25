@@ -2,12 +2,11 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: #E8F5E9;
 }
 
 header{
-    background-color: #038f54;
-    color: white;
+    background-color: #A0D6B4;
     padding: 1rem;
     align-items: center;
     display: flex;
@@ -30,7 +29,7 @@ header{
     width: 100px;
     height: 45px;
     padding: 10px;
-    background-color: #73b127;
+    background-color: #1B4D3E;
     color: white;
     border: none;
     cursor: pointer;
@@ -41,7 +40,7 @@ header{
 }
 
 #BotonIndex:hover{
-    background-color: #8CD47E;
+    background-color: #16aa6f;
 }
 
 .Perfil-contenedor{
@@ -55,7 +54,7 @@ header{
 }
 
 .Perfil{
-    background-color: #73b127;
+    background-color: #1B4D3E;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -73,11 +72,12 @@ header{
 
 .ContenidoDinamico{
     width: 70%;
-    background-color: #73b127;
+    background-color: #1B4D3E;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0,0,0, 0.1);
     margin-top: 2rem;
+    color: white;
 }
 
 .ContenidoDinamico h3{
@@ -88,7 +88,6 @@ header{
     border-radius: 50%;
     width: 150px;
     height: 150px;
-    background-color: #ccc;
     overflow: hidden;
 }
 .foto-perfil img{
@@ -108,8 +107,7 @@ button{
     height: 45px;
     padding: 10px;
     margin: 5px;
-    background-color: #038f54;
-    color: white;
+    background-color: #C5E1A5;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -126,7 +124,7 @@ button i{
 }
 
 button:hover{
-    background-color: #026d43;
+    background-color: #16aa6f;
 }
 
 footer{
