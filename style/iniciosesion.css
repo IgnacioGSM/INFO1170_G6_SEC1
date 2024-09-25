@@ -81,41 +81,31 @@ footer {
   text-align: center;
 }
 
-footer h2 {
+footer h5 {
   color: #1B4D3E;
   margin-bottom: 20px;
-}
-
-.footer-contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-width: 500px;
-  margin: 0 auto 20px;
-}
-
-.footer-contact-form input,
-.footer-contact-form textarea {
-  padding: 10px;
-  border: 1px solid #1B4D3E;
-  border-radius: 5px;
-  width: 100%;
-}
-
-.footer-contact-form button {
-  background-color: #2E8B57;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.footer-contact-form button:hover {
-  background-color: #1B4D3E;
 }
 
 footer p {
   color: #1B4D3E;
   margin-top: 20px;
+}
+
+footer a {
+  color: #2E8B57;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #1B4D3E;
+}
+
+ 
+footer .col-md-4 p a {
+  color: #1B4D3E;
+  text-decoration: underline;
+}
+
+footer .col-md-4 p a:hover {
+  color: #2E8B57;
 }
