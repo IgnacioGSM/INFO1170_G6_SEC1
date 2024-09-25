@@ -157,6 +157,7 @@
                     </form>
 
                     <div id="resultado"></div>
+                    <button id="borrar" style="display: none;">Borrar Archivos</button>
 
                     <script>
                         document.getElementById('formulario').addEventListener('submit', function(event){
@@ -165,6 +166,7 @@
                             const archivoInput = document.getElementById('archivo');
                             const archivos = archivoInput.files;
                             const resultadoDiv = document.getElementById('resultado')
+                            const botonDel = document.getElementById('borrar')
 
                             if (archivos.length > 0){
                                 if (!resultadoDiv.innerHTML){
@@ -174,9 +176,18 @@
                                     resultadoDiv.innerHTML += `<li>${archivos[i].name}</li>`;
                                 }
                                 resultadoDiv.innerHTML += '</ul>';
+
+                                botonDel.style.display = 'block';
+
                             }else{
                                 resultadoDiv.innerHTML += '<p>no se seleccionaron archivos</p>'
                             }
+                        });
+
+                        document.getElementById('borrar').addEventListener('click', function(){
+                            document.getElementById('resultado').innerHTML = '';
+                            document.getElementById('archivo').value = '';
+                            this.style.display = 'none';
                         });
                     </script>
 
