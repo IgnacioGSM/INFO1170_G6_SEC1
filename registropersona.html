@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,21 +16,25 @@
     </header>
     <div class="container">
         <h1>Bienvenido a Hospitrack</h1>
-        <form>
-            <label for="Nombre">Ingrese su Nombre:</label>
-            <input type="text" id="Nombre" name="Nombre" required>
+        <form onsubmit="return validaRegistro();">
+            <label for="nombre">Ingrese su Nombre:</label>
+            <input type="text" id="nombre" name="Nombre" required>
+            <span id="nombre-error" style="color: red; display: none;"></span>
 
 
             <label for="rut">Ingrese su RUT:</label>
             <input type="text" id="rut" name="rut" required>
+            <span id="rut-error" style="color: red; display: none;"></span>
 
             <label for="correo">Ingrese su correo electronico:</label>
-            <input type="correo" id="correo" name="correo" required>
+            <input type="email" id="correo" name="correo" required>
+            <span id="correo-error" style="color: red; display: none;"></span>
             <button type="submit">Registrarme</button>
 
             <a href="iniciosesion.html">Volver al inicio</a>
         </form>
     </div>
+    <script src="registropersona.js"></script>
     <footer>
         <footer>
             <div class="footer-content">

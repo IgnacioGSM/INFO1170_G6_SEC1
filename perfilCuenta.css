@@ -1,0 +1,315 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #E8F5E9;
+}
+
+header{
+    background-color: #A0D6B4;
+    padding: 1rem;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 8px 8px 0 0;
+}
+
+#HeaderContenedor{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-logo{
+    width: 30%;
+    height: auto;
+}
+
+#BotonIndex{
+    width: 100px;
+    height: 45px;
+    padding: 10px;
+    background-color: #1B4D3E;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-left: auto;
+}
+
+#BotonIndex:hover{
+    background-color: #16aa6f;
+}
+
+.Perfil-contenedor{
+    width: 80%;
+    max-width: 1200%;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0, 0.1);
+}
+
+.Perfil{
+    background-color: #1B4D3E;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1rem;
+    width: 30%;
+    border-radius: 5%;
+}
+
+.perfil-main{
+    display: flex;
+    gap: 2rem;
+}
+
+.ContenidoDinamico{
+    width: 70%;
+    background-color: #1B4D3E;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0, 0.1);
+    margin-top: 2rem;
+    color: white;
+}
+
+.ContenidoDinamico h3{
+    margin-top: 2rem;
+}
+
+.foto-perfil{
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+}
+.foto-perfil img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.foto-perfil p{
+    margin-top: 10px;
+    color: white;
+    text-align: center;
+    font-size: 1rem;
+}
+button{
+    width: 280px;
+    height: 45px;
+    padding: 10px;
+    margin: 5px;
+    background-color: #C5E1A5;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1.2rem;
+    line-height: 30px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+button i{
+    margin-right: 8px;
+}
+
+button:hover{
+    background-color: #16aa6f;
+}
+
+footer{
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    margin-top: 2rem;
+    text-align: center;
+    border-radius: 0 0 8px 8px;
+}
+
+.ContenidoCU{
+    margin-top: 20px;
+}
+
+.ContenidoCU h3{
+    font-size: 1,5rem;
+    margin-bottom: 15px;
+}
+
+.ContenidoCU p{
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.ContenidoCU p br{
+    margin-bottom: 10px;
+}
+
+.cambiarNombre{
+    margin-top: 20px;
+}
+
+.cambiarNombre h3{
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.cambiarNombre form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cambiarNombre label{
+    font-size: 1rem;
+}
+
+.cambiarNombre input{
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.cambiarNombre button{
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #026d43;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cambiarNombre button:hover{
+    background-color: #038f54;
+}
+
+.valoracion{
+    margin-top: 20px;
+}
+
+.estrellas{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: start;
+    font-size: 2rem;
+    color: #ddd;
+}
+
+.estrellas input[type="radio"]{
+    display: none;
+}
+
+.estrellas label{
+    cursor: pointer;
+    transition: color 0.3 ease;
+}
+
+.estrellas input[type="radio"]:checked ~ label,
+.estrellas input[type="radio"]:checked ~ label ~ label{
+    color: gold;
+}
+
+.estrellas label:hover,
+.estrellas label:hover ~ label{
+    color: gold;
+}
+
+.estrellas input[type="radio"]:hover ~ label{
+    color: gold;
+}
+
+.cambiarCor, .cambiarTel, .cambiarDir, .cambiarContra{
+    margin-top: 20px;
+}
+
+.cambiarCor h3, .cambiarTel h3, .cambiarDir h3, .cambiarContra h3{
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.cambiarCor form, .cambiarTel form, .cambiarDir form, .cambiarContra form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cambiarCor label, .cambiarTel label, .cambiarDir label, .cambiarContra label{
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.cambiarCor input, .cambiarTel input, .cambiarDir input, .cambiarContra input{
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 90%;
+}
+
+.cambiarCor button, .cambiarTel button, .cambiarDir button, .cambiarContra button{
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #026d43;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cambiarCor button:hover, .cambiarTel button:hover, .cambiarDir button:hover, .cambiarContra button:hover{
+    background-color: #038f54;
+}
+
+.MedExp{
+    margin-top: 20px;
+}
+
+.MedExp h3{
+    margin-bottom: 10px;
+}
+
+.MedExp label{
+    font-size: 1rem;
+    margin-bottom: 5px;
+    font-weight: bold;
+    display: block;
+}
+
+.MedExp input[type='file']{
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    width: 70%;
+}
+
+.borrarcuenta h3{
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.borrarcuenta p{
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.borrarcuenta input{
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}

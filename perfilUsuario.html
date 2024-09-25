@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="perfilCuenta.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="Perfil-contenedor">
+        <header>
+            <div id="HeaderContenedor">
+                <img src="imagenes/logo.png" class="header-logo" alt="logo">
+                <h1>Bienvenido a tu Perfil</h1>
+                <button id="BotonIndex" onclick="window.location.href='index.html';">Ir al Inicio</button>
+            </div>
+        </header>
+
+        <main class="perfil-main">
+            <section class="Perfil">
+                <div class="foto-perfil">
+                    <img src="imagenes/default_profile.png" alt="Foto de perfil">
+                    <p>Usuario</p>
+                </div>
+                <div class="Cuenta">
+                    <button id="boton-cuenta"><i class="fas fa-user"></i>Cuenta</button>
+                </div>
+                <div class="Cambia-contra">
+                    <button id="boton-confCU"><i class="fas fa-key"></i>Configurar Cuenta</button>
+                </div>
+                <div class="Expedientes">
+                    <button id="boton-expedientes"><i class="fas fa-shield-alt"></i>Expedientes Medicos</button>
+                </div>
+                <div class="borra-cuenta">
+                    <button id="boton-borrar"><i class="fas fa-trash-alt"></i>Borrar Cuenta</button>
+                </div>
+            </section>
+
+            <section id="contenidoCuenta" class="ContenidoDinamico" style="display:none;">
+                <h2>Configuracion de la cuenta</h2>
+                <div class="foto-perfil">
+                    <img src="imagenes/default_profile.png" alt="foto-perfil">
+                    <p>Usuario</p>
+                </div>
+                <div class="ContenidoCU">
+                    <h3>Informacion General</h3>
+                    <p>
+                        Nombre: San martin<br>
+                        Correo: snMartin@gmail.com<br>
+                        RUT: 23654356-9<br>
+                        Telefono: +56 9 6752 8472<br>
+                        Direccion: Calle falsa 123 
+                    </p>
+                </div>
+                <div class="cambiarNombre">
+                    <h3>Cambiar Nombre de Usuario</h3>
+                    <form id="nombreUSR">
+                        <label for="nuevoNombre">Nuevo nombre de Usuario</label>
+                        <input type="text" name="nuevoNombre" id="nuevoNombre" placeholder="Ingrese un nuevo nombre de Usuario" required>
+                        <button type="submit">Actualizar Nombre</button>
+                    </form>
+                </div>
+                <h3>Valora HospiTrack</h3>
+                <div class="valoracion">
+                    <form id="valor">
+                        <label for="rating">Valora nuestro servicio</label>
+                        <div class="estrellas">
+                            <input type="radio" name="rating" id="estrella5" value="5">
+                            <label for="estrella5" title="5 estrellas">&#9733;</label>
+
+                            <input type="radio" name="rating" id="estrella4" value="4">
+                            <label for="estrella4" title="4 estrellas">&#9733;</label>
+
+                            <input type="radio" name="rating" id="estrella3" value="3">
+                            <label for="estrella3" title="3 estrellas">&#9733;</label>
+
+                            <input type="radio" name="rating" id="estrella2" value="2">
+                            <label for="estrella2" title="2 estrellas">&#9733;</label>
+
+                            <input type="radio" name="rating" id="estrella1" value="1">
+                            <label for="estrella1" title="1 estrella">&#9733;</label>
+                        </div>
+                        <button type="submit">Enviar valoracion</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="contenidoConfCuenta" class="ContenidoDinamico" style="display:none;">
+                <h2>Configuracion de tu Cuenta</h2>
+
+                <div class="cambiarCor">
+                    <h3>Actualiza tu Correo</h3>
+                    <form id="CambiarCorreo">
+                        <label for="nuevoCorreo">Nuevo Correo</label>
+                        <input type="email" name="nuevoCorreo" id="nuevoCorreo" placeholder="Ingrese su nuevo correo">
+
+                        <label for="confirmarCorreo">Contraseña Actual</label>
+                        <input type="password" name="confirmarCorreo" id="confirmarCorreo" placeholder="Ingrese su contraseña actual" required>
+
+                        <button type="submit">Actualizar correo</button>
+                    </form>
+                </div>
+
+                <div class="cambiarTel">
+                    <h3>Actualiza tu Telefono</h3>
+                    <form id="CambiarTelefono">
+                        <label for="nuevoTelefono">Nuevo Telefono</label>
+                        <input type="tel" name="nuevoTelefono" id="nuevoTelefono" placeholder="Ingrese su nuevo telefono">
+
+                        <label for="confirmarTelefono">Contraseña Actual</label>
+                        <input type="password" name="confirmarTelefono" id="confirmarTelefono" placeholder="Ingrese su contraseña actual" required>
+
+                        <button type="submit">Actualizar telefono</button>
+                    </form>
+                </div>
+
+                <div class="cambiarDir">
+                    <h3>Actualiza tu Direccion</h3>
+                    <form id="CambiarDireccion">
+                        <label for="nuevaDireccion">Nueva Direccion</label>
+                        <input type="text" name="nuevaDireccion" id="nuevaDireccion" placeholder="Ingrese su nueva direccion">
+
+                        <label for="confirmarDireccion">Contraseña Actual</label>
+                        <input type="password" name="confirmarDireccion" id="confirmarDireccion" placeholder="Ingrese su contraseña actual" required>
+
+                        <button type="submit">Actualizar direccion</button>
+                    </form>
+                </div>
+
+                <div class="cambiarContra">
+                    <h3>Actualiza tu contraseña</h3>
+                    <form id="CambiarContraseña">
+                        <label for="contraseñaActual">Contraseña Actual</label>
+                        <input type="password" name="contraseñaActual" id="contraseñaActual" placeholder="Ingrese su contraseña actual" required>
+                    
+                        <label for="nuevaContraseña">Nueva Contraseña</label>
+                        <input type="password" name="nuevaContraseña" id="nuevaContraseña" placeholder="Ingrese su nueva contraseña" required>
+
+                        <label for="confirmarContraseña">Confirme Su Nueva Contraseña</label>
+                        <input type="password" name="confirmarContraseña" id="confirmarContraseña" placeholder="Confirme su nueva contraseña" required>
+
+                        <button type="submit">Actualizar Contraseña</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="contenidoExpedientes" class="ContenidoDinamico" style="display:none;">
+                <h2>Expedientes Medicos</h2>
+                <div class="MedExp">
+                    <h3>Sube tus expedientes aqui</h3>
+                    <form id="formulario">
+                        <label for="archivo">Seleccione un archivo:</label>
+                        <input type="file" id="archivo" accept=".pdf, .doc" multiple required>
+                        <br><br>
+                        <button type="submit">Subir archivo</button>
+                    </form>
+
+                    <div id="resultado"></div>
+                    <button id="borrar" style="display: none;">Borrar Archivos</button>
+
+                    <script>
+                        document.getElementById('formulario').addEventListener('submit', function(event){
+                            event.preventDefault();
+
+                            const archivoInput = document.getElementById('archivo');
+                            const archivos = archivoInput.files;
+                            const resultadoDiv = document.getElementById('resultado')
+                            const botonDel = document.getElementById('borrar')
+
+                            if (archivos.length > 0){
+                                if (!resultadoDiv.innerHTML){
+                                    resultadoDiv.innerHTML = '<h3>Archivos subidos:</h3><ul>';
+                                }
+                                for (let i = 0; i < archivos.length; i++){
+                                    resultadoDiv.innerHTML += `<li>${archivos[i].name}</li>`;
+                                }
+                                resultadoDiv.innerHTML += '</ul>';
+
+                                botonDel.style.display = 'block';
+
+                            }else{
+                                resultadoDiv.innerHTML += '<p>no se seleccionaron archivos</p>'
+                            }
+                        });
+
+                        document.getElementById('borrar').addEventListener('click', function(){
+                            document.getElementById('resultado').innerHTML = '';
+                            document.getElementById('archivo').value = '';
+                            this.style.display = 'none';
+                        });
+                    </script>
+
+                </div>
+            </section>
+
+            <section id="contenidoBorrarCuenta" class="ContenidoDinamico" style="display:none;">
+
+                <div class="borrarcuenta">
+                    <h3>Borrar Cuenta</h3>
+                    <p>¿Seguro de borrar tu cuenta? Todos tus datos y registros se perderan y no podras recuperarlos</p>
+                    <form id="BorrarCuenta">
+                        <label for="confirmarContra">Ingrese su contraseña para confirmar:</label>
+                        <input type="password" name="confirmarContra" id="confirmarContra" placeholder="Contraseña" required>
+
+                        <button type="submit">Borrar Cuenta</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="perfilUsuario.js"></script>
+    <footer>
+        <p>&copy; 2024 Hospitrack</p>
+    </footer>
+    
+</body>
+</html>
