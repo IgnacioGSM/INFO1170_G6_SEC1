@@ -2,9 +2,9 @@ function validarForm() {
 
     // Mas adelante se necesitará revisión de estos campos en el backend
 
-    let rut = document.getElementById("rut").value;
+    // let rut = document.getElementById("rut").value;
     let correo = document.getElementById("correo").value;
-    let motivo_consulta = document.getElementById("motivo-consulta").value;
+    // let motivo_consulta = document.getElementById("motivo-consulta").value;
 
     let regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     // Email debe comenzar con letras, números, puntos, guiones bajos o guiones, seguido de un @, 
@@ -18,7 +18,7 @@ function validarForm() {
 }
 
 function formatearRUT(input) {
-    let rut = input.value.replace(/[^\dkK.-]/g, ''); // Elimina caracteres no permitidos
+    let rut = input.value.replace(/[^\dkK]/g, ''); // Elimina caracteres no permitidos
     
     // dividir el rut en parte numerica y digito verificador
     let numerica = rut.slice(0, -1);
@@ -37,11 +37,23 @@ function formatearRUT(input) {
     // Se agrega guión y dígito verificador si es que este último existe
 }
 
+function limpiarRUT(input) {
+    input.value = input.value.replace(/[^\dkK]/g, ''); // Elimina puntos y guiones
+}
+
 
 document.getElementById("rut").addEventListener("input", function() {
     this.value = this.value.trimStart();
-    this.value = this.value.replace(/[^\dkK.-]/g, ''); // Elimina caracteres no permitidos
+    this.value = this.value.replace(/[^\dkK]/g, ''); // Elimina caracteres no permitidos
 }); // Elimina los espacios al inicio del campo rut mientras se escribe
+
+document.getElementById("rut").addEventListener("blur", function() {
+    formatearRUT(this);
+}); // Formatea el rut al salir del campo, añade los puntos y guión
+
+document.getElementById("rut").addEventListener("focus", function() {
+    limpiarRUT(this);
+}); // Al volver al seleccionar el input de rut se limpian los puntos y guión
 
 document.getElementById("correo").addEventListener("input", function() {
     this.value = this.value.trimStart();
