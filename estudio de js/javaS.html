@@ -1,0 +1,27 @@
+
+//a/
+<!DOCTYPE html>
+<html>
+<head>
+    <title>¡Vamos a hacer que la web sea más divertida!</title>
+</head>
+<body>
+
+    <h1>¡Hola! Soy tu página web.</h1>
+    <p id="miParrafo">¿Ves este párrafo? ¡Lo vamos a cambiar de color!</p>
+    <button onclick="cambiarColor()">¡Haz clic aquí para la magia!</button>
+
+    <script>
+        // esta es ua funcion muy util en js, que es cambiar el color al "interactuar"
+        function cambiarColor() {
+            // Primero, buscamos el párrafo que queremos cambiar
+            // 
+            const parrafo = document.getElementById("miParrafo");
+
+            // Ahora lo pintamos de azul
+            parrafo.style.color = "blue";
+        }
+    </script>
+
+</body>
+</html>
