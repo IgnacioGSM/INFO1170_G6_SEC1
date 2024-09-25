@@ -1,3 +1,4 @@
+
 /* Variables de color */
 :root {
     --caladon: #A0D6B4;
@@ -7,6 +8,7 @@
     --white: #FFFFFF;
 }
 
+/* Estilo general */
 body {
     font-family: Arial, sans-serif;
     background-color: var(--mint);
@@ -18,6 +20,7 @@ body {
     min-height: 100vh;
 }
 
+/* Encabezado */
 header {
     background-color: var(--caladon);
     display: flex;
@@ -39,18 +42,13 @@ h1 {
     text-align: center;
 }
 
-.header-btn {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
+/* Main */
 .admin-main {
     flex: 1;
     padding: 20px;
 }
 
+/* Sección de formulario */
 section {
     margin-bottom: 20px;
     background-color: var(--white);
@@ -59,7 +57,59 @@ section {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.btn {
+h2 {
+    text-align: center;
+    color: var(--dark-spring-green);
+}
+
+/* Formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid var(--dark-spring-green);
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--jade);
+}
+
+/* Botón de envío */
+button[type="submit"] {
+    align-self: flex-start;
+    padding: 10px 20px;
+    background-color: var(--jade);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--dark-spring-green);
+}
+
+/* Botones de secciones */
+.section-button {
     display: inline-block;
     margin: 5px;
     padding: 10px 20px;
@@ -69,24 +119,24 @@ section {
     border-radius: 5px;
 }
 
-.btn:hover {
+.section-button:hover {
     background-color: var(--dark-spring-green);
 }
 
+/* Footer */
 footer {
     background-color: var(--caladon);
     padding: 10px;
     text-align: center;
 }
-
-/* Hospitales grid */
-.hospital-grid {
+/* secciones grid */
+.seccion-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.hospital-card {
+.seccion-card {
     background-color: var(--white);
     border: 2px solid var(--jade);
     padding: 20px;
@@ -96,13 +146,13 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.hospital-card a {
+.seccion-card a {
     text-decoration: none;
     color: var(--dark-spring-green);
     font-weight: bold;
 }
 
-.hospital-card:hover {
+.seccion-card:hover {
     border-color: var(--dark-spring-green);
     transform: scale(1.05);
     transition: all 0.2s ease;
