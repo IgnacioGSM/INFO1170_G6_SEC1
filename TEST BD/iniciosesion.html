@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="iniciosesion.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+</head>
+<body>
+    <header>
+        <img src="hospitracklogo.jpg" class="header-logo">
+        <nav class="header-nav">
+            
+    </header>
+
+    <div class="container">
+        <h1>Bienvenido a Hospitrack</h1>
+        <form onsubmit="return validateform();">
+            <label for="rut">Ingrese su RUT:</label>
+            <input type="text" id="rut" name="rut" required>
+            <span id="rut-error" style="color: red; display: none;"></span>
+
+            <label for="password">Ingrese su contraseña:</label>
+            <input type="password" id="password" name="password" required>
+            <span id="password-error" style="color: red; display: none;"></span>
+
+            <a href="olvidadopassword.html">¿Ha olvidado su contraseña?</a>
+            <button type="submit">Iniciar Sesión</button>
+            <p>¿No tienes una cuenta? <a href="templates/registro.html">Regístrate aquí</a></p>
+        </form>
+    </div>
+    <script src="iniciodesesion.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <footer>
+        <div class="footer-content">
+            <p>© 2024 Hospitrack. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
