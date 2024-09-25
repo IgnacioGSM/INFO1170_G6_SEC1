@@ -4,19 +4,35 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   margin: 0;
+
+  /* Mantener el footer abajo */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #A0D6B4;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.header-logo {
+  height: 80px;
 }
 
 .container {
   width: 400px;
-  margin: auto; 
+  margin: auto;
 }
 
 h1 {
   color: #1B4D3E;
   margin-bottom: 20px;
 }
-
-
 
 form {
   display: flex;
@@ -25,15 +41,15 @@ form {
 }
 
 label {
-  color: #1B4D3E; 
+  color: #1B4D3E;
   font-weight: bold;
 }
 
 input[type="text"],
-input[type="email"] {
+input[type="correo"] {
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #1B4D3E; 
+  border: 1px solid #1B4D3E;
 }
 
 button[type="submit"] {
@@ -46,7 +62,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #1B4D3E; 
+  background-color: #1B4D3E;
 }
 
 a {
@@ -57,25 +73,54 @@ a {
 a:hover {
   color: #2E8B57;
 }
-header {
-  background-color: #A0D6B4;
-  width: 100%;
-  display: flex;
-  flex-flow: wrap row;
-  justify-content: space-evenly;
-  padding: 20px;
-}
-
-
 
 footer {
   width: 100%;
   background-color: #A0D6B4;
-  padding-bottom: 200px;
-  margin-top: auto; 
+  padding: 20px;
+  margin-top: auto; /* Mantener el footer en la parte inferior */
+  text-align: center;
 }
-.header-logo {
-  display: inline-block;
-  margin-left: 20px;
-  height: 80px;
+
+footer p {
+  margin: 0;
+  color: #1B4D3E;
+}
+footer h2 {
+  color: #1B4D3E;
+  margin-bottom: 20px;
+}
+
+.footer-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 0 auto 20px;
+}
+
+.footer-contact-form input,
+.footer-contact-form textarea {
+  padding: 10px;
+  border: 1px solid #1B4D3E;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.footer-contact-form button {
+  background-color: #2E8B57;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.footer-contact-form button:hover {
+  background-color: #1B4D3E;
+}
+
+footer p {
+  color: #1B4D3E;
+  margin-top: 20px;
 }

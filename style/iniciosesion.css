@@ -4,9 +4,24 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   margin: 0;
+
+  /* Mantener el footer al fondo */
   display: flex;
   flex-flow: column nowrap;
   min-height: 100vh;
+}
+
+header {
+  background-color: #A0D6B4;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.header-logo {
+  height: 80px;
 }
 
 .container {
@@ -59,25 +74,38 @@ button[type="submit"]:hover {
   background-color: #1B4D3E;
 }
 
-header {
-  background-color: #A0D6B4;
-  width: 100%;
-  display: flex;
-  flex-flow: wrap row;
-  justify-content: space-evenly;
-  padding: 20px;
-}
-
-
-
+/* Estilos para el footer */
 footer {
-  width: 100%;
   background-color: #A0D6B4;
-  padding-bottom: 200px;
-  margin-top: auto; 
+  padding: 40px 20px;
+  text-align: center;
 }
-.header-logo {
-  display: inline-block;
-  margin-left: 20px;
-  height: 80px;
+
+footer h5 {
+  color: #0fce95;
+  margin-bottom: 20px;
+}
+
+footer p {
+  color: #0fce95;
+  margin-top: 20px;
+}
+
+footer a {
+  color: #2E8B57;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #00bbff;
+}
+
+ 
+footer .col-md-4 p a {
+  color: #00bbff;
+  text-decoration: underline;
+}
+
+footer .col-md-4 p a:hover {
+  color: #2E8B57;
 }

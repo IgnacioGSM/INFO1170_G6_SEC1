@@ -51,8 +51,13 @@
             <h1 class="index-hospital-name">Seleccione un hospital</h1>
         </article>
         
+<<<<<<< HEAD
+        <article class="index-derecha-mapa">
+            <h1 id="index-hospital-name" class="index-hospital-name">Nombre del  centro medico</h1>
+=======
         <article id="hospital-seleccionado" class="index-derecha-mapa">
             <h1 id="index-hospital-name" class="index-hospital-name">Nombre del hospital</h1>
+>>>>>>> origin/main
             
             <div class="index-hospital-info">
 
@@ -65,6 +70,20 @@
                 </div>
 
                 <div class="index-filas">
+<<<<<<< HEAD
+                    <h3 class="index-filas-titulo">Cantidad de personas: </h3>
+                    <h2 class="index-filas-subtitulo">Emergencia</h2>   <!-- Aquí se debe mostrar la sección en la que se encuentra la persona -->
+                    <h1 class="index-filas-value">5 personas</h1> <!-- Aquí se debe mostrar el número de personas en la fila de espera -->
+                </div>
+            </div>
+
+            <div class="index-reservacion" onsubmit="validarForm()">
+                <h2 class="index-reservacion-titulo">Agendar hora</h2>
+                <form id="index-reservacion-form">
+                    <input id="rut" onchange="formatearRUT(this)" maxlength="9" type="text" class="index-reservacion-input" placeholder="Rut" required>
+                    <input id="correo" type="text" class="index-reservacion-input" placeholder="Correo" required>
+                    <textarea id="motivo-consulta" class="index-reservacion-textarea" name="motivo-consulta" rows="3" placeholder="Motivo de consulta" required></textarea>
+=======
                     <h3 class="index-filas-titulo">Personas en espera en: </h3>
                     <h2 id="index-filas-subtitulo">-------</h2>   <!-- Aquí se debe mostrar la sección en la que se encuentra la persona -->
                     <h1 id="index-filas-value">Escoja una sección...</h1> <!-- Aquí se debe mostrar el número de personas en la fila de espera -->
@@ -90,6 +109,7 @@
                     <input id="rut" maxlength="9" type="text" class="index-reservacion-input" placeholder="Rut" value="11.111.111-1" required>
                     <input id="correo" type="text" class="index-reservacion-input" placeholder="Correo" value="correousuario@email.com" required>
                     <textarea id="motivo-consulta" class="index-reservacion-textarea" name="motivo-consulta" rows="2" placeholder="Motivo de consulta" required></textarea>
+>>>>>>> origin/main
                     <input type="submit" class="index-reservacion-submit" value="Reservar">
                 </form>
             </div>
