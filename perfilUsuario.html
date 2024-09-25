@@ -167,7 +167,9 @@
                             const resultadoDiv = document.getElementById('resultado')
 
                             if (archivos.length > 0){
-                                resultadoDiv.innerHTML = '<h3>Archivos seleccionados</h3><ul>';
+                                if (!resultadoDiv.innerHTML){
+                                    resultadoDiv.innerHTML = '<h3>Archivos subidos:</h3><ul>';
+                                }
                                 for (let i = 0; i < archivos.length; i++){
                                     resultadoDiv.innerHTML += `<li>${archivos[i].name}</li>`;
                                 }
