@@ -82,12 +82,12 @@ footer {
 }
 
 footer h5 {
-  color: #1B4D3E;
+  color: #0fce95;
   margin-bottom: 20px;
 }
 
 footer p {
-  color: #1B4D3E;
+  color: #0fce95;
   margin-top: 20px;
 }
 
@@ -97,12 +97,12 @@ footer a {
 }
 
 footer a:hover {
-  color: #1B4D3E;
+  color: #00bbff;
 }
 
  
 footer .col-md-4 p a {
-  color: #1B4D3E;
+  color: #00bbff;
   text-decoration: underline;
 }
 
