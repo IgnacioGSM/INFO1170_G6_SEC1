@@ -1,62 +1,43 @@
-function validanombre(nombre){
-    var nombrePattern = /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s'-]+$/;
-    if (nombre === ""){
-        return "No puedes dejar este campo Vacio";
+const nombrePattern = /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s'-]+$/;
+const rutPattern = /^[0-9]{1,8}-[0-9Kk]{1}$/;
+const correoPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+function validacampo(valor, patron, mensaje){
+    if (valor.trim() === ""){
+        return "No puedes dejar este campo vacio";
     }
-    if (!nombrePattern.test(nombre)){
-        return "Ingresa un nombre valido";
+    if (!patron.test(valor)){
+        return mensaje;
     }
-    return null;
+    return null
 }
 
-function validarut(rut){
-    var rutPattern = /^[0-9]{1,8}-[0-9Kk]{1}$/;
-    if (rut === ""){
-        return "No puedes dejar este campo Vacio";
-    }
-    if (!rutPattern.test(rut)){
-        return "Ingresa un RUT valido";
-    }
-    return null;
-}
-
-function validacorreo(correo){
-    var correoPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (correo === ""){
-        return "No puedes dejar este campo Vacio";
-    }
-    if (!correoPattern.test(correo)){
-        return "Ingresa un correo valido";
-    }
-    return null;
-}
-
-function muestraError(inputElement, message){
-    var ElementoError = document.getElementById(inputElement.id + "-error");
+function muestraError(inputElement, mensaje){
+    const ElementoError = document.getElementById(inputElement.id + "-error");
     inputElement.style.border = "1px solid red";
-    ElementoError.innerHTML = message;
+    ElementoError.innerHTML = mensaje;
     ElementoError.style.display = "block";
 }
 
 function limpiaError(inputElement){
-    var ElementoError = document.getElementById(inputElement.id + "-error");
+    const ElementoError = document.getElementById(inputElement.id + "-error");
     inputElement.style.border = "";
     ElementoError.innerHTML = "";
     ElementoError.style.display = "none";
 }
 
 function validaRegistro(){
-    var nombre = document.getElementById('nombre');
-    var rut = document.getElementById('rut');
-    var correo = document.getElementById('correo');
+    const nombre = document.getElementById('nombre');
+    const rut = document.getElementById('rut');
+    const correo = document.getElementById('correo');
 
     limpiaError(nombre);
     limpiaError(rut);
     limpiaError(correo);
 
-    var nombreError = validanombre(nombre.value);
-    var rutError = validarut(rut.value);
-    var correoError = validacorreo(correo.value);
+    const nombreError = validacampo(nombre.value, nombrePattern, "Ingresa un nombre valido");
+    const rutError = validacampo(rut.value, rutPattern, "Ingresa un RUT valido, sin puntos y usando comilla");
+    const correoError = validacampo(correo.value, correoPattern, "Ingresa un correo valido" );
 
     if (nombreError){
         muestraError(nombre, nombreError);
