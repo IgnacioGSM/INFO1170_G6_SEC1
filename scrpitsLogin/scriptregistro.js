@@ -1,29 +1,31 @@
 function validarFormulario() {
-    const nombre = document.getElementById('Nombre').value;
-    const rut = document.getElementById('rut').value;
-    const correo = document.getElementById('correo').value;
+    const emailInput = document.getElementById('correo');
+    const passwordInput = document.getElementById('password');
+    const emailError = document.getElementById('correo-error');
+    const passwordError = document.getElementById('password-error');
+    let isValid = true;
 
-    // Validación del nombre (puedes agregar más reglas)
-    if (nombre.length < 3) {
-        alert('El nombre debe tener al menos 3 caracteres.');
-        return false;
+    // Limpiar mensajes de error previos
+    emailError.textContent = '';
+    passwordError.textContent = '';
+    emailError.style.display = 'none';
+    passwordError.style.display = 'none';
+
+    // Validación de correo electrónico
+    const email = emailInput.value.trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+        emailError.textContent = 'Correo no válido.';
+        emailError.style.display = 'block';
+        isValid = false;
     }
 
-    // Validación del RUT (puedes agregar una validación más precisa)
-    if (!rut.match(/^\d{7}-\d$/)) {
-        alert('Ingrese un RUT válido (formato: 1234567-8).');
-        return false;
+    // Validación de la contraseña
+    const password = passwordInput.value.trim();
+    if (password.length < 8) {
+        passwordError.textContent = 'Contraseña muy corta (mínimo 8 caracteres).';
+        passwordError.style.display = 'block';
+        isValid = false;
     }
 
-    // Validación del correo electrónico
-    if (!correo.match(/^\S+@\S+\.\S+$/)) {
-        alert('Ingrese un correo electrónico válido.');
-        return false;
-    }
-
-    // Puedes agregar más validaciones aquí, como:
-    // - Comprobar si el RUT ya existe en la base de datos
-    // - Verificar la contraseña (si se requiere)
-
-    return true;
+    return isValid;
 }
