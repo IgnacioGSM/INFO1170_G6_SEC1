@@ -5,24 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel del Administrador - Hospitrack</title>
     <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="style/header.css">
 </head>
 <body>
     <header>
-        <img src="logo.png" class="header-logo" alt="Logo de Hospitrack">
-        <h1>Panel de Administrador</h1>
+        <img src="imagenes/logo.png" class="header-logo" alt="logo">
+        <h1>Panel de administrador</h1>
+        <nav class="header-nav">
+            <ul class="header-list">
+                <li class="sesion-iniciada"><a class="header-link" href="perfilUsuario.html"><img src="imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
+                <li class="sesion-iniciada"><a class="header-link" href="index.html">Volver al mapa</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main class="admin-main">
         <section id="hospitales">
             <h2>Gestionar Hospitales</h2>
-            <a href="#" class="btn">Agregar Hospital</a>
-            <a href="#" class="btn">Eliminar Hospital</a>
+            <div class="hospital-grid">
+                <!-- Ejemplo de hospital registrado -->
+                <div class="hospital-card">
+                    <a href="editar_hospital.html?id=1">
+                        <p>Hospital 1</p>
+                    </a>
+                </div>
+                <div class="hospital-card">
+                    <a href="editar_hospital.html?id=2">
+                        <p>Hospital 2</p>
+                    </a>
+                </div>
+            </div>
+            <a href="agregar_hospital.html" class="btn">Agregar Hospital</a>
+            <a href="#" class="btn" id="eliminar-btn">Eliminar Hospital</a>
         </section>
 
         <section id="cuentas">
             <h2>Gestionar Cuentas</h2>
-            <a href="#" class="btn">Crear Cuenta de Recepcionista</a>
+            <a href="#" class="btn">Agregar Cuenta de Recepcionista</a>
+            <a href="#" class="btn">Eliminar Permisos de Recepcionista</a>
             <a href="#" class="btn">Suspender Usuario</a>
+            <a href="#" class="btn">Eliminar Cuenta</a>
         </section>
     </main>
 

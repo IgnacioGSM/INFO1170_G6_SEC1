@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/index_style.css">
+    <link rel="stylesheet" href="style/header.css">
     <link rel="stylesheet" href="style/mis_solicitudes.css">
     <link rel="stylesheet" href="style/pagina_solicitud.css">
     <title>Mis Solicitudes</title>
@@ -15,12 +16,12 @@
             <ul class="header-list">
                 <li class="invitado-only"><a class="header-link" href="iniciosesion.html">Iniciar Sesión</a></li>
                 <li class="invitado-only"><a class="header-link" href="registropersona.html">Registrarse</a></li>
-                <li class="sesion-iniciada"><a class="header-link" href="#"><img src="imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
+                <li class="sesion-iniciada"><a class="header-link" href="perfilUsuario.html"><img src="imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
                 <li class="sesion-iniciada"><a class="header-link" href="index.html">Volver al mapa</a></li>
 
                 <!-- Por ahora no se está checkeando si se entra desde cierto tipo de usuario -->
-                <li class="sesion-iniciada admin-only"><a class="header-link" href="#">Panel de administrador</a></li>
-                <li class="sesion-iniciada recepcionista-only"><a class="header-link" href="#">Panel de recepcionista</a></li>
+                <li class="sesion-iniciada admin-only"><a class="header-link" href="admin.html">Panel de administrador</a></li>
+                <li class="sesion-iniciada recepcionista-only"><a class="header-link" href="inter_recepcionista.html">Panel de recepcionista</a></li>
             </ul>
         </nav>
     </header>
