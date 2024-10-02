@@ -1,0 +1,17 @@
+{
+  "name": "info1170_g6_sec1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "iniciosesion.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.0",
+    "mysql": "^2.18.1"
+  }
+}
