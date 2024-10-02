@@ -1,11 +1,13 @@
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
+app.use(express.static(__dirname));
 
 const bd = mysql.createConnection({
     host: 'localhost',
@@ -24,10 +26,15 @@ bd.connect((err) => {
 
 app.use(express.static('public'));
 
-app.post('/register', (req, res) => {
-    const {Nombre, rut, correo, contraseña} = req.body;
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
-    const query = 'INSERT INTO usuarios (Nombre, rut, correo, contraseña) VALUES (?, ?, ?, ?)';
+app.post('/register', (req, res) => {
+    let {Nombre, rut, correo, contraseña} = req.body;
+    rut = rut.replace(/[-]/g, '');
+
+    const query = 'INSERT INTO usuario (Nombre, RUT, CorreoElectronico, Contrasenia) VALUES (?, ?, ?, ?)';
 
     bd.query(query, [Nombre, rut, correo, contraseña], (err, result) =>{
         if (err){
