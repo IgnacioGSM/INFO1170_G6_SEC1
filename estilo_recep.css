@@ -259,12 +259,11 @@ footer {
     padding: 10px;
     text-align: center;
     color: #1B4D3E;
-    position: relative; /* Cambiar de absolute a relative */
+    position: relative;
     width: 100%;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    margin-top: 20px; /* Añadir un margen para separar del contenido */
+    margin-top: 20px;
 }
-
 
 footer p {
     margin: 0;
@@ -316,18 +315,18 @@ input.valid {
 
 /* --------------------------- Gestión de Registros de Espera ----------------------- */
 .gestion-registros {
-    background-color: #E8F5E9; /* Color de fondo suave */
-    border-radius: 10px; /* Bordes redondeados */
+    background-color: #E8F5E9;
+    border-radius: 10px;
     padding: 20px;
-    max-width: 600px; /* Ancho máximo */
-    margin: 20px auto; /* Centrado horizontal */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .gestion-registros h2 {
     font-family: Arial, sans-serif;
     font-size: 24px;
-    background-color: #2E8B57; /* Color consistente */
+    background-color: #2E8B57;
     color: white;
     padding: 10px;
     border-radius: 30px;
@@ -338,7 +337,7 @@ input.valid {
 #gestion-form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Espacio entre elementos */
+    gap: 15px;
 }
 
 #gestion-form label {
@@ -351,15 +350,15 @@ input.valid {
 #gestion-form input[type="email"],
 #gestion-form input[type="tel"] {
     padding: 10px;
-    border: 1px solid #2E8B57; /* Borde verde */
+    border: 1px solid #2E8B57;
     border-radius: 5px;
     font-size: 16px;
     width: 100%;
-    box-sizing: border-box; /* Ajuste de ancho */
+    box-sizing: border-box;
 }
 
 #gestion-form input:focus {
-    outline: 2px solid #2E8B57; /* Efecto de foco */
+    outline: 2px solid #2E8B57;
 }
 
 #gestion-form button {
@@ -374,6 +373,27 @@ input.valid {
 }
 
 #gestion-form button:hover {
-    background-color: #1B4D3E; /* Oscurecimiento */
-    transform: scale(1.05); /* Expansión */
+    background-color: #1B4D3E;
+    transform: scale(1.05);
+}
+
+/* Table styling for records */
+#tabla-registros-espera th, #tabla-registros-espera td {
+  padding: 10px;
+  border: 1px solid #2E8B57;
+}
+
+#tabla-registros-espera td {
+  text-align: center;
+}
+
+#tabla-registros-espera button {
+  background-color: #1B4D3E;
+  color: white;
+  border-radius: 5px;
+}
+
+/* Input file styling */
+input[type="file"] {
+  margin-top: 10px;
 }

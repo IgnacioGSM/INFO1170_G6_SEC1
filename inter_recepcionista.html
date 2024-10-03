@@ -74,9 +74,25 @@
 
           <button type="submit">Agregar Registro</button>
         </form>
+
+        <!-- Tabla de Fila de Espera -->
+        <table border="1" cellspacing="0" cellpadding="10" id="tabla-registros-espera">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>RUT</th>
+              <th>Correo</th>
+              <th>Celular</th>
+              <th>Servicio</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="lista-registros">
+            <!-- Las filas serán agregadas dinámicamente -->
+          </tbody>
+        </table>
       </section>
 
-      <!-- Sección de Recepción de Solicitudes -->
       <!-- Sección de Recepción de Solicitudes -->
       <section id="recepcion-solicitudes" style="display: none;">
         <h2>Recepción de Solicitudes</h2>
@@ -97,6 +113,7 @@
               <button>Aceptar</button>
               <button>Rechazar</button>
               <button>Comentar</button>
+              <input type="file" id="subir-archivo-juan" accept=".pdf">
             </td>
           </tr>
           <tr>
@@ -106,15 +123,7 @@
               <button>Aceptar</button>
               <button>Rechazar</button>
               <button>Comentar</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Carlos García</td>
-            <td>Cardiología</td>
-            <td>
-              <button>Aceptar</button>
-              <button>Rechazar</button>
-              <button>Comentar</button>
+              <input type="file" id="subir-archivo-maria" accept=".pdf">
             </td>
           </tr>
         </tbody>
@@ -140,20 +149,19 @@
       </table>
     </section>
 
-      
-      <!-- Sección de Perfil -->
-      <section id="perfil-view" style="display: none;">
-        <h2>Perfil del Recepcionista</h2>
-        <form id="perfil-form">
-          <label for="perfil-nombre">Nombre:</label>
-          <input type="text" id="perfil-nombre" name="nombre" value="Nombre del usuario">
+    <!-- Sección de Perfil -->
+    <section id="perfil-view" style="display: none;">
+      <h2>Perfil del Recepcionista</h2>
+      <form id="perfil-form">
+        <label for="perfil-nombre">Nombre:</label>
+        <input type="text" id="perfil-nombre" name="nombre" value="Nombre del usuario">
 
-          <label for="perfil-email">Email:</label>
-          <input type="email" id="perfil-email" name="email" value="email@dominio.com">
+        <label for="perfil-email">Email:</label>
+        <input type="email" id="perfil-email" name="email" value="email@dominio.com">
 
-          <button type="submit">Guardar Cambios</button>
-        </form>
-      </section>
+        <button type="submit">Guardar Cambios</button>
+      </form>
+    </section>
     </main>
 
     <footer>

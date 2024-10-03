@@ -132,11 +132,64 @@ document.getElementById("gestion-form").addEventListener("submit", function(even
     event.preventDefault();
     if (validateForm(this)) {
         showNotification("Registro agregado");
-        // Lógica para agregar el registro aquí...
+        agregarRegistro();
     } else {
         showNotification("Error: Campos vacíos");
     }
 });
+
+// Función para agregar un registro a la tabla de espera
+function agregarRegistro() {
+    const nombre = document.getElementById("nombre-paciente").value;
+    const rut = document.getElementById("rut-paciente").value;
+    const correo = document.getElementById("correo-paciente").value;
+    const celular = document.getElementById("celular-paciente").value;
+    const servicio = document.getElementById("servicio-paciente").value;
+
+    // Crear una nueva fila para la tabla
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${nombre}</td>
+        <td>${rut}</td>
+        <td>${correo}</td>
+        <td>${celular}</td>
+        <td>${servicio}</td>
+        <td>
+            <button onclick="editRegistro(this)">Editar</button>
+            <button onclick="deleteRegistro(this)">Eliminar</button>
+        </td>
+    `;
+    document.getElementById("lista-registros").appendChild(row);
+
+    // Limpiar el formulario
+    document.getElementById("gestion-form").reset();
+}
+
+// Función para editar un registro
+function editRegistro(button) {
+    const row = button.closest('tr');
+    const cells = row.querySelectorAll('td');
+    const nombre = cells[0].textContent;
+    const rut = cells[1].textContent;
+    const correo = cells[2].textContent;
+    const celular = cells[3].textContent;
+    const servicio = cells[4].textContent;
+
+    // Pre-llenar el formulario con los valores de la fila seleccionada
+    document.getElementById("nombre-paciente").value = nombre;
+    document.getElementById("rut-paciente").value = rut;
+    document.getElementById("correo-paciente").value = correo;
+    document.getElementById("celular-paciente").value = celular;
+    document.getElementById("servicio-paciente").value = servicio;
+
+    // Eliminar la fila para editarla
+    row.remove();
+}
+
+// Función para eliminar un registro
+function deleteRegistro(button) {
+    button.closest('tr').remove();
+}
 
 // Validación de perfil
 document.getElementById("perfil-form").addEventListener("submit", function(event) {
@@ -166,6 +219,15 @@ function addHistorial(nombre, servicio, estado, comentarios, puesto) {
 // Añadir datos simulados al historial
 addHistorial("Juan Pérez", "Cardiología", "Atendido", "Ninguno", "Puesto 1");
 addHistorial("María López", "Pediatría", "Atendido", "Consulta rápida", "Puesto 2");
+
+// Manejo de subida de archivos PDF
+document.querySelectorAll('input[type="file"]').forEach(input => {
+    input.addEventListener('change', function() {
+        if (this.files[0]) {
+            alert("Archivo " + this.files[0].name + " cargado exitosamente.");
+        }
+    });
+});
 
 // Animaciones para las notificaciones
 const style = document.createElement("style");
