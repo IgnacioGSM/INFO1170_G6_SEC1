@@ -1,8 +1,7 @@
-// Mostrar/Ocultar el menú de navegación
+// Mostrar/Ocultar el menú de navegación con Bootstrap
 document.getElementById("toggle-menu-button").addEventListener("click", function() {
     const navMenu = document.getElementById("nav-menu");
-    const isVisible = navMenu.style.display === "block";
-    navMenu.style.display = isVisible ? "none" : "block";
+    navMenu.classList.toggle("d-none");  // Usamos 'd-none' de Bootstrap para ocultar/mostrar
 });
 
 // Ocultar el menú desplegable si se hace clic fuera del botón o del menú
@@ -10,31 +9,28 @@ document.addEventListener("click", function(event) {
     const navMenu = document.getElementById("nav-menu");
     const mainButton = document.getElementById("toggle-menu-button");
 
+    // Si haces clic fuera del botón o del menú, se cierra el menú
     if (!navMenu.contains(event.target) && event.target !== mainButton) {
-        navMenu.style.display = "none";
+        navMenu.classList.add("d-none");
     }
 });
 
 // Función para ocultar todas las secciones
 function hideAllSections() {
     const sections = document.querySelectorAll('main section');
-    sections.forEach(section => section.style.display = "none");
+    sections.forEach(section => section.classList.add("d-none"));  // Usamos 'd-none' para ocultar
 }
 
 // Función para mostrar una sección específica
 function showSection(sectionId) {
-    hideAllSections();
-    document.getElementById(sectionId).style.display = "block";
+    hideAllSections();  // Ocultamos todas
+    document.getElementById(sectionId).classList.remove("d-none");  // Mostramos la seleccionada
 }
 
 // Funcionalidad para los botones de navegación
 document.getElementById("btn-home").addEventListener("click", function() {
     showSection("home-view");
     updateActiveMenu(this);
-});
-
-document.getElementById("btn-inicio").addEventListener("click", function() {
-    window.location.href = "index.html"; // Redirecciona a la página de inicio
 });
 
 document.getElementById("btn-gestion").addEventListener("click", function() {
@@ -67,17 +63,16 @@ function updateActiveMenu(button) {
 // Mostrar/ocultar el menú de perfil
 document.getElementById("profile-button").addEventListener("click", function() {
     const profileMenu = document.getElementById("profile-menu");
-    const isVisible = profileMenu.style.display === "block";
-    profileMenu.style.display = isVisible ? "none" : "block";
+    profileMenu.classList.toggle("d-none");  // Mostrar/ocultar el menú de perfil
 });
 
-// Ocultar el menú de perfil si se hace clic fuera del botón o del menú
+// Ocultar el menú de perfil si se hace clic fuera
 document.addEventListener("click", function(event) {
     const profileMenu = document.getElementById("profile-menu");
     const profileButton = document.getElementById("profile-button");
 
     if (!profileMenu.contains(event.target) && event.target !== profileButton) {
-        profileMenu.style.display = "none";
+        profileMenu.classList.add("d-none");
     }
 });
 
@@ -103,18 +98,9 @@ function showNotification(action) {
     }, 3000);
 }
 
-// Asignar notificaciones a los botones de acción en solicitudes
-document.querySelectorAll("#solicitudes-list button").forEach(button => {
-    button.addEventListener("click", function() {
-        showNotification(this.textContent);
-    });
-});
-
 // Validación de formularios
 function validateForm(form) {
     let valid = true;
-
-    // Validar campos vacíos
     form.querySelectorAll('input').forEach(input => {
         if (input.value.trim() === '') {
             input.classList.add('error');
@@ -123,7 +109,6 @@ function validateForm(form) {
             input.classList.remove('error');
         }
     });
-
     return valid;
 }
 
@@ -132,75 +117,71 @@ document.getElementById("gestion-form").addEventListener("submit", function(even
     event.preventDefault();
     if (validateForm(this)) {
         showNotification("Registro agregado");
-        // Lógica para agregar el registro aquí...
+        agregarRegistro();
     } else {
         showNotification("Error: Campos vacíos");
     }
 });
+
+// Función para agregar un registro a la tabla de espera
+function agregarRegistro() {
+    const nombre = document.getElementById("nombre-paciente").value;
+    const rut = document.getElementById("rut-paciente").value;
+    const correo = document.getElementById("correo-paciente").value;
+    const celular = document.getElementById("celular-paciente").value;
+    const servicio = document.getElementById("servicio-paciente").value;
+
+    // Crear una nueva fila para la tabla
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${nombre}</td>
+        <td>${rut}</td>
+        <td>${correo}</td>
+        <td>${celular}</td>
+        <td>${servicio}</td>
+        <td>
+            <button class="btn btn-primary btn-sm" onclick="editRegistro(this)">Editar</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteRegistro(this)">Eliminar</button>
+        </td>
+    `;
+    document.getElementById("lista-registros").appendChild(row);
+
+    // Limpiar el formulario
+    document.getElementById("gestion-form").reset();
+}
+
+// Función para editar un registro
+function editRegistro(button) {
+    const row = button.closest('tr');
+    const cells = row.querySelectorAll('td');
+    document.getElementById("nombre-paciente").value = cells[0].textContent;
+    document.getElementById("rut-paciente").value = cells[1].textContent;
+    document.getElementById("correo-paciente").value = cells[2].textContent;
+    document.getElementById("celular-paciente").value = cells[3].textContent;
+    document.getElementById("servicio-paciente").value = cells[4].textContent;
+    row.remove();
+}
+
+// Función para eliminar un registro
+function deleteRegistro(button) {
+    button.closest('tr').remove();
+}
 
 // Validación de perfil
 document.getElementById("perfil-form").addEventListener("submit", function(event) {
     event.preventDefault();
     if (validateForm(this)) {
         showNotification("Perfil actualizado");
-        // Lógica para actualizar el perfil...
     } else {
         showNotification("Error: Campos vacíos");
     }
 });
 
-// Simulación de una lista de historial de solicitudes
-const historialList = document.getElementById("historial-list");
-function addHistorial(nombre, servicio, estado, comentarios, puesto) {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-        <td>${nombre}</td>
-        <td>${servicio}</td>
-        <td>${estado}</td>
-        <td>${comentarios}</td>
-        <td>${puesto}</td>
-    `;
-    historialList.appendChild(row);
-}
-
-// Añadir datos simulados al historial
-addHistorial("Juan Pérez", "Cardiología", "Atendido", "Ninguno", "Puesto 1");
-addHistorial("María López", "Pediatría", "Atendido", "Consulta rápida", "Puesto 2");
-
-// Animaciones para las notificaciones
-const style = document.createElement("style");
-style.innerHTML = `
-    .notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background-color: #2E8B57;
-        color: white;
-        padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        opacity: 0;
-        transform: translateY(-20px);
-        animation: fadeInOut 3s forwards;
-    }
-
-    @keyframes fadeInOut {
-        0% {
-            opacity: 0;
-            transform: translateY(-20px);
+// Manejo de subida de archivos PDF
+document.querySelectorAll('input[type="file"]').forEach(input => {
+    input.addEventListener('change', function() {
+        if (this.files[0]) {
+            alert("Archivo " + this.files[0].name + " cargado exitosamente.");
         }
-        10% {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        90% {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        100% {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-    }
-`;
-document.head.appendChild(style);
+    });
+});
