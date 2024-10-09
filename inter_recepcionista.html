@@ -165,15 +165,36 @@
               <td>Juan Pérez</td>
               <td>Traumatología</td>
               <td>
-                <button class="btn btn-success btn-sm">Aceptar</button>
-                <button class="btn btn-danger btn-sm">Rechazar</button>
-                <button class="btn btn-info btn-sm">Comentar</button>
+                <!-- Llamamos a las funciones cuando se hace clic -->
+                <button class="btn btn-success btn-sm" onclick="aceptarSolicitud(this)">Aceptar</button>
+                <button class="btn btn-danger btn-sm" onclick="rechazarSolicitud(this)">Rechazar</button>
                 <input type="file" id="subir-archivo-juan" accept=".pdf" class="form-control mt-2" />
               </td>
             </tr>
             <!-- Additional entries -->
           </tbody>
         </table>
+      </section>
+
+      <!-- Sección para Aceptar Solicitud -->
+      <section id="aceptar-solicitud" class="d-none">
+        <h2 class="text-center bg-success text-white py-3 rounded">Aceptar Solicitud</h2>
+        <div class="container">
+          <input type="text" id="puesto-input" class="form-control my-2" placeholder="Asignar puesto" />
+          <textarea id="comentario-input" class="form-control my-2" placeholder="Comentario (opcional)"></textarea>
+          <button id="guardar-aceptar" class="btn btn-primary w-100">Guardar</button>
+          <button id="cancelar-aceptar" class="btn btn-secondary w-100 mt-2">Cancelar</button>
+        </div>
+      </section>
+
+      <!-- Sección para Rechazar Solicitud -->
+      <section id="rechazar-solicitud" class="d-none">
+        <h2 class="text-center bg-danger text-white py-3 rounded">Rechazar Solicitud</h2>
+        <div class="container">
+          <textarea id="motivo-input" class="form-control my-2" placeholder="Motivo de rechazo" required></textarea>
+          <button id="guardar-rechazar" class="btn btn-warning w-100">Guardar</button>
+          <button id="cancelar-rechazar" class="btn btn-secondary w-100 mt-2">Cancelar</button>
+        </div>
       </section>
 
       <!-- Historial de Solicitudes Atendidas -->

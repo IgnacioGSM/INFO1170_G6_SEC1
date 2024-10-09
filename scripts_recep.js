@@ -37,7 +37,6 @@ document.getElementById("btn-perfil").addEventListener("click", function() {
     window.location.href = "perfilUsuario.html";  // Redirige a la página perfilUsuario.html
 });
 
-
 // Funcionalidad para los botones de navegación
 document.getElementById("btn-home").addEventListener("click", function() {
     showSection("home-view");
@@ -187,6 +186,76 @@ document.getElementById("perfil-form").addEventListener("submit", function(event
         showNotification("Error: Campos vacíos");
     }
 });
+
+// Función para resetear las secciones
+function resetearSecciones() {
+    // Ocultar ambas secciones
+    document.getElementById("aceptar-solicitud").classList.add("d-none");
+    document.getElementById("rechazar-solicitud").classList.add("d-none");
+    
+    // Mostrar la sección de Recepción de Solicitudes nuevamente
+    document.getElementById("recepcion-solicitudes").classList.remove("d-none");
+    
+    // Limpiar los inputs
+    document.getElementById("puesto-input").value = '';
+    document.getElementById("comentario-input").value = '';
+    document.getElementById("motivo-input").value = '';
+}
+
+// Función al aceptar una solicitud
+function aceptarSolicitud(button) {
+    const row = button.closest('tr');
+
+    // Ocultar la sección de Recepción de Solicitudes
+    document.getElementById("recepcion-solicitudes").classList.add("d-none");
+
+    // Mostrar la sección para aceptar la solicitud
+    document.getElementById("aceptar-solicitud").classList.remove("d-none");
+
+    // Manejar el evento de guardar
+    document.getElementById("guardar-aceptar").onclick = function () {
+        const puesto = document.getElementById("puesto-input").value.trim();
+        const comentario = document.getElementById("comentario-input").value.trim();
+
+        if (puesto !== "") {
+            alert(`Puesto asignado: ${puesto}\nComentario: ${comentario || 'Ninguno'}`);
+            row.remove();  // Simular que la solicitud fue atendida
+            resetearSecciones();
+        } else {
+            alert("Por favor asigna un puesto.");
+        }
+    };
+
+    // Manejar el evento de cancelar
+    document.getElementById("cancelar-aceptar").onclick = resetearSecciones;
+}
+
+// Función al rechazar una solicitud
+function rechazarSolicitud(button) {
+    const row = button.closest('tr');
+
+    // Ocultar la sección de Recepción de Solicitudes
+    document.getElementById("recepcion-solicitudes").classList.add("d-none");
+
+    // Mostrar la sección para rechazar la solicitud
+    document.getElementById("rechazar-solicitud").classList.remove("d-none");
+
+    // Manejar el evento de guardar
+    document.getElementById("guardar-rechazar").onclick = function () {
+        const motivo = document.getElementById("motivo-input").value.trim();
+
+        if (motivo !== "") {
+            alert(`Solicitud rechazada. Motivo: ${motivo}`);
+            row.remove();  // Simular que la solicitud fue rechazada
+            resetearSecciones();
+        } else {
+            alert("Por favor proporciona un motivo de rechazo.");
+        }
+    };
+
+    // Manejar el evento de cancelar
+    document.getElementById("cancelar-rechazar").onclick = resetearSecciones;
+}
 
 // Manejo de subida de archivos PDF
 document.querySelectorAll('input[type="file"]').forEach(input => {
