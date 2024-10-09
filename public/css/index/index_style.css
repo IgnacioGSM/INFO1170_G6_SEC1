@@ -1,17 +1,16 @@
-body {
+/*body {
     background-color: #E8F5E9;
     color: #1B4D3E;
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
 
-    /* Para poder dejar el footer abajo */
+    
     display: flex;
     flex-flow: column nowrap;
     min-height: 100vh;
-    overflow-x: hidden;     /* Arrastrar el mapa podía causar desbordamiento */
-}
-
+    overflow-x: hidden;    
+} */
 
 /* -----------------------SELECCION USERTYPE--------------------------- */
 
@@ -43,7 +42,7 @@ body {
 
 /* ---------------------------MAIN------------------------------- */
 
-.index-main {
+/*.index-main {
     background-color: #1B4D3E;
     color: white;
     display: flex;
@@ -73,16 +72,16 @@ body {
 
 #no-hospital .index-hospital-name {
     background-color: #1B4D3E;
-}
+}   */
 
 /* ---------------------------MAPA------------------------------- */
 
 #map {
-    width: 70%;
+    height:  800px;
 
 }
 
-/* ---------------------------SECCIONES------------------------------- */
+/* ---------------------------SECCIONES------------------------------- 
 
 .index-secciones {
     background-color:#bbd6cd;
@@ -123,9 +122,9 @@ body {
 .index-secciones-item:last-child:hover {
     border-radius: 0 0 30px 30px;
 }
+*/
 
-
-/* ---------------------------FILAS------------------------------- */
+/* ---------------------------FILAS------------------------------- 
 
 .index-filas {
     background-color: #bbd6cd;
@@ -152,9 +151,9 @@ body {
 #index-filas-value {
     padding-bottom: 20px;
 }
+*/
 
-
-/* ---------------------------FORMULARIO------------------------------- */
+/* ---------------------------FORMULARIO------------------------------- 
 
 .index-reservacion {
     background-color: #C5E1A5;
@@ -225,18 +224,18 @@ body {
 .index-reservacion-submit:hover {
     background-color: #1B4D3E;
 }   
-
-/* ---------------------------FOOTER------------------------------- */
+*/
+/* ---------------------------FOOTER------------------------------- 
 
 footer {
     width: 100%;
     background-color: #A0D6B4;
     padding-bottom: 200px;
 
-    /* Para poder dejar el footer abajo */
+    /* Para poder dejar el footer abajo 
     margin-top: auto;
 }
-
+*/
 
 
 /* ---------------------EXCLUSIVO USUARIOS-------------------------- */

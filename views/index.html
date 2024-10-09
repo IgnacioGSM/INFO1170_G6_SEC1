@@ -7,29 +7,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/index/index_style.css">
-    <link rel="stylesheet" href="/css/elem_compartidos/header.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>HospiTrack</title>
 </head>
 <body>
-    <header>
-        <img src="/imagenes/logo.png" class="header-logo" alt="logo">
-        <nav class="header-nav">
-            <ul class="header-list">
-                <li class="invitado-only"><a class="header-link" href="iniciosesion">Iniciar Sesión</a></li>
-                <li class="invitado-only"><a class="header-link" href="registropersona">Registrarse</a></li>
-                <li class="sesion-iniciada"><a class="header-link" href="perfilUsuario"><img src="imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
-                <li class="sesion-iniciada"><a class="header-link" href="mis_solicitudes">Mis solicitudes</a></li>
-                <li class="sesion-iniciada admin-only"><a class="header-link" href="admin">Panel de administrador</a></li>
-                <li class="sesion-iniciada recepcionista-only"><a class="header-link" href="inter_recepcionista">Panel de recepcionista</a></li>
+    <div class="container-fluid shadow-lg pb-1 mb-4 bg-success">
+        <div class="container">
+        <header class="d-flex flex-wrap justify-content-center align-items-center py-3 mb-4 border-bottom">
+            <img src="/imagenes/logo.png" class="me-auto" height="80px" alt="logo">
+            
+            <ul class="nav nav-pills pe-5">
+                <li class="nav-item invitado-only"><a class="btn nav-link btn-success" role="button" href="iniciosesion">Iniciar Sesión</a></li>
+                <li class="nav-item invitado-only"><a class="nav-link" href="registropersona">Registrarse</a></li>
+                <li class="nav-item sesion-iniciada"><a class="nav-link" href="perfilUsuario"><img width="30px" height="30px" src="imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
+                <li class="nav-item sesion-iniciada"><a class="nav-link" href="mis_solicitudes">Mis solicitudes</a></li>
+                <li class="nav-item sesion-iniciada admin-only"><a class="nav-link" href="admin">Panel de administrador</a></li>
+                <li class="nav-item sesion-iniciada recepcionista-only"><a class="nav-link" href="inter_recepcionista">Panel de recepcionista</a></li>
             </ul>
-        </nav>
-    </header>
+        
+        </header>
+        </div>
+    </div>
 
     <div id="overlay">      <!-- Overlay para escoger un tipo de usuario con el que entrar -->
         <div>
@@ -45,66 +50,109 @@
         </div>
     </div>
 
-    <main class="index-main">
-        <div id="map"></div>
+    <main class="container text-center bg-body-secondary">
+        <div class="row">
+            <div id="map" class="col-8"></div>
 
-        <article id="no-hospital" class="index-derecha-mapa">
-            <h1 class="index-hospital-name">Seleccione un hospital</h1>
-        </article>
-        
-        <article id="hospital-seleccionado" class="index-derecha-mapa">
-            <h1 id="index-hospital-name" class="index-hospital-name">Nombre del hospital</h1>
+            <article id="no-hospital" class="col-4 mx-auto my-auto">
+                <h1>Seleccione un hospital</h1>
+            </article>
             
-            <div class="index-hospital-info">
+            <article id="hospital-seleccionado" class="col-4 flex-column justify-content-center">
+                <h1 id="index-hospital-name">Nombre del hospital</h1>
+                
+                
+                
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sección</th>
+                        </tr>
+                    </thead>
+                    <tbody id="index-secciones-lista">
 
-                <div class="index-secciones">
-                    <h2 class="index-secciones-titulo">Secciones</h2>
-                    <ul id="index-secciones-lista" class="index-secciones-lista">      <!-- Elementos clickeables, actualizarán la fila de espera a su sección correspondiente-->
-                        <!-- <li class="index-secciones-item">Emergencia</li> ejemplo, al clickear un hospital el script generara estos -->
-
-                    </ul>
-                </div>
+                    </tbody>
+                </table>
 
                 <div class="index-filas">
                     <h3 class="index-filas-titulo">Personas en espera en: </h3>
                     <h2 id="index-filas-subtitulo">-------</h2>   <!-- Aquí se debe mostrar la sección en la que se encuentra la persona -->
                     <h1 id="index-filas-value">Escoja una sección...</h1> <!-- Aquí se debe mostrar el número de personas en la fila de espera -->
                 </div>
-            </div>
+               
 
-            <div class="index-reservacion">
-                <div id="index-formulario-invitado" class="index-formulario-bloqueado invitado-only">           <!-- Visible solo para usuario invitado -->
-                    <h1>Inicie sesión para poder solicitar una reserva</h1>
-                    <a class="header-link" href="iniciosesion">Iniciar Sesión</a>
-                    <a class="header-link" href="registropersona">Registrarse</a>
+                <div class="index-reservacion">
+                    <div id="index-formulario-invitado" class="index-formulario-bloqueado invitado-only">           <!-- Visible solo para usuario invitado -->
+                        <h1>Inicie sesión para poder solicitar una reserva</h1>
+                        <a class="header-link" href="iniciosesion">Iniciar Sesión</a>
+                        <a class="header-link" href="registropersona">Registrarse</a>
+                    </div>
+
+                    <div id="index-formulario-suspendido" class="index-formulario-bloqueado suspendido-only">
+                        <h1>Se han deshabilitado las solicitudes de reserva en tu cuenta</h1>
+                        <h2>Más información en:</h2>
+                        <a class="header-link" href="#">suspensión de cuentas</a>
+                    </div>
+
+                    <h2 class="index-reservacion-titulo">Reservar puesto</h2>
+                    <form method="POST" action="/submit_solicitud" id="index-reservacion-form" onsubmit="validarForm();">     <!-- preventDefault evita que se recargue la pagina si el formulario no es valido -->
+                        <h5>Esta información será visible solo para el recepcionista de la sección</h5>
+                        <input name="rut" id="rut" maxlength="9" type="text" class="index-reservacion-input" placeholder="Rut" value="11.111.111-1" required>
+                        <input name="correo" id="correo" type="text" class="index-reservacion-input" placeholder="Correo" value="correousuario@email.com" required>
+                        <textarea name="motivo_consulta" id="motivo-consulta" class="index-reservacion-textarea" name="motivo-consulta" rows="2" placeholder="Motivo de consulta" required></textarea>
+                        <input type="submit" class="index-reservacion-submit" value="Reservar">
+                    </form>
                 </div>
-
-                <div id="index-formulario-suspendido" class="index-formulario-bloqueado suspendido-only">
-                    <h1>Se han deshabilitado las solicitudes de reserva en tu cuenta</h1>
-                    <h2>Más información en:</h2>
-                    <a class="header-link" href="#">suspensión de cuentas</a>
-                </div>
-
-                <h2 class="index-reservacion-titulo">Reservar puesto</h2>
-                <form method="POST" action="/submit_solicitud" id="index-reservacion-form" onsubmit="validarForm();">     <!-- preventDefault evita que se recargue la pagina si el formulario no es valido -->
-                    <h5>Esta información será visible solo para el recepcionista de la sección</h5>
-                    <input name="rut" id="rut" maxlength="9" type="text" class="index-reservacion-input" placeholder="Rut" value="11.111.111-1" required>
-                    <input name="correo" id="correo" type="text" class="index-reservacion-input" placeholder="Correo" value="correousuario@email.com" required>
-                    <textarea name="motivo_consulta" id="motivo-consulta" class="index-reservacion-textarea" name="motivo-consulta" rows="2" placeholder="Motivo de consulta" required></textarea>
-                    <input type="submit" class="index-reservacion-submit" value="Reservar">
-                </form>
-            </div>
-        </article>
+            </article>
+        </div>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <p>© 2024 Hospitrack. Todos los derechos reservados.</p>
+    <footer class="footer mt-5 bg-dark text-light pt-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Encuentranos en otras redes sociales:</h5>
+                    <p>Instagram: <a href="https://www.instagram.com/hospitrack/" target="_blank">Hospitrack</a></p>
+                    <p>Facebook: Proximamente</p>
+                    <p>Telegram: Proximamente</p>
+                </div>
+
+                <div class="col-md-4">
+                    <h5>Términos y Condiciones</h5>
+                    <p>Esta página web recopila información de los hospitales cercanos en tu zona, permitiéndote agendar tus propias citas médicas. Por favor revisa nuestros <a href="terminosycondiciones.html">Términos y Condiciones</a> para más detalles.</p>
+                   
+                </div>
+
+                
+                <div class="col-md-4">
+                    <h5>Apelaciones</h5>
+                    <p>Si deseas apelar una decisión relacionada con tu cita o el uso de nuestros servicios, por favor dirígete a nuestro <a href="apelaciones.html">Apartado de Apelaciones</a> y completa el formulario de revisión.</p>
+                </div>
+              
+                <div class="col-md-4">
+                    <h5>Contacto</h5>
+                    <p>Para consultas, puedes escribirnos a los siguientes correos:</p>
+                    <ul>
+                        <li>Correos: <span id="correo1">iglausser2024@alu.uct.cl</span></li>
+                        <li>Correos: <span id="correo1">jvaldebenito2024@alu.uct.cl</span></li>
+                        <li>Correos: <span id="correo1">squinenao2024@alu.uct.cl</span></li>
+                        <li>Correos: <span id="correo1">tpenroz2024@alu.uct.cl</span></li>
+                        <li>Correos: <span id="correo2">mmaier2024@alu.uct.cl</span></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="row">
+                <div class="col text-center">
+                    <p>© 2024 Hospitrack. Todos los derechos reservados.</p>
+                </div>
+            </div>
         </div>
     </footer>
     
     <script src="js/index/seleccion_usertype.js"></script>
     <script src="js/index/script_mapa.js"></script>
     <script src="js/index/validacion_reserva.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
