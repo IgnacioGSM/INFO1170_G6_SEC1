@@ -27,6 +27,17 @@ function showSection(sectionId) {
     document.getElementById(sectionId).classList.remove("d-none");  // Mostramos la seleccionada
 }
 
+// Redirigir a index.html al hacer clic en el botón "Inicio"
+document.getElementById("btn-inicio").addEventListener("click", function() {
+    window.location.href = "index.html";  // Redirige a la página index.html
+});
+
+// Redirigir a perfilUsuario.html al hacer clic en el botón "Perfil"
+document.getElementById("btn-perfil").addEventListener("click", function() {
+    window.location.href = "perfilUsuario.html";  // Redirige a la página perfilUsuario.html
+});
+
+
 // Funcionalidad para los botones de navegación
 document.getElementById("btn-home").addEventListener("click", function() {
     showSection("home-view");
