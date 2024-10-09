@@ -24,14 +24,14 @@
 
     <div class="container">
         <h1>Bienvenido a Hospitrack</h1>
-        <form onsubmit="return validateform();">
+        <form onsubmit="return" id="loginForm">
             <label for="rut">Ingrese su RUT:</label>
             <input type="text" id="rut" name="rut" required>
-            <span id="rut-error" style="color: red; display: none;"></span>
+            <span id="rut-error" style="color: red;"></span>
 
             <label for="password">Ingrese su contraseña:</label>
             <input type="password" id="password" name="password" required>
-            <span id="password-error" style="color: red; display: none;"></span>
+            <span id="password-error" style="color: red;"></span>
 
             <a href="olvidadopassword.html">¿Ha olvidado su contraseña?</a>
             <button type="submit">Iniciar Sesión</button>

@@ -35,6 +35,7 @@ aside{
     border-radius: 10px;
     padding: 2rem;
     width: 30%;
+    color: white;
 }
 
 aside img{
@@ -70,5 +71,115 @@ aside img{
 }
 
 button{
+    background-color: #00a775;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+}
+
+button:hover{
+    background-color: #09b049;
+}
+
+.btn{
+    background-color: #10823bfe;
+}
+
+.estrellas{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: start;
+    font-size: 2rem;
+    color: #ddd;
+}
+
+.estrellas input{
+    display: none;
+}
+
+.estrellas label{
     background-color: #288a6c;
+    border-radius: 5px;
+
+}
+
+.estrellas label:hover,
+.estrellas label:hover ~ label,
+.estrellas input:checked ~ label{
+    color: gold;
+}
+
+.list-group-item{
+    border: none;
+    background-color: #00a775;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.list-group-item:hover{
+    background-color: #06c58c;
+}
+
+.foto-perfil img{
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}
+
+.container{
+    max-width: 1200px;
+}
+
+.MedExp{
+    margin-top: 20px;
+}
+
+.MedExp h3{
+    margin-bottom: 10px;
+}
+
+.MedExp label{
+    font-size: 1rem;
+    margin-bottom: 5px;
+    font-weight: bold;
+    display: block;
+}
+
+.MedExp input[type='file']{
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    width: 70%;
+}
+
+.borrarcuenta h3{
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.borrarcuenta p{
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.borrarcuenta input{
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+footer{
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    margin-top: 2rem;
+    text-align: center;
+    border-radius: 0 0 8px 8px;
 }

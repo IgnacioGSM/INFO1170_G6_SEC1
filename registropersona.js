@@ -28,37 +28,23 @@ function limpiaError(inputElement){
 }
 
 function validaRegistro(){
-    const nombre = document.getElementById('nombre');
-    const rut = document.getElementById('rut');
-    const correo = document.getElementById('correo');
-    const contraseña = document.getElementById('contraseña');
+    const inputs = [
+        {element: document.getElementById('nombre'), pattern: nombrePattern, mensaje: "Ingresa un nombre valido"},
+        {element: document.getElementById('rut'), pattern: rutPattern, mensaje: "Ingresa un RUT valido, sin puntos y usando guion"},
+        {element: document.getElementById('correo'), pattern: correoPattern, mensaje: "Ingresa un correo valido"},
+        {element: document.getElementById('contraseña'), pattern: contraPattern, mensaje: "La contraseña debe contener al menos 8 caracteres, una letra mayuscula, un miniscula y un numero y un caracter especial"}
+    ];
 
-    limpiaError(nombre);
-    limpiaError(rut);
-    limpiaError(correo);
-    limpiaError(contraseña);
+    let isValid = true;
 
-    const nombreError = validacampo(nombre.value, nombrePattern, "Ingresa un nombre valido");
-    const rutError = validacampo(rut.value, rutPattern, "Ingresa un RUT valido, sin puntos y usando comilla");
-    const correoError = validacampo(correo.value, correoPattern, "Ingresa un correo valido" );
-    const contraseñaError = validacampo(contraseña.value, contraPattern, "La contraseña debe contener al menos 8 caracteres, una letra mayuscula, un miniscula y un numero y un caracter especial");
+    inputs.forEach(({element, pattern, mensaje}) => {
+        limpiaError(element);
+        const error = validacampo(element.value, pattern, mensaje);
+        if (error) {
+            muestraError(element, error);
+            isValid = false;
+        }
+    });
 
-    if (nombreError){
-        muestraError(nombre, nombreError);
-        return false;
-    }
-    if (rutError){
-        muestraError(rut, rutError);
-        return false;
-    }
-    if (correoError){
-        muestraError(correo, correoError);
-        return false;
-    }
-    if (contraseñaError){
-        muestraError(contraseña, contraseñaError);
-        return false;
-    }
-    
-    return true;
+    return isValid;
 }
