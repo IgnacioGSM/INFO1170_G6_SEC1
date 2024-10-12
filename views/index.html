@@ -61,24 +61,33 @@
             <article id="hospital-seleccionado" class="col-4 flex-column justify-content-center">
                 <h1 id="index-hospital-name">Nombre del hospital</h1>
                 
-                
-                
+                <!-- Tabla con las secciones del hospital -->
                 <table class="table table-hover">
                     <thead>
-                        <tr>
-                            <th scope="col">Sección</th>
+                        <tr class="table-dark">
+                            <th>Sección</th>
                         </tr>
                     </thead>
                     <tbody id="index-secciones-lista">
 
                     </tbody>
                 </table>
-
-                <div class="index-filas">
-                    <h3 class="index-filas-titulo">Personas en espera en: </h3>
-                    <h2 id="index-filas-subtitulo">-------</h2>   <!-- Aquí se debe mostrar la sección en la que se encuentra la persona -->
-                    <h1 id="index-filas-value">Escoja una sección...</h1> <!-- Aquí se debe mostrar el número de personas en la fila de espera -->
-                </div>
+                
+                <!-- Tabla con las personas en espera en la sección seleccionada -->
+                <table class="table table-borderless">
+                    <thead>
+                        <tr class="table-dark">
+                            <th scope="col">Gente en espera</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th id="index-filas-seccion">Seleccione una sección</th>
+                        </tr>
+                        <tr>
+                            <td id="index-filas-cantidad">. . .</td>
+                        </tr>
+                    </tbody>
+                </table>
                
 
                 <div class="index-reservacion">

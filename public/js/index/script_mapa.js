@@ -59,7 +59,7 @@ fetch("fetch_testing/json_prueba.json")     // este fetch crea los marcadores en
         console.log("añadiendo hospitales del json");
         hospitales.forEach(hospital => {
             console.log("añadiendo " + hospital.nombre);
-            hospitales_en_json[hospital.id] = hospital;
+            hospitales_en_json[hospital.id] = hospital;     // guarda los hospitaes en un diccionario
         });
     })
     .then(() => {
@@ -68,7 +68,7 @@ fetch("fetch_testing/json_prueba.json")     // este fetch crea los marcadores en
             var marker = L.marker([hospitales_en_json[i].latitud, hospitales_en_json[i].longitud], {icon: MarcadorRojo}).addTo(map);
             marker.bindPopup("<b>" + hospitales_en_json[i].nombre + "</b>");
 
-            marker.on('click', function(marker){
+            marker.on('click', function(marker){    // Lo que ocurre al clickear un marcador del mapa
                 document.getElementById("index-hospital-name").innerHTML = hospitales_en_json[i].nombre;
 
                 let secciones_table_body = document.getElementById("index-secciones-lista");
@@ -87,17 +87,29 @@ fetch("fetch_testing/json_prueba.json")     // este fetch crea los marcadores en
                     secciones_table_body.appendChild(table_row);
                 })
 
-                document.getElementById("index-filas-subtitulo").innerHTML = "-------";  // valor default antes de seleccionar seccion
-                document.getElementById("index-filas-value").innerHTML = "Escoja una sección...";
+                document.getElementById("index-filas-seccion").innerHTML = "Seleccione una sección";
+                document.getElementById("index-filas-cantidad").innerHTML = ". . .";
 
 
-                for (let j = 0; j < hospitales_en_json[i].secciones.length; j++) {
-                    let lista_secciones = document.getElementById("index-secciones-lista");
-                    lista_secciones.childNodes[j].childNodes.forEach(child => {
-                        child.addEventListener("click", function() {
-                            console.log("click");
-                        })
-                    });
+                let lista_secciones = document.getElementById("index-secciones-lista");
+                lista_secciones.childNodes.forEach(child => {
+                    child.addEventListener("click", function() {                        // funcion al clickear una sección
+                        for (let k = 0; k < hospitales_en_json[i].secciones.length; k++) {
+                            lista_secciones.childNodes[k].classList.remove("table-success");
+                        }
+                        this.classList.add("table-success");                // cambia el color de la seccion seleccionada y quita el color de las demas
+
+                        document.getElementById("index-filas-seccion").innerHTML = this.textContent;    // muestra el nombre de la seccion seleccionada en el cuadro de filas
+
+                        for (let k = 0; k < hospitales_en_json[i].secciones.length; k++) {          // busca el numero de fila correspondiente a la seccion seleccionada
+                            console.log(hospitales_en_json[i].secciones[k] + " contra " + this.textContent);
+                            if (hospitales_en_json[i].secciones[k] == this.textContent) {
+                                document.getElementById("index-filas-cantidad").textContent = hospitales_en_json[i].filas[k] + " personas";
+                            }
+                        }
+                    })
+                });
+
 
 
                     /*lista_secciones.childNodes[j].addEventListener("click", function() {        // cambia el color de la seccion seleccionada
@@ -113,7 +125,7 @@ fetch("fetch_testing/json_prueba.json")     // este fetch crea los marcadores en
                             }
                         }
                     })*/
-                }
+                
 
                 selectingHospital();
             });

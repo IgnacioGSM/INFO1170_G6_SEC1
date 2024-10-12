@@ -162,20 +162,18 @@
     border-radius: 30px;
     position: relative;
 }
-
+*/
 .index-formulario-bloqueado {
     flex-flow: column nowrap;
     justify-content: center;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.8);
-    height: calc(100% + 20px);
-    width: 100%;
     z-index: 1000;
     margin-top: -20px;
     border-radius: 30px;
     color: white;
 }
-
+/*
 .index-reservacion-titulo {
     background-color: #2E8B57;
     color: white;
