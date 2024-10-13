@@ -20,7 +20,7 @@ function mostrarSeccion(id){
 
     document.getElementById(id).style.display = 'block';
 }
-
+/*Esto quedara comentado demomento porque provoca errores
 function manejaConfi(event, ContraseñaInputID, mensajeExito){
     event.preventDefault();
 
@@ -45,4 +45,4 @@ document.getElementById('CambiarTelefono').addEventListener('submit', function(e
 
 document.getElementById('CambiarDireccion').addEventListener('submit', function(event){
     manejaConfi(event, 'confirmarDireccion', 'direccion actualizado con exito');
-});
+});*/

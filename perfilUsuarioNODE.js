@@ -8,6 +8,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
+app.use(express.static(__dirname));
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -17,14 +18,14 @@ const connection = mysql.createConnection({
 });
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'perfilUsuario.html'));
 });
 
 app.post('/cambiarcorreo', (req, res) => {
     const {nuevoCorreo, confirmarCorreo} = req.body;
-    const userId = 1;
+    const userId = 4;
 
-    connection.query('SELECT contrasenia FROM usuarios WHERE IdUsuario = ?', [userId], (error, results) => {
+    connection.query('SELECT contrasenia FROM usuario WHERE IdUsuario = ?', [userId], (error, results) => {
         if (error) return res.status(500).send('Error en el servidor');
 
         const storedPassword = results[0].contrasenia;
