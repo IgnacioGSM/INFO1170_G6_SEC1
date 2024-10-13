@@ -18,18 +18,18 @@
     <title>HospiTrack</title>
 </head>
 <body>
-    <div class="container-fluid shadow-lg pb-1 mb-4 bg-success">
+    <div class="container-fluid shadow-lg pb-1 mb-4 bg-success bg-gradient">
         <div class="container">
         <header class="d-flex flex-wrap justify-content-center align-items-center py-3 mb-4 border-bottom">
             <img src="/imagenes/logo.png" class="me-auto" height="80px" alt="logo">
             
-            <ul class="nav nav-pills pe-5">
-                <li class="nav-item invitado-only"><a class="btn nav-link btn-success" role="button" href="iniciosesion">Iniciar Sesión</a></li>
-                <li class="nav-item invitado-only"><a class="nav-link" href="registropersona">Registrarse</a></li>
-                <li class="nav-item sesion-iniciada"><a class="nav-link" href="perfilUsuario"><img width="30px" height="30px" src="imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
-                <li class="nav-item sesion-iniciada"><a class="nav-link" href="mis_solicitudes">Mis solicitudes</a></li>
-                <li class="nav-item sesion-iniciada admin-only"><a class="nav-link" href="admin">Panel de administrador</a></li>
-                <li class="nav-item sesion-iniciada recepcionista-only"><a class="nav-link" href="inter_recepcionista">Panel de recepcionista</a></li>
+            <ul class="nav nav-pills">
+                <li class="nav-item invitado-only"><a class="btn btn-outline-light me-3 btn-lg" role="button" href="iniciosesion">Iniciar Sesión</a></li>
+                <li class="nav-item invitado-only"><a class="btn btn-outline-light me-3 btn-lg" href="registropersona">Registrarse</a></li>
+                <li class="nav-item sesion-iniciada"><a class="btn btn-outline-light me-3 btn-lg" href="perfilUsuario"><img class="me-2" width="30px" height="30px" src="imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
+                <li class="nav-item sesion-iniciada"><a class="btn btn-outline-light me-3 btn-lg" href="mis_solicitudes">Mis solicitudes</a></li>
+                <li class="nav-item sesion-iniciada admin-only"><a class="btn btn-outline-light me-3 btn-lg" href="admin">Panel de administrador</a></li>
+                <li class="nav-item sesion-iniciada recepcionista-only"><a class="btn btn-outline-light me-3 btn-lg" href="inter_recepcionista">Panel de recepcionista</a></li>
             </ul>
         
         </header>
@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <main class="container text-center bg-body-secondary">
+    <main class="container text-center bg-body-secondary shadow">
         <div class="row">
             <div id="map" class="col-8"></div>
 
@@ -90,26 +90,28 @@
                 </table>
                
 
-                <div class="index-reservacion">
-                    <div id="index-formulario-invitado" class="index-formulario-bloqueado invitado-only">           <!-- Visible solo para usuario invitado -->
+                <div class="bg-white position-relative">
+                    <div id="index-formulario-invitado" class="container z-3 position-absolute flex-column justify-content-center text-bg-dark bg-opacity-75 w-100 h-100 invitado-only">           <!-- Visible solo para usuario invitado -->
                         <h1>Inicie sesión para poder solicitar una reserva</h1>
-                        <a class="header-link" href="iniciosesion">Iniciar Sesión</a>
-                        <a class="header-link" href="registropersona">Registrarse</a>
+                        <a class="btn btn-success m-2" href="iniciosesion">Iniciar Sesión</a>
+                        <a class="btn btn-success m-2" href="registropersona">Registrarse</a>
                     </div>
 
-                    <div id="index-formulario-suspendido" class="index-formulario-bloqueado suspendido-only">
+                    <div id="index-formulario-suspendido" class="container z-3 position-absolute flex-column justify-content-center text-bg-dark bg-opacity-75 w-100 h-100 suspendido-only">
                         <h1>Se han deshabilitado las solicitudes de reserva en tu cuenta</h1>
                         <h2>Más información en:</h2>
-                        <a class="header-link" href="#">suspensión de cuentas</a>
+                        <a class="btn btn-success" href="#">suspensión de cuentas</a>
                     </div>
 
-                    <h2 class="index-reservacion-titulo">Reservar puesto</h2>
-                    <form method="POST" action="/submit_solicitud" id="index-reservacion-form" onsubmit="validarForm();">     <!-- preventDefault evita que se recargue la pagina si el formulario no es valido -->
-                        <h5>Esta información será visible solo para el recepcionista de la sección</h5>
-                        <input name="rut" id="rut" maxlength="9" type="text" class="index-reservacion-input" placeholder="Rut" value="11.111.111-1" required>
-                        <input name="correo" id="correo" type="text" class="index-reservacion-input" placeholder="Correo" value="correousuario@email.com" required>
-                        <textarea name="motivo_consulta" id="motivo-consulta" class="index-reservacion-textarea" name="motivo-consulta" rows="2" placeholder="Motivo de consulta" required></textarea>
-                        <input type="submit" class="index-reservacion-submit" value="Reservar">
+                    <h2 class="text-bg-dark m-0">Reservar puesto</h2>
+                    <h6 class="text-bg-dark m-0 mb-3">Esta información será visible solo para el recepcionista de la sección</h6>
+                    <form class="container" method="POST" action="/submit_solicitud" id="index-reservacion-form" onsubmit="validarForm();">     <!-- preventDefault evita que se recargue la pagina si el formulario no es valido -->
+                        <div class="form-group">
+                            <input class="form-control mb-3" name="rut" id="rut" maxlength="9" type="text" placeholder="Rut" value="12.345.678-9" required>
+                            <input class="form-control mb-3" name="correo" id="correo" type="text" placeholder="Correo" value="correousuario@email.com" required>
+                            <textarea class="form-control mb-3" name="motivo_consulta" id="motivo-consulta"  name="motivo-consulta" rows="3" placeholder="Motivo de consulta" required></textarea>
+                        </div>
+                        <input class="btn btn-success mb-3" type="submit" value="Reservar">
                     </form>
                 </div>
             </article>

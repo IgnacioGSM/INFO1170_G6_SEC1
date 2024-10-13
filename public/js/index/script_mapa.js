@@ -84,6 +84,7 @@ fetch("fetch_testing/json_prueba.json")     // este fetch crea los marcadores en
                     let table_data = document.createElement("td");
                     table_data.innerHTML = seccion;
                     table_row.appendChild(table_data);
+                    table_row.setAttribute("role", "button");
                     secciones_table_body.appendChild(table_row);
                 })
 
