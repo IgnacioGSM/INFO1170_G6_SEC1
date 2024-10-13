@@ -27,7 +27,7 @@ app.get('/perfilUsuario', (req, res) => {
 });
 
 app.get('/mis_solicitudes', (req, res) => {
-  res.sendFile(path.join(__dirname,'mis_solicitudes.html'));
+  res.sendFile(path.join(__dirname,'views','mis_solicitudes.html'));
 });
 
 app.get('/admin', (req, res) => {
