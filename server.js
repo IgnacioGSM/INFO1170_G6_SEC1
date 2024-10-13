@@ -1,8 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mysql = require('mysql2');
 const path = require('path');
 const app = express();
+const { host, user, password, database } = require('./credenciales_mysql.js');  // cambiar los datos en el archivo credenciales_mysql.js para que funcione en sus equipos
 
+// Conexión a la base de datos
+const db = mysql.createConnection({
+  host: host,
+  user: user,
+  password: password,
+  database: database
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -41,7 +50,41 @@ app.get('/inter_recepcionista', (req, res) => {
 
 app.post('/submit_solicitud', (req, res) => {
     console.log(req.body);
-    res.sendFile(path.join(__dirname,'views','index.html'));
+    let idSeccion = 1;
+    let date = new Date();
+    let hora_solicitud = date.getFullYear() + '/' +
+      ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
+      ('0' + date.getDate()).slice(-2) + ' ' +
+      ('0' + date.getHours()).slice(-2) + ':' +
+      ('0' + date.getMinutes()).slice(-2) + ':' +
+      ('0' + date.getSeconds()).slice(-2);
+    let estado = 'pendiente';
+
+    let rut = req.body.rut.replace(/[^\dkK]/g, ''); // Quita puntos y guión recibidos en el rut
+    let correo = req.body.correo;
+    let motivo_consulta = req.body.motivo_consulta;
+
+    let queryUser = "SELECT * FROM Usuario WHERE RUT = ?";
+    db.query(queryUser, [rut], (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        if (result.length === 0) {
+            console.log("Usuario no encontrado");
+            res.send("Usuario no encontrado");
+        } else {
+            let idUsuario = result[0].IdUsuario;
+            let querySolicitud = "INSERT INTO Solicitud (IdUsuario, IdSeccion, Mensaje, HoraSolicitud, Estado) VALUES (?, ?, ?, ?, ?)";
+            db.query(querySolicitud, [idUsuario, idSeccion, motivo_consulta, hora_solicitud, estado], (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Solicitud enviada");
+                    res.sendFile(path.join(__dirname,'views','index.html'));
+                }
+            });
+        }
+      });
     });
 
 // Escuchar en el puerto 3000
