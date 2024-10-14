@@ -1,6 +1,6 @@
 <?php
 // Conexión a la base de datos
-include('conexion.php');
+include('Recuperacion.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $correo = $_POST['correo'];
