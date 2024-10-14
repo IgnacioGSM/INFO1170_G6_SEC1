@@ -1,4 +1,3 @@
-
 /* Variables de color */
 :root {
     --caladon: #A0D6B4;
@@ -129,7 +128,8 @@ footer {
     padding: 10px;
     text-align: center;
 }
-/* secciones grid */
+
+/* Secciones grid */
 .seccion-grid {
     display: flex;
     flex-wrap: wrap;
@@ -142,18 +142,63 @@ footer {
     padding: 20px;
     border-radius: 10px;
     width: 150px;
+    height: 150px; 
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+    /* Centrado de contenido */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .seccion-card a {
     text-decoration: none;
     color: var(--dark-spring-green);
     font-weight: bold;
+    font-size: 1.2em; /* Ajusta el tamaño de fuente si es necesario */
 }
 
 .seccion-card:hover {
     border-color: var(--dark-spring-green);
     transform: scale(1.05);
     transition: all 0.2s ease;
+}
+
+/* Sección para agregar nueva */
+.seccion-add {
+    background-color: var(--white);
+    border: 2px dashed var(--jade);
+    padding: 20px;
+    border-radius: 10px;
+    width: 150px;
+    height: 150px; /* Mantener misma altura que las tarjetas */
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.seccion-add:hover {
+    border-color: var(--dark-spring-green);
+    background-color: var(--mint);
+}
+
+.btn-add-seccion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--dark-spring-green);
+}
+
+.plus-icon {
+    font-size: 2em;
+    color: var(--jade);
+}
+
+.plus-icon:hover {
+    color: var(--dark-spring-green);
 }

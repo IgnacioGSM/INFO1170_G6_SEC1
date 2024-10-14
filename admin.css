@@ -19,26 +19,71 @@ body {
     min-height: 100vh;
 }
 
-/* Logo en el header */
-.header-logo {
-    height: 50px;
-    position: absolute;
-    left: 20px;
+/* Estilo del header */
+header {
+    background-color: var(--caladon);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: relative;
 }
 
-/* Botones personalizados */
-.btn-custom {
+/* Ajuste del logo */
+.header-logo {
+    height: 50px;
+}
+
+/* Botón de ir a página principal */
+.btn.btn-custom {
     background-color: var(--jade);
     color: var(--white);
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.btn-custom:hover {
+.btn.btn-custom:hover {
     background-color: var(--dark-spring-green);
+}
+
+/* Alinear el botón con un margen */
+.btn-pos {
+    margin-right: 20px;
+}
+
+/* Botones secundarios */
+.btn-secondary {
+    background-color: #6c757d;
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    color: var(--white);
+}
+
+/* Botones de peligro (rojo) */
+.btn-danger {
+    background-color: #dc3545;
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    color: var(--white);
 }
 
 /* Secciones principales */
@@ -59,7 +104,7 @@ section {
 .hospital-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 10px;
 }
 
 /* Tarjetas de hospital */
@@ -71,6 +116,7 @@ section {
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, border-color 0.2s ease;
+    flex: 1 1 auto;
 }
 
 .hospital-card:hover {
@@ -78,11 +124,61 @@ section {
     transform: scale(1.05);
 }
 
+/* Agregar hospital */
+.hospital-add {
+    background-color: var(--white);
+    border: 2px dashed var(--jade);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    height: 100%;
+}
+
+.hospital-add:hover {
+    border-color: var(--dark-spring-green);
+    background-color: var(--mint);
+}
+
+.btn-add-hospital {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--dark-spring-green);
+}
+
+.plus-icon {
+    font-size: 2em;
+    color: var(--jade);
+    margin-bottom: 10px;
+}
+
+.hospital-add p {
+    margin: 0;
+    font-weight: bold;
+    color: var(--dark-spring-green);
+}
+
+/*columnas tengan la misma altura */
+.hospital-grid .col-md-3, 
+.hospital-grid .col-sm-6 {
+    display: flex;
+    flex-direction: column;
+}
+
+.hospital-grid .card {
+    flex: 1 1 auto;
+}
+
 /* Footer */
 footer {
-    background-color: var(--jade);
-    color: var(--white);
+    background-color: var(--caladon);
     padding: 10px;
     text-align: center;
-    margin-top: auto;
-} 
+}

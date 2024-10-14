@@ -1,4 +1,3 @@
-/* agregar_hospital.css */
 
 /* Variables de color */
 :root {
@@ -116,7 +115,6 @@ button[type="submit"]:hover {
     background-color: var(--dark-spring-green);
 }
 
-/* Footer */
 footer {
     background-color: var(--caladon);
     padding: 10px;
