@@ -5,11 +5,8 @@ const path = require('path');
 
 const app = express();
 
-app.set("view engine", "ejs")
 
 app.use(bodyParser.urlencoded({extended:true}));
-
-app.use(express.static(__dirname));
 
 const bd = mysql.createConnection({
     host: 'localhost',
@@ -26,7 +23,9 @@ bd.connect((err) => {
     console.log('Conectado a la base de datos mysql');
 });
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.set("view engine", "ejs")
+app.set("views", path.join(__dirname, 'views'))
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
@@ -114,10 +113,10 @@ app.post('/cambiardireccion', (req, res) => {
     });
 });
 
-app.get('/', (req,res) =>{
-    const userId = 4
+app.get('/views/perfilUsuario', (req,res) =>{
+    const userId = 4;
 
-    const query = 'SELECT Nombre, CorreoElectronico, RUT, NumeroTelefono FROM usuario IdUsuario = ?'
+    const query = 'SELECT Nombre, CorreoElectronico, RUT, NumeroTelefono FROM usuario WHERE IdUsuario = ?';
 
     bd.query(query, [userId], (err, result) =>{
         if (err){
