@@ -5,8 +5,8 @@ const path = require('path');
 
 const app = express();
 
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+
 app.use(express.static(__dirname));
 
 const bd = mysql.createConnection({
@@ -43,6 +43,72 @@ app.post('/register', (req, res) => {
         }
         console.log('Usuario registrado');
         res.send('Registro exitosos');
+    });
+});
+
+app.post('/cambiarcorreo', (req, res) => {
+    const {nuevoCorreo, confirmarCorreo} = req.body;
+    const userId = 4;
+
+    bd.query('SELECT contrasenia FROM usuario WHERE IdUsuario = ?', [userId], (error, results) => {
+        if (error) return res.status(500).send('Error en el servidor');
+
+        const storedPassword = results[0].contrasenia;
+        if (confirmarCorreo == storedPassword) {
+            bd.query('UPDATE usuario SET CorreoElectronico = ? WHERE IdUsuario = ?', [nuevoCorreo, userId], (error) =>{
+                if (error) return res.status(500).send('Error al actualizar el correo');
+                res.send('Correo actualizado');
+            });
+        } else {
+            res.send("Contraseña incorrecta");
+        }
+        /*bcrypt.compare(confirmarCorreo, storedPassword, (err, isMatch) => {
+            if (err) return res.status(500).send('Error en el servidor');
+            if (!isMatch) return res.status(400).send('Contraseña incorrecta');
+
+            connection.query('UPDATE usuarios SET CorreoElectronico = ? WHERE IdUsuario = ?', [nuevoCorreo, userId], (error) =>{
+                if (error) return res.status(500).send('Error al actualizar el correo');
+                res.send('Correo actualizado');
+            });
+        });*/
+    });
+});
+
+app.post('/cambiartelefono', (req, res) => {
+    const {nuevoTelefono, confirmarTelefono} = req.body;
+    const userId = 4;
+
+    bd.query('SELECT contrasenia FROM usuario WHERE IdUsuario = ?', [userId], (error, results) => {
+        if (error) return res.status(500).send('Error en el servidor');
+
+        const storedPassword = results[0].contrasenia;
+        if (confirmarTelefono == storedPassword) {
+            bd.query('UPDATE usuario SET NumeroTelefono = ? WHERE IdUsuario = ?', [nuevoTelefono, userId], (error) =>{
+                if (error) return res.status(500).send('Error al actualizar el telefono');
+                res.send('Telefono actualizado');
+            });
+        } else {
+            res.send("Contraseña incorrecta");
+        }
+    });
+});
+
+app.post('/cambiardireccion', (req, res) => {
+    const {nuevaDireccion, confirmarDireccion} = req.body;
+    const userId = 4;
+
+    bd.query('SELECT contrasenia FROM usuario WHERE IdUsuario = ?', [userId], (error, results) => {
+        if (error) return res.status(500).send('Error en el servidor');
+
+        const storedPassword = results[0].contrasenia;
+        if (confirmarDireccion == storedPassword) {
+            bd.query('UPDATE usuario SET Direccion = ? WHERE IdUsuario = ?', [nuevaDireccion, userId], (error) =>{
+                if (error) return res.status(500).send('Error al actualizar la direccion');
+                res.send('Direccion actualizada');
+            });
+        } else {
+            res.send("Contraseña incorrecta");
+        }
     });
 });
 

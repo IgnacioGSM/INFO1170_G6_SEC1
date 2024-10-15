@@ -1,7 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const path = require('path');
 
 const app = express();
@@ -29,8 +29,13 @@ app.post('/cambiarcorreo', (req, res) => {
         if (error) return res.status(500).send('Error en el servidor');
 
         const storedPassword = results[0].contrasenia;
-
-        bcrypt.compare(confirmarCorreo, storedPassword, (err, isMatch) => {
+        if (confirmarCorreo == storedPassword) {
+            connection.query('UPDATE usuario SET CorreoElectronico = ? WHERE IdUsuario = ?', [nuevoCorreo, userId], (error) =>{
+                if (error) return res.status(500).send('Error al actualizar el correo');
+                res.send('Correo actualizado');
+            });
+        }
+        /*bcrypt.compare(confirmarCorreo, storedPassword, (err, isMatch) => {
             if (err) return res.status(500).send('Error en el servidor');
             if (!isMatch) return res.status(400).send('Contraseña incorrecta');
 
@@ -38,7 +43,7 @@ app.post('/cambiarcorreo', (req, res) => {
                 if (error) return res.status(500).send('Error al actualizar el correo');
                 res.send('Correo actualizado');
             });
-        });
+        });*/
     });
 });
 
