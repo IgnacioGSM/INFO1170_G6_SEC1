@@ -114,10 +114,10 @@ app.post('/cambiardireccion', (req, res) => {
     });
 });
 
-app.get('/', (res,req) =>{
+app.get('/', (req,res) =>{
     const userId = 4
 
-    const query = 'SELECT Nombre, CorreoElectronico, RUT, NumeroTelefono'
+    const query = 'SELECT Nombre, CorreoElectronico, RUT, NumeroTelefono FROM usuario IdUsuario = ?'
 
     bd.query(query, [userId], (err, result) =>{
         if (err){
