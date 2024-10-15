@@ -5,6 +5,8 @@ const path = require('path');
 
 const app = express();
 
+app.set("view engine", "ejs")
+
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use(express.static(__dirname));
@@ -108,6 +110,25 @@ app.post('/cambiardireccion', (req, res) => {
             });
         } else {
             res.send("Contraseña incorrecta");
+        }
+    });
+});
+
+app.get('/', (res,req) =>{
+    const userId = 4
+
+    const query = 'SELECT Nombre, CorreoElectronico, RUT, NumeroTelefono'
+
+    bd.query(query, [userId], (err, result) =>{
+        if (err){
+            console.error('Error al obtener los datos del usuario: ', err);
+            return res.status(500).send('Error al obtener los datos del usuario');
+        }
+
+        if (result.length > 0){
+            res.render('perfilUsuario', {usuario: result[0]});
+        }else{
+            res.status(404).send('Usuario no encontrado');
         }
     });
 });
