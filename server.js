@@ -41,6 +41,21 @@ app.get('/', (req, res) => {
   }
 });
 
+app.get('/mis_solicitudes', (req, res) => {
+  if (req.session.usuario) {
+    let querySolicitudes = "SELECT * FROM Solicitud WHERE IdUsuario = ?";
+    db.query(querySolicitudes, [req.session.usuario.IdUsuario], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+      res.render('mis_solicitudes', {user: req.session.usuario, solicitudes: result});
+      }
+    });
+  } else {
+    res.render('index', {user: 0}); // No se debería poder acceder a esta página sin estar logeado
+  }
+});
+
 // Rutas para páginas a las que se accede desde index, direcciones temporales hasta que todas estén bien organizadas
 app.get('/iniciosesion', (req, res) => {
   // Para testear, al entrar a iniciosesion se simula que se inicia sesión como usuario
@@ -66,9 +81,6 @@ app.get('/perfilUsuario', (req, res) => {
   res.sendFile(path.join(__dirname,'perfilUsuario.html'));
 });
 
-app.get('/mis_solicitudes', (req, res) => {
-  res.sendFile(path.join(__dirname,'views','mis_solicitudes.html'));
-});
 
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname,'admin.html'));
