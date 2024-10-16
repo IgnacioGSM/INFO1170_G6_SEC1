@@ -27,7 +27,7 @@
     <div class="container d-flex justify-content-center align-items-center mt-5">
         <div class="form-box bg-light p-4 rounded shadow">
             <h1 class="mb-4 text-center">Bienvenido a Hospitrack</h1>
-            <form onsubmit="return validaRegistro();">
+            <form method="post" action="/register" onsubmit="return validaRegistro();">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Ingrese su Nombre:</label>
                     <input type="text" id="nombre" name="Nombre" class="form-control" required>
