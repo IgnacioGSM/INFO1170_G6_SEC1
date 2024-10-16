@@ -19,7 +19,7 @@
             <h2>Gestionar Hospitales</h2>
             <form>
                 <div class="row hospital-grid">
-                    <% hospitales.forEach(function(hospital, index) { %>
+                    <% hospitales.forEach(function(hospital) { %>
                         <div class="col-md-3 col-sm-6 mb-3 d-flex flex-column">
                             <div class="card hospital-card">
                                 <div class="card-body text-center">
@@ -32,7 +32,7 @@
                     <!-- Agregar hospital -->
                     <div class="col-md-3 col-sm-6 mb-3 d-flex flex-column">
                         <div class="card hospital-add">
-                            <a href="agregar_hospital.html" class="btn-add-hospital">
+                            <a href="agregar_hospital" class="btn-add-hospital">
                                 <div class="card-body text-center">
                                     <span class="plus-icon">+</span>
                                     <p>Agregar Hospital</p>
