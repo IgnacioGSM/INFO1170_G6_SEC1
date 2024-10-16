@@ -1,0 +1,204 @@
+/* Variables de color */
+:root {
+    --caladon: #A0D6B4;
+    --mint: #E8F5E9;
+    --dark-spring-green: #1B4D3E;
+    --jade: #2E8B57;
+    --white: #FFFFFF;
+}
+
+/* Estilo general */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--mint);
+    color: var(--dark-spring-green);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Encabezado */
+header {
+    background-color: var(--caladon);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    position: relative;
+}
+
+.header-logo {
+    height: 50px;
+    position: absolute;
+    left: 20px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2em;
+    text-align: center;
+}
+
+/* Main */
+.admin-main {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Sección de formulario */
+section {
+    margin-bottom: 20px;
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: var(--dark-spring-green);
+}
+
+/* Formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid var(--dark-spring-green);
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--jade);
+}
+
+/* Botón de envío */
+button[type="submit"] {
+    align-self: flex-start;
+    padding: 10px 20px;
+    background-color: var(--jade);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--dark-spring-green);
+}
+
+/* Botones de secciones */
+.section-button {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: var(--jade);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.section-button:hover {
+    background-color: var(--dark-spring-green);
+}
+
+/* Footer */
+footer {
+    background-color: var(--caladon);
+    padding: 10px;
+    text-align: center;
+}
+
+/* Secciones grid */
+.seccion-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.seccion-card {
+    background-color: var(--white);
+    border: 2px solid var(--jade);
+    padding: 20px;
+    border-radius: 10px;
+    width: 150px;
+    height: 150px; 
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+    /* Centrado de contenido */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.seccion-card a {
+    text-decoration: none;
+    color: var(--dark-spring-green);
+    font-weight: bold;
+    font-size: 1.2em; /* Ajusta el tamaño de fuente si es necesario */
+}
+
+.seccion-card:hover {
+    border-color: var(--dark-spring-green);
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+}
+
+/* Sección para agregar nueva */
+.seccion-add {
+    background-color: var(--white);
+    border: 2px dashed var(--jade);
+    padding: 20px;
+    border-radius: 10px;
+    width: 150px;
+    height: 150px; /* Mantener misma altura que las tarjetas */
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.seccion-add:hover {
+    border-color: var(--dark-spring-green);
+    background-color: var(--mint);
+}
+
+.btn-add-seccion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--dark-spring-green);
+}
+
+.plus-icon {
+    font-size: 2em;
+    color: var(--jade);
+}
+
+.plus-icon:hover {
+    color: var(--dark-spring-green);
+}
