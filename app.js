@@ -113,6 +113,31 @@ app.post('/cambiardireccion', (req, res) => {
     });
 });
 
+app.post('/cambiarcontraseña', (req, res) => {
+    const {nuevaContraseña, confirmarContraseña, contraseñaActual} = req.body;
+    const userId = 4;
+
+    bd.query('SELECT contrasenia FROM usuario WHERE IdUsuario = ?', [userId], (error, results) => {
+        if (error) return res.status(500).send('Error en el servidor');
+
+        const storedPassword = results[0].contrasenia;
+        if (contraseñaActual === storedPassword) {
+
+            if (nuevaContraseña === confirmarContraseña) {
+
+                bd.query('UPDATE usuario SET Contrasenia = ? WHERE IdUsuario = ?', [nuevaContraseña, userId], (error) =>{
+                    if (error) return res.status(500).send('Error al actualizar la contraseña');
+                    res.send('Contraseña actualizada');
+                });
+            } else {
+                res.send("Contraseña incorrecta");
+            }
+        } else {
+            res.send('La contraseña actual no coincide')
+        }
+    }); 
+});
+
 app.get('/views/perfilUsuario', (req,res) =>{
     const userId = 4;
 
