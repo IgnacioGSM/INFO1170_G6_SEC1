@@ -1,91 +1,69 @@
-// Importar módulos necesarios
 const express = require('express');
-const mysql = require('mysql');
 const bodyParser = require('body-parser');
+const mysql = require('mysql');
+const session = require('express-session');
 const path = require('path');
 
-// Crear una aplicación Express
 const app = express();
+const port = 3000;
 
-// Configuración de body-parser para manejar solicitudes POST
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-// Configurar la carpeta de archivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Configurar EJS como el motor de plantillas
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-// Conexión a la base de datos MySQL
-const bd = mysql.createConnection({
+// Configuración de la conexión a la base de datos
+const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'Hospitrack'
+    database: 'hospitrack'
 });
 
-// Verificar la conexión a la base de datos
-bd.connect((err) => {
+// Conectar a la base de datos
+db.connect((err) => {
     if (err) {
-        console.error('Error conectando a la base de datos:', err);
-        return;
+        throw err;
     }
-    console.log('Conectado a la base de datos MySQL');
+    console.log('Conectado a la base de datos MySQL.');
 });
 
-// Ruta para la página principal del panel del administrador
+// Configuración de middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Ruta para la raíz que redirige a la página de administración
 app.get('/', (req, res) => {
-    bd.query('SELECT * FROM hospitales', (err, hospitales) => {
+    res.redirect('/admin');
+});
+
+// Ruta para el panel de administrador
+app.get('/admin', (req, res) => {
+    db.query('SELECT * FROM hospitales', (err, hospitales) => {
         if (err) {
-            console.error('Error obteniendo hospitales:', err);
-            res.status(500).send('Error en el servidor');
-        } else {
-            res.render('admin', { hospitales });
+            return res.status(500).send('Error en la consulta');
         }
+        res.render('admin', { hospitales });
     });
 });
 
-// Ruta para mostrar el formulario de agregar hospital
+// Ruta para agregar un hospital
 app.get('/agregar_hospital', (req, res) => {
     res.render('agregar_hospital', { error: null, success: null });
 });
 
-// Ruta para manejar el formulario de agregar hospital
-app.post('/agregar_hospital', (req, res) => {
+app.post('/Agregar_hospital', (req, res) => {
     const { id, nombre, latitud, longitud } = req.body;
 
-    if (!id || !nombre || !latitud || !longitud) {
-        return res.render('agregar_hospital', {
-            error: 'Todos los campos son obligatorios.',
-            success: null
-        });
-    }
-
     const query = 'INSERT INTO hospitales (id, nombre, latitud, longitud) VALUES (?, ?, ?, ?)';
-    bd.query(query, [id, nombre, latitud, longitud], (err) => {
-        if (err) {
-            console.error('Error insertando hospital:', err);
-            return res.render('agregar_hospital', {
-                error: 'Hubo un error al agregar el hospital.',
-                success: null
-            });
+    const values = [id, nombre, latitud, longitud];
+
+    db.query(query, values, (error, results) => {
+        if (error) {
+            return res.render('agregar_hospital', { error: 'Error al agregar el hospital.', success: null });
         }
-        res.render('agregar_hospital', {
-            error: null,
-            success: 'Hospital agregado exitosamente.'
-        });
+        res.render('agregar_hospital', { success: 'Hospital agregado correctamente.', error: null });
     });
 });
 
-// Manejo de errores para rutas no encontradas
-app.use((req, res) => {
-    res.status(404).send('Página no encontrada');
-});
-
-// Escuchar en el puerto 3000
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor escuchando en http://localhost:${PORT}`);
+// Iniciar el servidor
+app.listen(port, () => {
+    console.log(`Servidor escuchando en http://localhost:${port}`);
 });
