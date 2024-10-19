@@ -1,48 +1,39 @@
-function validacorreo(correo){
-    var correoPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (correo === ""){
-        return "Este campo no puede estar vacio";
-    }
-    if (!correoPattern.test(correo)){
-        return "Por favor ingresa un correo valido";
-    }
-    return null;
-}
+const correoPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-function validapassword(password){
-    var passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (password === ""){
+function validarcampo(valor, patron, mensaje){
+    if (valor.trim() === ""){
         return "No puedes dejar este campo vacio";
     }
-    if (!passwordPattern.test(password)){
-        return "La contraseña debe contener al menos 8 caracteres, una letra mayuscula, un miniscula y un numero y un caracter especial";
+    if (!patron.test(valor)){
+        return mensaje;
     }
-    return null;
+    return null
 }
 
-function muestraError(inputElement, message){
-    var ElementoError = document.getElementById(inputElement.id + "-error");
+function muestraError(inputElement, mensaje){
+    const ElementoError = document.getElementById(inputElement.id + "-error");
     inputElement.style.border = "1px solid red";
-    ElementoError.innerHTML = message;
+    ElementoError.innerHTML = mensaje;
     ElementoError.style.display = "block";
 }
 
 function limpiaError(inputElement){
-    var ElementoError = document.getElementById(inputElement.id + "-error");
+    const ElementoError = document.getElementById(inputElement.id + "-error");
     inputElement.style.border = "";
     ElementoError.innerHTML = "";
     ElementoError.style.display = "none";
 }
 
 function validaFormu(){
-    var correo = document.getElementById('correo');
-    var password = document.getElementById('password');
+    const correo = document.getElementById('correo');
+    const password = document.getElementById('password');
 
     limpiaError(correo);
     limpiaError(password);
 
-    var correoError = validacorreo(correo.value);
-    var passwordError = validapassword(password.value);
+    const correoError = validarcampo(correo.value, correoPattern, "Ingresa un correo valido");
+    const passwordError = validarcampo(password.value, passwordPattern, "La contraseña debe contener al menos 8 caracteres, una letra mayuscula, un miniscula y un numero y un caracter especial");
 
     if (correoError){
         muestraError(correo, correoError);

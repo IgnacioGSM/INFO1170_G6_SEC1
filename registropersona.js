@@ -1,75 +1,50 @@
-function validanombre(nombre){
-    var nombrePattern = /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s'-]+$/;
-    if (nombre === ""){
-        return "No puedes dejar este campo Vacio";
+const nombrePattern = /^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s'-]+$/;
+const rutPattern = /^[0-9]{1,8}-[0-9Kk]{1}$/;
+const correoPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const contraPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+function validacampo(valor, patron, mensaje){
+    if (valor.trim() === ""){
+        return "No puedes dejar este campo vacio";
     }
-    if (!nombrePattern.test(nombre)){
-        return "Ingresa un nombre valido";
+    if (!patron.test(valor)){
+        return mensaje;
     }
-    return null;
+    return null
 }
 
-function validarut(rut){
-    var rutPattern = /^[0-9]{1,8}-[0-9Kk]{1}$/;
-    if (rut === ""){
-        return "No puedes dejar este campo Vacio";
-    }
-    if (!rutPattern.test(rut)){
-        return "Ingresa un RUT valido";
-    }
-    return null;
-}
-
-function validacorreo(correo){
-    var correoPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (correo === ""){
-        return "No puedes dejar este campo Vacio";
-    }
-    if (!correoPattern.test(correo)){
-        return "Ingresa un correo valido";
-    }
-    return null;
-}
-
-function muestraError(inputElement, message){
-    var ElementoError = document.getElementById(inputElement.id + "-error");
+function muestraError(inputElement, mensaje){
+    const ElementoError = document.getElementById(inputElement.id + "-error");
     inputElement.style.border = "1px solid red";
-    ElementoError.innerHTML = message;
+    ElementoError.innerHTML = mensaje;
     ElementoError.style.display = "block";
 }
 
 function limpiaError(inputElement){
-    var ElementoError = document.getElementById(inputElement.id + "-error");
+    const ElementoError = document.getElementById(inputElement.id + "-error");
     inputElement.style.border = "";
     ElementoError.innerHTML = "";
     ElementoError.style.display = "none";
 }
 
 function validaRegistro(){
-    var nombre = document.getElementById('nombre');
-    var rut = document.getElementById('rut');
-    var correo = document.getElementById('correo');
+    const inputs = [
+        {element: document.getElementById('nombre'), pattern: nombrePattern, mensaje: "Ingresa un nombre valido"},
+        {element: document.getElementById('rut'), pattern: rutPattern, mensaje: "Ingresa un RUT valido, sin puntos y usando guion"},
+        {element: document.getElementById('correo'), pattern: correoPattern, mensaje: "Ingresa un correo valido"},
+        {element: document.getElementById('contraseña'), pattern: contraPattern, mensaje: "La contraseña debe contener al menos 8 caracteres, una letra mayuscula, un miniscula y un numero y un caracter especial"}
+    ];
 
-    limpiaError(nombre);
-    limpiaError(rut);
-    limpiaError(correo);
+    let isValid = true;
 
-    var nombreError = validanombre(nombre.value);
-    var rutError = validarut(rut.value);
-    var correoError = validacorreo(correo.value);
+    inputs.forEach(({element, pattern, mensaje}) => {
+        limpiaError(element);
+        const error = validacampo(element.value, pattern, mensaje);
+        if (error) {
+            muestraError(element, error);
+            isValid = false;
+        }
+    });
 
-    if (nombreError){
-        muestraError(nombre, nombreError);
-        return false;
-    }
-    if (rutError){
-        muestraError(rut, rutError);
-        return false;
-    }
-    if (correoError){
-        muestraError(correo, correoError);
-        return false;
-    }
-    
-    return true;
+    return isValid;
 }
