@@ -59,7 +59,7 @@ fetch("fetch_testing/json_prueba.json")     // este fetch crea los marcadores en
         console.log("añadiendo hospitales del json");
         hospitales.forEach(hospital => {
             console.log("añadiendo " + hospital.nombre);
-            hospitales_en_json[hospital.id] = hospital;
+            hospitales_en_json[hospital.id] = hospital;     // guarda los hospitaes en un diccionario
         });
     })
     .then(() => {
@@ -68,37 +68,56 @@ fetch("fetch_testing/json_prueba.json")     // este fetch crea los marcadores en
             var marker = L.marker([hospitales_en_json[i].latitud, hospitales_en_json[i].longitud], {icon: MarcadorRojo}).addTo(map);
             marker.bindPopup("<b>" + hospitales_en_json[i].nombre + "</b>");
 
-            marker.on('click', function(marker){
+            marker.on('click', function(marker){    // Lo que ocurre al clickear un marcador del mapa
                 document.getElementById("index-hospital-name").innerHTML = hospitales_en_json[i].nombre;
 
-                let secciones_list = document.getElementById("index-secciones-lista");
+                let secciones_table_body = document.getElementById("index-secciones-lista");
 
-                while (secciones_list.firstChild) {
-                    secciones_list.removeChild(secciones_list.lastChild);       // mata a todos los hijos de la lista de secciones
+                while (secciones_table_body.firstChild) {
+                    secciones_table_body.removeChild(secciones_table_body.lastChild);       // mata a todos los hijos de la lista de secciones
                 }
 
                 current_hospital = hospitales_en_json[i].id;
 
                 hospitales_en_json[i].secciones.forEach(seccion => {        // añade las secciones del hospital al html
-                    let seccion_element = document.createElement("li");
-                    seccion_element.className = "index-secciones-item";
-                    seccion_element.innerHTML = seccion;
-                    secciones_list.appendChild(seccion_element);
+                    let table_row = document.createElement("tr");
+                    let table_data = document.createElement("td");
+                    table_data.innerHTML = seccion;
+                    table_row.appendChild(table_data);
+                    table_row.setAttribute("role", "button");
+                    secciones_table_body.appendChild(table_row);
                 })
 
-                document.getElementById("index-filas-subtitulo").innerHTML = "-------";  // valor default antes de seleccionar seccion
-                document.getElementById("index-filas-value").innerHTML = "Escoja una sección...";
+                document.getElementById("index-filas-seccion").innerHTML = "Seleccione una sección";
+                document.getElementById("index-filas-cantidad").innerHTML = ". . .";
 
 
-                for (let j = 0; j < hospitales_en_json[i].secciones.length; j++) {
-                    let lista_secciones = document.getElementById("index-secciones-lista");
-                    lista_secciones.childNodes[j].addEventListener("click", function() {        // cambia el color de la seccion seleccionada
+                let lista_secciones = document.getElementById("index-secciones-lista");
+                lista_secciones.childNodes.forEach(child => {
+                    child.addEventListener("click", function() {                        // funcion al clickear una sección
                         for (let k = 0; k < hospitales_en_json[i].secciones.length; k++) {
-                            lista_secciones.childNodes[k].style.backgroundColor = "#bbd6cd";
-                            lista_secciones.childNodes[k].style.color = "#1B4D3E";
+                            lista_secciones.childNodes[k].classList.remove("table-success");
                         }
-                        this.style.backgroundColor = "#22a17b";
-                        this.style.color = "white";
+                        this.classList.add("table-success");                // cambia el color de la seccion seleccionada y quita el color de las demas
+
+                        document.getElementById("index-filas-seccion").innerHTML = this.textContent;    // muestra el nombre de la seccion seleccionada en el cuadro de filas
+
+                        for (let k = 0; k < hospitales_en_json[i].secciones.length; k++) {          // busca el numero de fila correspondiente a la seccion seleccionada
+                            console.log(hospitales_en_json[i].secciones[k] + " contra " + this.textContent);
+                            if (hospitales_en_json[i].secciones[k] == this.textContent) {
+                                document.getElementById("index-filas-cantidad").textContent = hospitales_en_json[i].filas[k] + " personas";
+                            }
+                        }
+                    })
+                });
+
+
+
+                    /*lista_secciones.childNodes[j].addEventListener("click", function() {        // cambia el color de la seccion seleccionada
+                        for (let k = 0; k < hospitales_en_json[i].secciones.length; k++) {
+                            lista_secciones.childNodes[k].class = '';
+                        }
+                        this.class = "selected";
 
                         document.getElementById("index-filas-subtitulo").innerHTML = this.innerHTML;    // muestra el nombre de la seccion seleccionada en el cuadro de filas
                         for (let k = 0; k < hospitales_en_json[i].secciones.length; k++) {          // busca el numero de fila correspondiente a la seccion seleccionada
@@ -106,8 +125,8 @@ fetch("fetch_testing/json_prueba.json")     // este fetch crea los marcadores en
                                 document.getElementById("index-filas-value").innerHTML = hospitales_en_json[i].filas[k] + " personas";
                             }
                         }
-                    })
-                }
+                    })*/
+                
 
                 selectingHospital();
             });
