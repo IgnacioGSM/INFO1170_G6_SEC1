@@ -31,6 +31,18 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Ruta principal para la interfaz de recepcionista
+app.get('/recepcionista', async (req, res) => {
+    try {
+      const solicitudes = await db.query('SELECT * FROM solicitudes'); // Obtener solicitudes de la base de datos
+      res.render('recepcionista', { solicitudes });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error al cargar las solicitudes');
+    }
+  });
+  
+
 app.post('/register', (req, res) => {
     let {Nombre, rut, correo, contraseña} = req.body;
     rut = rut.replace(/[-]/g, '');

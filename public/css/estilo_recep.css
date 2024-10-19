@@ -1,0 +1,151 @@
+/* Estilos adicionales y específicos */
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Titulares de cada sección */
+  .gestion-registros h2,
+  #recepcion-solicitudes h2,
+  #historial-solicitudes h2,
+  #perfil-view h2 {
+    background-color: #2E8B57;
+    color: white;
+    padding: 10px;
+    border-radius: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos personalizados para el menú de navegación */
+#nav-menu {
+    display: flex; /* Para que los botones se dispongan horizontalmente */
+    position: absolute;
+    top: 160px;
+    right: 250px;
+    justify-content: space-around; /* Distribuye los botones de manera uniforme */
+    background-color: #f8f9fa; /* Fondo claro para el nav */
+    padding: 10px; /* Espaciado alrededor del menú */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para el menú */
+    z-index: 10;
+  }
+  
+  #nav-menu button {
+    flex: 0 1 auto; /* Cada botón ocupa el mismo espacio horizontal */
+    background-color: #28a745; /* Fondo verde de los botones */
+    color: white; /* Color del texto blanco */
+    border: 2px solid #28a745; /* Borde del mismo color del fondo */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 8px 15px; /* Espaciado interno del botón */
+    margin: 0 10px; /* Espaciado entre los botones */
+    text-align: center; /* Alineación del texto centrada */
+    font-size: 1rem; /* Tamaño de la fuente */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Animación suave */
+  }
+  
+  #nav-menu button:hover {
+    background-color: #218838; /* Fondo más oscuro al hacer hover */
+    transform: translateY(-2px); /* Efecto de elevación en hover */
+  }
+  
+  #nav-menu button:focus {
+    outline: none; /* Sin bordes feos al enfocarse */
+    box-shadow: 0px 0px 5px 2px rgba(40, 167, 69, 0.6); /* Sombra verde al enfoque */
+  }
+  
+  /* Botones de acción */
+  .btn {
+    margin: 5px; /* Añadimos márgenes para los botones */
+  }
+  
+  /* Colores personalizados para los botones */
+  .btn-success {
+    background-color: #4CAF50 !important;  /* Verde claro */
+    border-color: #4CAF50 !important;
+  }
+  
+  .btn-primary {
+    background-color: #5cb85c !important;  /* Verde un poco más claro */
+    border-color: #5cb85c !important;
+  }
+  
+  .btn-danger {
+    background-color: #e74c3c !important; /* Rojo oscuro */
+    border-color: #e74c3c !important;
+  }
+  
+  /* Margen general para formularios */
+  form {
+    margin-bottom: 20px;
+  }
+  
+  /* Tabla de espera */
+  #tabla-registros-espera th, 
+  #tabla-registros-espera td {
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px; /* Margen en la tabla */
+  }
+  
+  /* Botones dentro de la tabla */
+  #tabla-registros-espera td button {
+    background-color: #5cb85c;
+    color: white;
+    border-radius: 5px;
+    margin: 5px; /* Añadimos margen a los botones de la tabla */
+  }
+  
+  /* Estilo para el input de archivo */
+  input[type="file"] {
+    margin-top: 10px;
+  }
+  
+  /* Estilo para input con error */
+  input.error {
+    border: 2px solid red;
+  }
+  
+  /* Notificaciones en tiempo real */
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #2E8B57;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInOut 5s forwards;
+  }
+  
+  /* Animación para las notificaciones */
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    10% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    90% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
+  
+  /* Ocultamos los elementos con d-none de Bootstrap */
+  .nav-menu.d-none {
+    display: none !important;
+  }
+  
