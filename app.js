@@ -1,16 +1,28 @@
 const express = require('express');
-const router = express.Router();
-const db = require('/hospitrack.db'); // Conexión a la base de datos
+const path = require('path');
+const app = express();
+const db = require('/hospitrack.db'); // Tu módulo de base de datos
 
-// Ruta para cargar la página de recepcionista
-router.get('/recepcionista', async (req, res) => {
+// Configuración de EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Servir archivos estáticos
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Ruta principal para la interfaz de recepcionista
+app.get('/recepcionista', async (req, res) => {
   try {
-    const solicitudes = await db.query('SELECT * FROM solicitudes'); // Obtener solicitudes desde la base de datos
-    res.render('inter_recepcionista', { solicitudes });
+    const solicitudes = await db.query('SELECT * FROM solicitudes'); // Obtener solicitudes de la base de datos
+    res.render('recepcionista', { solicitudes });
   } catch (error) {
     console.error(error);
     res.status(500).send('Error al cargar las solicitudes');
   }
 });
 
-module.exports = router;
+// Iniciar servidor
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor ejecutándose en el puerto ${PORT}`);
+});
