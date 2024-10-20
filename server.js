@@ -56,6 +56,25 @@ app.get('/mis_solicitudes', (req, res) => {
   }
 });
 
+app.get('/solicitud', (req, res) => {
+  console.log("Entrando a la solicitud: " + req.query.idsoli);  // asi se recibe el id de la solicitud
+  if (req.session.usuario) {
+    let queryPaginaSolicitud = "SELECT soli.*, sec.NombreSeccion, cen.Nombre AS NombreHospital \
+                                FROM Solicitud soli \
+                                INNER JOIN Seccion sec ON soli.IdSeccion = sec.IdSeccion \
+                                INNER JOIN CentroSalud cen ON cen.IdCentro = sec.IdCentro \
+                                WHERE soli.IdSolicitud = ?";
+    db.query(queryPaginaSolicitud, [req.query.idsoli], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result);
+        res.render('solicitud', {user: req.session.usuario, solicitud: result[0]});
+      }
+    });
+  }
+});
+
 // Rutas para páginas a las que se accede desde index, direcciones temporales hasta que todas estén bien organizadas
 app.get('/iniciosesion', (req, res) => {
   // Para testear, al entrar a iniciosesion se simula que se inicia sesión como usuario

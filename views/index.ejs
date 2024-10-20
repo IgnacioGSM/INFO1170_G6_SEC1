@@ -93,7 +93,7 @@
                     <% } %>
                     <h2 class="text-bg-dark m-0">Reservar puesto</h2>
                     <h6 class="text-bg-dark m-0 mb-3">Esta información será visible solo para el recepcionista de la sección</h6>
-                    <form class="container" method="POST" action="/submit_solicitud" id="index-reservacion-form" onsubmit="validarForm();">     <!-- preventDefault evita que se recargue la pagina si el formulario no es valido -->
+                    <form class="container" method="POST" action="/submit_solicitud" id="index-reservacion-form" onsubmit="validarForm();">
                         <div class="form-group">
                             <input class="form-control mb-3" name="rut" id="rut" maxlength="9" type="text" placeholder="Rut" value="<%= user.RUT %>" required>
                             <input class="form-control mb-3" name="correo" id="correo" type="text" placeholder="Correo" value="<%= user.CorreoElectronico %>" required>
