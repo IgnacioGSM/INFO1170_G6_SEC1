@@ -68,7 +68,7 @@ app.get('/iniciosesion', (req, res) => {
       res.send("Usuario no encontrado");
     } else {
       req.session.usuario = result[0];
-      res.sendFile(path.join(__dirname,'iniciosesion.html')); // Envío de respuestas DENTRO de la función del query, para que no se envíe antes de que se ejecute la consulta
+      res.sendFile(path.join(__dirname,'views','iniciosesion.html')); // Envío de respuestas DENTRO de la función del query, para que no se envíe antes de que se ejecute la consulta
     }
   });
 });
@@ -123,7 +123,7 @@ app.post('/submit_solicitud', (req, res) => {
                     console.log(err);
                 } else {
                     console.log("Solicitud enviada");
-                    res.render('index', {user: req.session.usuario});
+                    res.redirect('/');
                 }
             });
         }

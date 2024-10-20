@@ -16,75 +16,51 @@
     </style>
 </head>
 <body>
-    <%- include('partials/header') %>
+    <%- include('partials/header', {index:0}) %>        <!-- Se incluye el header con la variable index en 0 para que aparezca el boton de inicio -->
 
     <main class="container text-center bg-body-secondary shadow">
         <h1 class="text-bg-dark rounded mb-4">Mis Solicitudes</h1>
         <h2>Solicitudes pendientes</h2>
         <ul class="list-group">
             <% for (let i = 0; i < solicitudes.length; i++) { %>
-
-            <li class="list-group-item soli-pendiente">                        <!-- Una solicitud -->
-                <ul class="list-group list-group-horizontal">   <!-- Datos de la solicitud -->
-                    <div class="list-group list-group-horizontal col-9">
-                        <li class="list-group-item w-25 text-bg-light">Hospital: Hospital 3</li>
-                        <li class="list-group-item w-25 text-bg-light">Sección: Emergencia</li>
-                        <li class="list-group-item w-25 text-bg-light">Fecha: <%= solicitudes[i].HoraSolicitud.getDate() + "/" + solicitudes[i].HoraSolicitud.getMonth() + "/" + solicitudes[i].HoraSolicitud.getFullYear() %></li>
-                        <li class="list-group-item w-25 text-bg-light">Hora: <%= solicitudes[i].HoraSolicitud.getHours() + ":" + solicitudes[i].HoraSolicitud.getMinutes() %></li>
-                    </div>
-                    <li class="list-group-item col-3 bg-warning-subtle">Estado: <%= solicitudes[i].Estado %></li>
-                </ul>
-            </li>
+                <% if (solicitudes[i].Estado == "pendiente") { %>
+                    <li class="list-group-item soli-pendiente">                        <!-- Una solicitud -->
+                        <ul class="list-group list-group-horizontal">   <!-- Datos de la solicitud -->
+                            <div class="list-group list-group-horizontal col-9">
+                                <li class="list-group-item w-25 text-bg-light">Hospital: Hospital 3</li>
+                                <li class="list-group-item w-25 text-bg-light">Sección: Emergencia</li>
+                                <li class="list-group-item w-25 text-bg-light">Fecha: <%= solicitudes[i].HoraSolicitud.getDate() + "/" + solicitudes[i].HoraSolicitud.getMonth() + "/" + solicitudes[i].HoraSolicitud.getFullYear() %></li>
+                                <li class="list-group-item w-25 text-bg-light">Hora: <%= solicitudes[i].HoraSolicitud.getHours() + ":" + solicitudes[i].HoraSolicitud.getMinutes() %></li>
+                            </div>
+                            <li class="list-group-item col-3 bg-warning-subtle">Estado: <%= solicitudes[i].Estado %></li>
+                        </ul>
+                    </li>
+                <% } %>
             <% } %>
         </ul>
             
         <br>
         <h2>Solicitudes pasadas</h2>
         <ul class="list-group">
-            <li class="list-group-item soli-pasada">
-                <ul class="list-group list-group-horizontal">
-                    <div class="list-group list-group-horizontal col-9">
-                        <li class="list-group-item w-25 text-bg-light">Hospital: Hospital 1</li>
-                        <li class="list-group-item w-25 text-bg-light">Sección: Emergencia</li>
-                        <li class="list-group-item w-25 text-bg-light">Fecha: 01/01/2021</li>
-                        <li class="list-group-item w-25 text-bg-light">Hora: 12:00</li>
-                    </div>
-                    <li class="list-group-item col-3 bg-success-subtle">Estado: Aceptada</li>
-                </ul>
-            </li>
-            <li class="list-group-item soli-pasada">
-                <ul class="list-group list-group-horizontal">
-                    <div class="list-group list-group-horizontal col-9">
-                        <li class="list-group-item w-25 text-bg-light">Hospital: Hospital 2</li>
-                        <li class="list-group-item w-25 text-bg-light">Sección: Consultas</li>
-                        <li class="list-group-item w-25 text-bg-light">Fecha: 04/12/2024</li>
-                        <li class="list-group-item w-25 text-bg-light">Hora: 4:00</li>
-                    </div>
-                    <li class="list-group-item col-3 bg-danger-subtle">Estado: Rechazada</li>
-                </ul>
-            </li>
-            <li class="list-group-item soli-pasada">
-                <ul class="list-group list-group-horizontal">
-                    <div class="list-group list-group-horizontal col-9">
-                        <li class="list-group-item w-25 text-bg-light">Hospital: Hospital 4</li>
-                        <li class="list-group-item w-25 text-bg-light">Sección: uwu</li>
-                        <li class="list-group-item w-25 text-bg-light">Fecha: 01/01/2021</li>
-                        <li class="list-group-item w-25 text-bg-light">Hora: 12:00</li>
-                    </div>
-                    <li class="list-group-item col-3 bg-success-subtle">Estado: Aceptada</li>
-                </ul>
-            </li>
-            <li class="list-group-item soli-pasada">
-                <ul class="list-group list-group-horizontal">
-                    <div class="list-group list-group-horizontal col-9">
-                        <li class="list-group-item w-25 text-bg-light">Hospital: Hospital 5</li>
-                        <li class="list-group-item w-25 text-bg-light">Sección: uwu</li>
-                        <li class="list-group-item w-25 text-bg-light">Fecha: 01/01/2021</li>
-                        <li class="list-group-item w-25 text-bg-light">Hora: 12:00</li>
-                    </div>
-                    <li class="list-group-item col-3 bg-success-subtle">Estado: Aceptada</li>
-                </ul>
-            </li>
+            <% for (let i = 0; i < solicitudes.length; i++) { %>
+                <% if (solicitudes[i].Estado != "pendiente") { %>
+                    <li class="list-group-item soli-pendiente">                        <!-- Una solicitud -->
+                        <ul class="list-group list-group-horizontal">   <!-- Datos de la solicitud -->
+                            <div class="list-group list-group-horizontal col-9">
+                                <li class="list-group-item w-25 text-bg-light">Hospital: Hospital 3</li>
+                                <li class="list-group-item w-25 text-bg-light">Sección: Emergencia</li>
+                                <li class="list-group-item w-25 text-bg-light">Fecha: <%= solicitudes[i].HoraSolicitud.getDate() + "/" + solicitudes[i].HoraSolicitud.getMonth() + "/" + solicitudes[i].HoraSolicitud.getFullYear() %></li>
+                                <li class="list-group-item w-25 text-bg-light">Hora: <%= solicitudes[i].HoraSolicitud.getHours() + ":" + solicitudes[i].HoraSolicitud.getMinutes() %></li>
+                            </div>
+                            <% if (solicitudes[i].Estado == "aceptada") { %>
+                                <li class="list-group-item col-3 bg-success-subtle">Estado: <%= solicitudes[i].Estado %></li>
+                            <% } else { %>
+                                <li class="list-group-item col-3 bg-danger-subtle">Estado: <%= solicitudes[i].Estado %></li>
+                            <% } %>
+                        </ul>
+                    </li>
+                <% } %>
+            <% } %>
         </ul>
     </main>
 

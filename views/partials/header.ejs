@@ -21,6 +21,10 @@
                 <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" role="button" href="iniciosesion">Iniciar Sesión</a></li>
                 <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="registropersona">Registrarse</a></li>
             <% } %>
+
+            <% if (!index) { %>     <!-- Si index es false (no se llamó este partial desde index) se mostrará un boton para volver al inicio -->
+                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/">Inicio</a></li>
+            <% } %>
         </ul>
     
     </header>
