@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="keywords" content="hospital cercano, consulta, hora medica, hospital, Hospitrack">
+    <meta name="description" content="HospiTrack es una aplicación web que te permite visualizar las filas de espera en hospitales cercanos y reservar tu puesto en la fila.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>HospiTrack</title>
+    <style>
+        #map {
+            height: 800px;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    
+    <main class="container text-center bg-body-secondary shadow">
+        <div class="row">
+            <div id="map" class="col-8"></div>
+
+            <article id="no-hospital" class="col-4 mx-auto my-auto">
+                <h1>Seleccione un hospital</h1>
+            </article>
+            
+            <article id="hospital-seleccionado" class="col-4 flex-column justify-content-center">
+                <h1 id="index-hospital-name">Nombre del hospital</h1>
+                
+                <!-- Tabla con las secciones del hospital -->
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="table-dark">
+                            <th>Sección</th>
+                        </tr>
+                    </thead>
+                    <tbody id="index-secciones-lista">
+
+                    </tbody>
+                </table>
+                
+                <!-- Tabla con las personas en espera en la sección seleccionada -->
+                <table class="table table-borderless">
+                    <thead>
+                        <tr class="table-dark">
+                            <th scope="col">Gente en espera</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th id="index-filas-seccion">Seleccione una sección</th>
+                        </tr>
+                        <tr>
+                            <td id="index-filas-cantidad">. . .</td>
+                        </tr>
+                    </tbody>
+                </table>
+               
+
+                <div class="bg-white position-relative">
+                    <% if (!user) { %>
+                    <div id="index-formulario-invitado" class="container z-3 position-absolute d-flex flex-column justify-content-center text-bg-dark bg-opacity-75 w-100 h-100">
+                        <h1>Inicie sesión para poder solicitar una reserva</h1>
+                        <a class="btn btn-success m-2" href="iniciosesion">Iniciar Sesión</a>
+                        <a class="btn btn-success m-2" href="registropersona">Registrarse</a>
+                    </div>
+                    <h2 class="text-bg-dark m-0">Reservar puesto</h2>
+                    <h6 class="text-bg-dark m-0 mb-3">Esta información será visible solo para el recepcionista de la sección</h6>
+                    <form class="container" method="POST" action="/submit_solicitud" id="index-reservacion-form" onsubmit="validarForm();">
+                        <div class="form-group">
+                            <input class="form-control mb-3" name="rut" id="rut" maxlength="9" type="text" placeholder="Rut" required disabled>
+                            <input class="form-control mb-3" name="correo" id="correo" type="text" placeholder="Correo" required disabled>
+                            <textarea class="form-control mb-3" name="motivo_consulta" id="motivo-consulta"  name="motivo-consulta" rows="3" placeholder="Motivo de consulta" required></textarea>
+                        </div>
+                        <input class="btn btn-success mb-3" type="submit" value="Reservar">
+                    </form>
+                    <% } else { %>
+
+                    <% if (user.TipoUsuario == 'suspendido') { %>
+                    <div id="index-formulario-suspendido" class="container z-3 position-absolute d-flex flex-column justify-content-center text-bg-dark bg-opacity-75 w-100 h-100">
+                        <h1>Se han deshabilitado las solicitudes de reserva en tu cuenta</h1>
+                        <h2>Más información en:</h2>
+                        <a class="btn btn-success" href="#">suspensión de cuentas</a>
+                    </div>
+                    <% } %>
+                    <h2 class="text-bg-dark m-0">Reservar puesto</h2>
+                    <h6 class="text-bg-dark m-0 mb-3">Esta información será visible solo para el recepcionista de la sección</h6>
+                    <form class="container" method="POST" action="/submit_solicitud" id="index-reservacion-form" onsubmit="validarForm();">     <!-- preventDefault evita que se recargue la pagina si el formulario no es valido -->
+                        <div class="form-group">
+                            <input class="form-control mb-3" name="rut" id="rut" maxlength="9" type="text" placeholder="Rut" value="<%= user.RUT %>" required>
+                            <input class="form-control mb-3" name="correo" id="correo" type="text" placeholder="Correo" value="<%= user.CorreoElectronico %>" required>
+                            <textarea class="form-control mb-3" name="motivo_consulta" id="motivo-consulta"  name="motivo-consulta" rows="3" placeholder="Motivo de consulta" required></textarea>
+                        </div>
+                        <input class="btn btn-success mb-3" type="submit" value="Reservar">
+                    </form>
+                    <% } %>
+
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <%- include('partials/footer.ejs') %>
+    
+    <script src="js/index/script_mapa.js"></script>
+    <script src="js/index/validacion_reserva.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

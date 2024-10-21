@@ -49,7 +49,7 @@ document.getElementById("rut").addEventListener("input", function() {
 
 document.getElementById("rut").addEventListener("blur", function() {
     formatearRUT(this);
-}); // Formatea el rut al salir del campo, añade los puntos y guión
+}); // Agrega formato rut al salir del campo, añade los puntos y guión ------ Falta hacer que esto se ejecute al cargar la pagina
 
 document.getElementById("rut").addEventListener("focus", function() {
     limpiarRUT(this);
