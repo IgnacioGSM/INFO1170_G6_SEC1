@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const path = require('path');
+const session = require('express-session');
 
 const app = express();
 const port = 3000;
@@ -28,6 +29,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Configuración de sesiones para manejar el `user`
+app.use(session({
+    secret: 'secreto',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Asegúrate de configurar esto correctamente en producción (secure: true si usas HTTPS)
+}));
+
+// Simular un middleware de autenticación para asignar un usuario
+app.use((req, res, next) => {
+    if (!req.session.user) {
+        req.session.user = { id: 1, nombre: 'Admin' }; // Simulación de un usuario autenticado
+    }
+    next();
+});
+
 // Ruta para la página principal que redirige al panel de administración
 app.get('/', (req, res) => {
     res.redirect('/admin');
@@ -39,13 +56,13 @@ app.get('/admin', (req, res) => {
         if (err) {
             return res.status(500).send('Error en la consulta');
         }
-        res.render('admin', { hospitales });
+        res.render('admin', { hospitales, user: req.session.user });
     });
 });
 
 // Ruta para agregar un hospital
 app.get('/agregar_hospital', (req, res) => {
-    res.render('agregar_hospital', { error: null, success: null });
+    res.render('agregar_hospital', { error: null, success: null, user: req.session.user });
 });
 
 app.post('/agregar_hospital', (req, res) => {
@@ -55,9 +72,9 @@ app.post('/agregar_hospital', (req, res) => {
 
     db.query(query, values, (error) => {
         if (error) {
-            return res.render('agregar_hospital', { error: 'Error al agregar el hospital.', success: null });
+            return res.render('agregar_hospital', { error: 'Error al agregar el hospital.', success: null, user: req.session.user });
         }
-        res.render('agregar_hospital', { success: 'Hospital agregado correctamente.', error: null });
+        res.render('agregar_hospital', { success: 'Hospital agregado correctamente.', error: null, user: req.session.user });
     });
 });
 
@@ -70,7 +87,7 @@ app.get('/editar_hospital/:id', (req, res) => {
         if (err || results.length === 0) {
             return res.status(404).send('Hospital no encontrado');
         }
-        res.render('editar_hospital', { hospital: results[0], error: null, success: null });
+        res.render('editar_hospital', { hospital: results[0], error: null, success: null, user: req.session.user });
     });
 });
 
@@ -82,9 +99,9 @@ app.post('/editar_hospital/:id', (req, res) => {
 
     db.query(query, [nombre, latitud, longitud, hospitalId], (error) => {
         if (error) {
-            return res.render('editar_hospital', { hospital: { id: hospitalId, nombre, latitud, longitud }, error: 'Error al actualizar el hospital.', success: null });
+            return res.render('editar_hospital', { hospital: { id: hospitalId, nombre, latitud, longitud }, error: 'Error al actualizar el hospital.', success: null, user: req.session.user });
         }
-        res.render('editar_hospital', { hospital: { id: hospitalId, nombre, latitud, longitud }, success: 'Hospital actualizado correctamente.', error: null });
+        res.render('editar_hospital', { hospital: { id: hospitalId, nombre, latitud, longitud }, success: 'Hospital actualizado correctamente.', error: null, user: req.session.user });
     });
 });
 
