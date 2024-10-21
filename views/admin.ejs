@@ -24,7 +24,8 @@
                             <div class="card hospital-card">
                                 <div class="card-body text-center">
                                     <h5 class="card-title"><%= hospital.nombre %></h5>
-                                    <a href="editar_hospital.html?id=<%= hospital.id %>" class="btn btn-custom">Editar</a>
+                                    <!-- Cambiado para usar ejs en lugar de html -->
+                                    <a href="/editar_hospital/<%= hospital.id %>" class="btn btn-custom">Editar</a>
                                 </div>
                             </div>
                         </div>
@@ -32,7 +33,7 @@
                     <!-- Agregar hospital -->
                     <div class="col-md-3 col-sm-6 mb-3 d-flex flex-column">
                         <div class="card hospital-add">
-                            <a href="agregar_hospital" class="btn-add-hospital">
+                            <a href="/agregar_hospital" class="btn-add-hospital">
                                 <div class="card-body text-center">
                                     <span class="plus-icon">+</span>
                                     <p>Agregar Hospital</p>

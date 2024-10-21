@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
-const session = require('express-session');
 const path = require('path');
 
 const app = express();
@@ -29,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Ruta para la raíz que redirige a la página de administración
+// Ruta para la página principal que redirige al panel de administración
 app.get('/', (req, res) => {
     res.redirect('/admin');
 });
@@ -49,17 +48,56 @@ app.get('/agregar_hospital', (req, res) => {
     res.render('agregar_hospital', { error: null, success: null });
 });
 
-app.post('/Agregar_hospital', (req, res) => {
+app.post('/agregar_hospital', (req, res) => {
     const { id, nombre, latitud, longitud } = req.body;
-
     const query = 'INSERT INTO hospitales (id, nombre, latitud, longitud) VALUES (?, ?, ?, ?)';
     const values = [id, nombre, latitud, longitud];
 
-    db.query(query, values, (error, results) => {
+    db.query(query, values, (error) => {
         if (error) {
             return res.render('agregar_hospital', { error: 'Error al agregar el hospital.', success: null });
         }
         res.render('agregar_hospital', { success: 'Hospital agregado correctamente.', error: null });
+    });
+});
+
+// Ruta para editar un hospital (formulario)
+app.get('/editar_hospital/:id', (req, res) => {
+    const hospitalId = req.params.id;
+    const query = 'SELECT * FROM hospitales WHERE id = ?';
+
+    db.query(query, [hospitalId], (err, results) => {
+        if (err || results.length === 0) {
+            return res.status(404).send('Hospital no encontrado');
+        }
+        res.render('editar_hospital', { hospital: results[0], error: null, success: null });
+    });
+});
+
+// Ruta para actualizar un hospital
+app.post('/editar_hospital/:id', (req, res) => {
+    const hospitalId = req.params.id;
+    const { nombre, latitud, longitud } = req.body;
+    const query = 'UPDATE hospitales SET nombre = ?, latitud = ?, longitud = ? WHERE id = ?';
+
+    db.query(query, [nombre, latitud, longitud, hospitalId], (error) => {
+        if (error) {
+            return res.render('editar_hospital', { hospital: { id: hospitalId, nombre, latitud, longitud }, error: 'Error al actualizar el hospital.', success: null });
+        }
+        res.render('editar_hospital', { hospital: { id: hospitalId, nombre, latitud, longitud }, success: 'Hospital actualizado correctamente.', error: null });
+    });
+});
+
+// Ruta para eliminar un hospital
+app.post('/eliminar_hospital/:id', (req, res) => {
+    const hospitalId = req.params.id;
+    const query = 'DELETE FROM hospitales WHERE id = ?';
+
+    db.query(query, [hospitalId], (error) => {
+        if (error) {
+            return res.status(500).send('Error al eliminar el hospital');
+        }
+        res.redirect('/admin');
     });
 });
 
