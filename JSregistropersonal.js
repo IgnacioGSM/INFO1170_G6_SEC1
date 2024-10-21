@@ -1,10 +1,17 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const app = express();
 const path = require('path');
+const bodyParser = require('body-parser');
 
 app.use(express.json());
+
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
+app.use(express.static(__dirname));
+
+
 
 const connection = mysql.createConnection({
     host: 'localhost',
