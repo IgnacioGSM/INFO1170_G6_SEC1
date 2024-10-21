@@ -68,11 +68,27 @@ app.get('/solicitud', (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        console.log(result);
-        res.render('solicitud', {user: req.session.usuario, solicitud: result[0]});
+        if (result[0].Estado === 'pendiente') {
+          res.render('solicitud', {user: req.session.usuario, solicitud: result[0], respuesta: 0});
+        }
+        else {
+          let queryRespuesta = "SELECT * FROM RespuestaSolicitud WHERE IdSolicitud = ?";
+          db.query(queryRespuesta, [req.query.idsoli], (err, result2) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.render('solicitud', {user: req.session.usuario, solicitud: result[0], respuesta: result2[0]});
+            }
+          });
+        }
       }
     });
   }
+});
+
+app.get('/cancelarsolicitud', (req, res) => {
+  console.log("Cancelando solicitud: " + req.query.idsoli);  // asi se recibe el id de la solicitud
+  res.send("Solicitud cancelada uwu");
 });
 
 // Rutas para páginas a las que se accede desde index, direcciones temporales hasta que todas estén bien organizadas

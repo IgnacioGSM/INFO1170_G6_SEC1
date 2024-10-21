@@ -34,7 +34,11 @@
                 </tr>
             </tbody>
         </table>
-        
+        <% if (solicitud.Estado == "pendiente") { %>
+            <a href="<%= '/cancelarsolicitud?idsoli=' + encodeURIComponent(solicitud.IdSolicitud) %>">Cancelar Solicitud</a>
+        <% } else { %>
+            <p>uwu</p>
+        <% } %>
         
         <h3>Respuesta recibida:</h3>
         <div class="soli-info-container">
