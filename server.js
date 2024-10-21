@@ -4,6 +4,7 @@ const mysql = require('mysql2');
 const path = require('path');
 const session = require('express-session');
 const { host, user, password, database } = require('./credenciales_mysql.js');  // cambiar los datos en el archivo credenciales_mysql.js para que funcione en sus equipos
+const { rmSync } = require('fs');
 
 const app = express();
 
@@ -61,7 +62,7 @@ app.get('/mis_solicitudes', (req, res) => {
 // Rutas para páginas a las que se accede desde index, direcciones temporales hasta que todas estén bien organizadas
 app.get('/iniciosesion', (req, res) => {
   // Para testear, al entrar a iniciosesion se simula que se inicia sesión como usuario
-  let logQuery = "SELECT * FROM Usuario WHERE RUT = ?";
+  let logQuery = "SELECT * FROM usuario WHERE RUT = ?";
   db.query(logQuery, ['123456789'], (err, result) => {
     if (err) {
       console.log(err);
@@ -70,15 +71,15 @@ app.get('/iniciosesion', (req, res) => {
       res.send("Usuario no encontrado");
     } else {
       req.session.usuario = result[0];
-      res.sendFile(path.join(__dirname,'iniciosesion.html')); // Envío de respuestas DENTRO de la función del query, para que no se envíe antes de que se ejecute la consulta
+      res.sendFile(path.join(__dirname,'views','iniciosesion.html')); // Envío de respuestas DENTRO de la función del query, para que no se envíe antes de que se ejecute la consulta
     }
   });
 });
 
-app.get('/admin', (req, res) => {
+app.get('/trucazoadmin', (req, res) => {
   if (req.session.usuario) {
     req.session.usuario.TipoUsuario = 'admin';
-    res.render('admin', {user: req.session.usuario});
+    res.redirect('/admin');
   }
 });
 
@@ -91,9 +92,6 @@ app.get('/perfilUsuario', (req, res) => {
 });
 
 
-app.get('/admin', (req, res) => {
-  res.sendFile(path.join(__dirname,'admin.html'));
-});
 
 app.get('/inter_recepcionista', (req, res) => {
   res.sendFile(path.join(__dirname,'inter_recepcionista.html'));
@@ -142,11 +140,12 @@ app.post('/submit_solicitud', (req, res) => {
 
 // Ruta para el panel de administrador
 app.get('/admin', (req, res) => {
-    db.query('SELECT * FROM hospitales', (err, hospitales) => {
+    db.query('SELECT * FROM centrosalud', (err, hospitales) => {
         if (err) {
             return res.status(500).send('Error en la consulta');
         }
-        res.render('admin', { hospitales, user: req.session.user });
+        console.log(req.session.usuario);
+        res.render('admin', { hospitales, user: req.session.usuario });
     });
 });
 
@@ -157,14 +156,14 @@ app.get('/agregar_hospital', (req, res) => {
 
 app.post('/agregar_hospital', (req, res) => {
     const { id, nombre, latitud, longitud } = req.body;
-    const query = 'INSERT INTO hospitales (id, nombre, latitud, longitud) VALUES (?, ?, ?, ?)';
+    const query = 'INSERT INTO centrosalud (id, nombre, latitud, longitud) VALUES (?, ?, ?, ?)';
     const values = [id, nombre, latitud, longitud];
 
     db.query(query, values, (error) => {
         if (error) {
-            return res.render('agregar_hospital', { error: 'Error al agregar el hospital.', success: null, user: req.session.user });
+            return res.render('agregar_hospital', { error: 'Error al agregar el hospital.', success: null, user: req.session.usuario });
         }
-        res.render('agregar_hospital', { success: 'Hospital agregado correctamente.', error: null, user: req.session.user });
+        res.render('agregar_hospital', { success: 'Hospital agregado correctamente.', error: null, user: req.session.usuario });
     });
 });
 
@@ -177,7 +176,7 @@ app.get('/editar_hospital/:id', (req, res) => {
         if (err || results.length === 0) {
             return res.status(404).send('Hospital no encontrado');
         }
-        res.render('editar_hospital', { hospital: results[0], error: null, success: null, user: req.session.user });
+        res.render('editar_hospital', { hospital: results[0], error: null, success: null, user: req.session.usuario });
     });
 });
 
@@ -189,9 +188,9 @@ app.post('/editar_hospital/:id', (req, res) => {
 
     db.query(query, [nombre, latitud, longitud, hospitalId], (error) => {
         if (error) {
-            return res.render('editar_hospital', { hospital: { id: hospitalId, nombre, latitud, longitud }, error: 'Error al actualizar el hospital.', success: null, user: req.session.user });
+            return res.render('editar_hospital', { hospital: { id: hospitalId, nombre, latitud, longitud }, error: 'Error al actualizar el hospital.', success: null, user: req.session.usuario });
         }
-        res.render('editar_hospital', { hospital: { id: hospitalId, nombre, latitud, longitud }, success: 'Hospital actualizado correctamente.', error: null, user: req.session.user });
+        res.render('editar_hospital', { hospital: { id: hospitalId, nombre, latitud, longitud }, success: 'Hospital actualizado correctamente.', error: null, user: req.session.usuario });
     });
 });
 
