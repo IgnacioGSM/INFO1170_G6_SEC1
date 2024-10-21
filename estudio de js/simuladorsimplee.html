@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejemplo Avanzado de JavaScript</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simulador de Tienda en Línea</h1>
+
+    <div id="productos">
+        </div>
+
+    <button onclick="agregarProducto()">Agregar Producto</button>
+    <button onclick="calcularTotal()">Calcular Total</button>
+
+    <p id="total">Total: $0</p>
+
+    <script>
+        // Array para almacenar los productos
+        const productos = [];
+
+        // Función para agregar un producto al carrito
+        function agregarProducto() {
+            const nombre = prompt("Ingrese el nombre del producto:");
+            const precio = parseFloat(prompt("Ingrese el precio del producto:"));
+
+            // Creamos un objeto para representar el producto
+            const producto = {
+                nombre: nombre,
+                precio: precio
+            };
+
+            // Agregamos el producto al array
+            productos.push(producto);
+
+            // Actualizamos la lista de productos en el HTML
+            mostrarProductos();
+        }
+
+        // Función para mostrar los productos en la página
+        function mostrarProductos() {
+            const listaProductos = document.getElementById("productos");
+            listaProductos.innerHTML = ""; // Limpiamos la lista antes de volver a llenarla
+
+            productos.forEach(producto => {
+                const elemento = document.createElement("div");
+                elemento.textContent = `${producto.nombre} - $${producto.precio}`;
+                listaProductos.appendChild(elemento);
+            });
+        }
+
+        // Función para calcular el total de la compra
+        function calcularTotal() {
+            let total = 0;
+            productos.forEach(producto => {
+                total += producto.precio;
+            });
+            document.getElementById("total").textContent = `Total: $${total}`;
+        }
+    </script>
+</body>
+</html>

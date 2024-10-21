@@ -1,0 +1,56 @@
+1.Como crear una base de datos
+  Para crear una base de datos se usa el siguiente comando:
+
+CREATE DATABASE nombre_base_de_datos;
+
+Ejem:
+CREATE DATABASE HospiTrack;
+-------------------------------------------------------------------------------
+
+2.Como crear tablas para la base de datos
+
+Primero llama a la base de datos que usaras
+USE nombre_base_de_datos;
+
+Y despues crea la estructura de la tabla
+CREATE TABLE nombre_de_tabla (
+    columna1 tipo_de_dato,
+    columna2 tipo_de_dato,
+    ...
+);
+
+Ejem:
+USE HospiTrack;
+
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    rut VARCHAR(100),
+    correo VARCHAR(100),
+);
+-------------------------------------------------------------------------------
+
+3.Para insertar datos a una tabla se usa el comando: INSERT INTO
+
+Ejem:
+INSERT INTO usuarios (nombre, correo, telefono)
+VALUES ('Juan', 'juan@example.com', '+56912345678');
+
+En el ejemplo anterior se inserta a la tabla usuarios, en la columnas nombre, 
+rut, correo los valores de Juan, 21305809-k y juan@example.com, respectivamente
+-------------------------------------------------------------------------------
+
+4.Para realizar consultas basicas se utiliza el comando SELECT
+
+Ejem:
+SELECT * FROM usuarios
+
+En este ejemplo se selecionan todas la columna usando '*' de la tabla usuarios
+y lo que hace la consulta es mostrar todos los datos de la tabla
+-------------------------------------------------------------------------------
+
+5.Como filtrar datos
+
+SELECT * FROM usuarios 
+WHERE nombre = 'ejemplo'
+-------------------------------------------------------------------------------

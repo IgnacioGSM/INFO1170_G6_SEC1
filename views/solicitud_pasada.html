@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/index_style.css">
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="stylesheet" href="style/mis_solicitudes.css">
+    <link rel="stylesheet" href="style/pagina_solicitud.css">
+    <title>Mis Solicitudes</title>
+</head>
+<body>
+    <header>
+        <img src="imagenes/logo.png" class="header-logo" alt="logo">
+        <nav class="header-nav">
+            <ul class="header-list">
+                <li class="invitado-only"><a class="header-link" href="iniciosesion.html">Iniciar Sesión</a></li>
+                <li class="invitado-only"><a class="header-link" href="registropersona.html">Registrarse</a></li>
+                <li class="sesion-iniciada"><a class="header-link" href="perfilUsuario.html"><img src="imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
+                <li class="sesion-iniciada"><a class="header-link" href="index.html">Volver al mapa</a></li>
+
+                <!-- Por ahora no se está checkeando si se entra desde cierto tipo de usuario -->
+                <li class="sesion-iniciada admin-only"><a class="header-link" href="admin.html">Panel de administrador</a></li>
+                <li class="sesion-iniciada recepcionista-only"><a class="header-link" href="inter_recepcionista.html">Panel de recepcionista</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div id="volver-lista-solicitudes">
+            <h3>Volver a la lista</h3>
+        </div>
+        <div class="soli-info-container">
+        <h1>Información de la solicitud</h1>
+            <table>
+                <thead>
+                    <th>Hospital</th>
+                    <td>Hospital 3</td>
+                </thead>
+                <tr>
+                    <th>Sección</th>
+                    <td>Emergencia</td>
+                </tr>
+                <tr>
+                    <th>Fecha</th>
+                    <td>01/01/2021</td>
+                </tr>
+                <tr>
+                    <th>Hora</th>
+                    <td>12:00</td>
+                </tr>
+                <tfoot>
+                    <th>Mensaje enviado</th>
+                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus est omnis nulla repudiandae vero recusandae accusamus id odit debitis, iure quos voluptatem mollitia doloremque dolor! Impedit quaerat adipisci enim cupiditate.</td>
+                </tfoot>
+            </table>
+        </div>
+        <h3>Respuesta recibida:</h3>
+        <div class="soli-info-container">
+            <div id="respuesta-rating-container">
+                <button id="reportar-respuesta-boton" class="boton-rojo boton-mediano">Reportar Respuesta inadecuada</button>
+                <form class="estrellas">
+                    <input id="enviar-estrellas-respuesta" type="button" value="Valorar respuesta">
+
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">★</label>
+                </form>
+            </div>
+            <table>
+                <thead>
+                    <th>Recepcionista</th>
+                    <td>Don Pollo</td>
+                </thead>
+                <tr>
+                    <th>Fecha</th>
+                    <td>01/01/2021</td>
+                </tr>
+                <tr>
+                    <th>Hora</th>
+                    <td>15:45</td>
+                </tr>
+                <tfoot>
+                    <th>Respuesta</th>
+                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus est omnis nulla repudiandae vero recusandae accusamus id odit debitis, iure quos voluptatem mollitia doloremque dolor! Impedit quaerat adipisci enim cupiditate.</td>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2024 Hospitrack. Todos los derechos reservados.</p>
+        </div>
+        
+    </footer>
+    <script>
+        document.getElementById("volver-lista-solicitudes").addEventListener("click", () => {   // Volver a la lista de solicitudes al presionar el botón
+            window.location.href = "mis_solicitudes.html";
+        });
+
+
+        // Estrellitas
+
+        document.getElementById("enviar-estrellas-respuesta").addEventListener("click", () => {   // Enviar la valoración de la respuesta
+            if (document.querySelector('input[name="rating"]:checked') == null) {
+                alert("Por favor seleccione una valoración");
+                return;
+            }
+            let rating_value = document.querySelector('input[name="rating"]:checked').value;
+            console.log(rating_value);
+            alert("Se ha enviado la valoración de la respuesta: " + rating_value + " estrellas");
+        });
+
+        let rating_value = document
+        document.getElementsByName("rating").forEach((radio) => {       // Deseleccionar todas las estrellas al iniciar la página
+            radio.checked = false;
+        });
+
+        // Boton de reportar
+        var reportado = false;
+        document.getElementById("reportar-respuesta-boton").addEventListener("click", () => {   // Reportar respuesta inadecuada
+            if (reportado) {
+                alert("Ya ha reportado esta respuesta");
+                return;
+            }
+            if (confirm("¿Está seguro que desea reportar esta respuesta?")) {
+                alert("Se ha reportado la respuesta");
+                reportado = true;    
+            }
+        });
+    </script>
+</body>
+</html>
