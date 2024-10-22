@@ -33,13 +33,9 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Ruta principal
-app.get('/', (req, res) => {
-  if (req.session.usuario) {
-    res.render('index', {user: req.session.usuario});
-  } else {
-    res.render('index', {user: 0});
-  }
-});
+const indexRouter = require('./rutas/index/index');
+
+app.use('/', indexRouter);
 
 app.get('/mis_solicitudes', (req, res) => {
   if (req.session.usuario) {
