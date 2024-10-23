@@ -83,6 +83,14 @@ app.get('/trucazoadmin', (req, res) => {
   }
 });
 
+app.get('/agregar_hospital', (req, res) => {
+  if (req.session.usuario && req.session.usuario.TipoUsuario === 'admin') {
+    res.render('agregar_hospital', { user: req.session.usuario, error: null, success: null });
+  } else {
+    res.redirect('/');
+  }
+});
+
 app.get('/registropersona', (req, res) => {
   res.sendFile(path.join(__dirname,'registropersona.html'));
 });
@@ -140,71 +148,76 @@ app.post('/submit_solicitud', (req, res) => {
 
 // Ruta para el panel de administrador
 app.get('/admin', (req, res) => {
-    db.query('SELECT * FROM centrosalud', (err, hospitales) => {
-        if (err) {
-            return res.status(500).send('Error en la consulta');
-        }
-        console.log(req.session.usuario);
-        res.render('admin', { hospitales, user: req.session.usuario });
-    });
+  db.query('SELECT * FROM centrosalud', (err, hospitales) => {
+      if (err) {
+          return res.status(500).send('Error en la consulta');
+      }
+      console.log(req.session.usuario);
+      res.render('admin', { hospitales, user: req.session.usuario });
+  });
 });
+
 
 // Ruta para agregar un hospital
-app.get('/agregar_hospital', (req, res) => {
-    res.render('agregar_hospital', { error: null, success: null, user: req.session.user });
-});
-
 app.post('/agregar_hospital', (req, res) => {
-    const { id, nombre, latitud, longitud } = req.body;
-    const query = 'INSERT INTO centrosalud (id, nombre, latitud, longitud) VALUES (?, ?, ?, ?)';
-    const values = [id, nombre, latitud, longitud];
+  const { Latitud, Longitud, Nombre } = req.body;
+  const query = 'INSERT INTO centrosalud (Latitud, Longitud, Nombre) VALUES (?, ?, ?)';
 
-    db.query(query, values, (error) => {
-        if (error) {
-            return res.render('agregar_hospital', { error: 'Error al agregar el hospital.', success: null, user: req.session.usuario });
-        }
-        res.render('agregar_hospital', { success: 'Hospital agregado correctamente.', error: null, user: req.session.usuario });
-    });
+  db.query(query, [Latitud, Longitud, Nombre], (err, result) => {
+      if (err) {
+          console.error('Error al insertar en la tabla CentroSalud:', err);
+          res.render('agregar_hospital', { user: req.session.usuario, error: 'Error al crear el centro de salud', success: null });
+      } else {
+          res.render('agregar_hospital', { user: req.session.usuario, error: null, success: 'Centro de salud creado exitosamente' });
+      }
+  });
 });
+
+
 
 // Ruta para editar un hospital (formulario)
-app.get('/editar_hospital/:id', (req, res) => {
-    const hospitalId = req.params.id;
-    const query = 'SELECT * FROM hospitales WHERE id = ?';
-
-    db.query(query, [hospitalId], (err, results) => {
-        if (err || results.length === 0) {
-            return res.status(404).send('Hospital no encontrado');
-        }
-        res.render('editar_hospital', { hospital: results[0], error: null, success: null, user: req.session.usuario });
-    });
+app.get('/editar_hospital', (req, res) => {
+  const query = 'SELECT * FROM centrosalud';
+  
+  db.query(query, (err, results) => {
+      if (err) {
+          console.error('Error al obtener datos de CentroSalud:', err);
+          res.status(500).send('Error al obtener centros de salud');
+      } else {
+          res.json(results);
+      }
+  });
 });
 
 // Ruta para actualizar un hospital
-app.post('/editar_hospital/:id', (req, res) => {
-    const hospitalId = req.params.id;
-    const { nombre, latitud, longitud } = req.body;
-    const query = 'UPDATE hospitales SET nombre = ?, latitud = ?, longitud = ? WHERE id = ?';
-
-    db.query(query, [nombre, latitud, longitud, hospitalId], (error) => {
-        if (error) {
-            return res.render('editar_hospital', { hospital: { id: hospitalId, nombre, latitud, longitud }, error: 'Error al actualizar el hospital.', success: null, user: req.session.usuario });
-        }
-        res.render('editar_hospital', { hospital: { id: hospitalId, nombre, latitud, longitud }, success: 'Hospital actualizado correctamente.', error: null, user: req.session.usuario });
-    });
+app.put('/editar_hospital/:id', (req, res) => {
+  const { id } = req.params;
+  const { Latitud, Longitud, Nombre } = req.body;
+  const query = 'UPDATE centrosalud SET Latitud = ?, Longitud = ?, Nombre = ? WHERE IdCentro = ?';
+  
+  db.query(query, [Latitud, Longitud, Nombre, id], (err, result) => {
+      if (err) {
+          console.error('Error al actualizar en la tabla CentroSalud:', err);
+          res.status(500).send('Error al actualizar el centro de salud');
+      } else {
+          res.send('Centro de salud actualizado exitosamente');
+      }
+  });
 });
 
 // Ruta para eliminar un hospital
-app.post('/eliminar_hospital/:id', (req, res) => {
-    const hospitalId = req.params.id;
-    const query = 'DELETE FROM hospitales WHERE id = ?';
-
-    db.query(query, [hospitalId], (error) => {
-        if (error) {
-            return res.status(500).send('Error al eliminar el hospital');
-        }
-        res.redirect('/admin');
-    });
+app.delete('/eliminar_hospital/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'DELETE FROM centrosalud WHERE IdCentro = ?';
+  
+  db.query(query, [id], (err, result) => {
+      if (err) {
+          console.error('Error al eliminar de la tabla CentroSalud:', err);
+          res.status(500).send('Error al eliminar el centro de salud');
+      } else {
+          res.send('Centro de salud eliminado exitosamente');
+      }
+  });
 });
 
 app.get('/logout', (req, res) => {
