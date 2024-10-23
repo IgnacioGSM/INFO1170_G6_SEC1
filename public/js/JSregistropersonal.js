@@ -43,11 +43,17 @@ app.post('/register', async (req, res) => {
         await pool.query('INSERT INTO usuario (RUT, Nombre, CorreoElectronico, Contrasenia) VALUES (?, ?, ?, ?)', 
             [RUT, Nombre, CorreoElectronico, hashedPassword]);
 
-        res.status(201).send('Usuario registrado exitosamente');
+        // Redirigir a la página de éxito
+        res.redirect('/index.html');
     } catch (err) {
         console.error(err);
         res.status(500).send('Error en el servidor');
     }
+});
+
+
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(3000, () => {

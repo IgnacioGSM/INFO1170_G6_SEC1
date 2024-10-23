@@ -48,6 +48,10 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 app.listen(3000, () => {
     console.log('Servidor escuchando en puerto 3000');
 });
