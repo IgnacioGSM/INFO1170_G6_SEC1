@@ -21,35 +21,12 @@ body {
     min-height: 100vh;
 }
 
-/* Encabezado */
-header {
-    background-color: var(--caladon);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px;
-    position: relative;
-}
-
-.header-logo {
-    height: 50px;
-    position: absolute;
-    left: 20px;
-}
 
 h1 {
     margin: 0;
     font-size: 2em;
     text-align: center;
 }
-
-.header-btn {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
 /* Main */
 .admin-main {
     flex: 1;
@@ -102,7 +79,7 @@ input:focus {
 }
 
 /* Botón de envío */
-button[type="submit"] {
+button[type="submit"], .btn {
     align-self: flex-start;
     padding: 10px 20px;
     background-color: var(--jade);
@@ -112,13 +89,7 @@ button[type="submit"] {
     cursor: pointer;
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:hover, .btn:hover {
     background-color: var(--dark-spring-green);
-}
-
-/* Footer */
-footer {
-    background-color: var(--caladon);
-    padding: 10px;
-    text-align: center;
+    color: var(--white); /* Asegura que el texto siga siendo visible */
 }

@@ -4,6 +4,7 @@ const mysql = require('mysql2');
 const path = require('path');
 const session = require('express-session');
 const { host, user, password, database } = require('./credenciales_mysql.js');  // cambiar los datos en el archivo credenciales_mysql.js para que funcione en sus equipos
+const { rmSync } = require('fs');
 
 const app = express();
 
@@ -14,7 +15,6 @@ const db = mysql.createConnection({
   password: password,
   database: database
 });
-
 // Configuraciones de la app
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -43,10 +43,11 @@ const misSolicitudesRouter = require('./rutas/missolicitudes.js');
 
 app.use('/mis_solicitudes', misSolicitudesRouter);
 
+
 // Rutas para páginas a las que se accede desde index, direcciones temporales hasta que todas estén bien organizadas
 app.get('/iniciosesion', (req, res) => {
   // Para testear, al entrar a iniciosesion se simula que se inicia sesión como usuario
-  let logQuery = "SELECT * FROM Usuario WHERE RUT = ?";
+  let logQuery = "SELECT * FROM usuario WHERE RUT = ?";
   db.query(logQuery, ['123456789'], (err, result) => {
     if (err) {
       console.log(err);
@@ -55,9 +56,24 @@ app.get('/iniciosesion', (req, res) => {
       res.send("Usuario no encontrado");
     } else {
       req.session.usuario = result[0];
-      res.sendFile(path.join(__dirname,'views','iniciosesion.html')); // Envío de respuestas DENTRO de la función del query, para que no se envíe antes de que se ejecute la consulta
+      res.sendFile(path.join(__dirname,'views','iniciosesion.html'));
     }
   });
+});
+
+app.get('/trucazoadmin', (req, res) => {
+  if (req.session.usuario) {
+    req.session.usuario.TipoUsuario = 'admin';
+    res.redirect('/admin');
+  }
+});
+
+app.get('/agregar_hospital', (req, res) => {
+  if (req.session.usuario && req.session.usuario.TipoUsuario === 'admin') {
+    res.render('agregar_hospital', { user: req.session.usuario, error: null, success: null });
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.get('/registropersona', (req, res) => {
@@ -69,9 +85,6 @@ app.get('/perfilUsuario', (req, res) => {
 });
 
 
-app.get('/admin', (req, res) => {
-  res.sendFile(path.join(__dirname,'admin.html'));
-});
 
 app.get('/inter_recepcionista', (req, res) => {
   res.sendFile(path.join(__dirname,'inter_recepcionista.html'));
@@ -81,31 +94,76 @@ app.get('/inter_recepcionista', (req, res) => {
 
 // Ruta para el panel de administrador
 app.get('/admin', (req, res) => {
-    db.query('SELECT * FROM hospitales', (err, hospitales) => {
-        if (err) {
-            return res.status(500).send('Error en la consulta');
-        }
-        res.render('admin', { hospitales });
-    });
+  db.query('SELECT * FROM centrosalud', (err, hospitales) => {
+      if (err) {
+          return res.status(500).send('Error en la consulta');
+      }
+      console.log(req.session.usuario);
+      res.render('admin', { hospitales, user: req.session.usuario });
+  });
 });
+
 
 // Ruta para agregar un hospital
-app.get('/agregar_hospital', (req, res) => {
-    res.render('agregar_hospital', { error: null, success: null });
+app.post('/agregar_hospital', (req, res) => {
+  const { Latitud, Longitud, Nombre } = req.body;
+  const query = 'INSERT INTO centrosalud (Latitud, Longitud, Nombre) VALUES (?, ?, ?)';
+
+  db.query(query, [Latitud, Longitud, Nombre], (err, result) => {
+      if (err) {
+          console.error('Error al insertar en la tabla CentroSalud:', err);
+          res.render('agregar_hospital', { user: req.session.usuario, error: 'Error al crear el centro de salud', success: null });
+      } else {
+          res.render('agregar_hospital', { user: req.session.usuario, error: null, success: 'Centro de salud creado exitosamente' });
+      }
+  });
 });
 
-app.post('/Agregar_hospital', (req, res) => {
-    const { id, nombre, latitud, longitud } = req.body;
 
-    const query = 'INSERT INTO hospitales (id, nombre, latitud, longitud) VALUES (?, ?, ?, ?)';
-    const values = [id, nombre, latitud, longitud];
 
-    db.query(query, values, (error, results) => {
-        if (error) {
-            return res.render('agregar_hospital', { error: 'Error al agregar el hospital.', success: null });
-        }
-        res.render('agregar_hospital', { success: 'Hospital agregado correctamente.', error: null });
-    });
+// Ruta para editar un hospital (formulario)
+app.get('/editar_hospital', (req, res) => {
+  const query = 'SELECT * FROM centrosalud';
+  
+  db.query(query, (err, results) => {
+      if (err) {
+          console.error('Error al obtener datos de CentroSalud:', err);
+          res.status(500).send('Error al obtener centros de salud');
+      } else {
+          res.json(results);
+      }
+  });
+});
+
+// Ruta para actualizar un hospital
+app.put('/editar_hospital/:id', (req, res) => {
+  const { id } = req.params;
+  const { Latitud, Longitud, Nombre } = req.body;
+  const query = 'UPDATE centrosalud SET Latitud = ?, Longitud = ?, Nombre = ? WHERE IdCentro = ?';
+  
+  db.query(query, [Latitud, Longitud, Nombre, id], (err, result) => {
+      if (err) {
+          console.error('Error al actualizar en la tabla CentroSalud:', err);
+          res.status(500).send('Error al actualizar el centro de salud');
+      } else {
+          res.send('Centro de salud actualizado exitosamente');
+      }
+  });
+});
+
+// Ruta para eliminar un hospital
+app.delete('/eliminar_hospital/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'DELETE FROM centrosalud WHERE IdCentro = ?';
+  
+  db.query(query, [id], (err, result) => {
+      if (err) {
+          console.error('Error al eliminar de la tabla CentroSalud:', err);
+          res.status(500).send('Error al eliminar el centro de salud');
+      } else {
+          res.send('Centro de salud eliminado exitosamente');
+      }
+  });
 });
 
 // Escuchar en el puerto 3000

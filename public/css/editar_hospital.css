@@ -25,21 +25,33 @@ header {
     background-color: var(--caladon);
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between; /* Distribuir elementos en los extremos */
     padding: 10px 20px;
-    position: relative;
 }
 
 .header-logo {
     height: 50px;
-    position: absolute;
-    left: 20px;
 }
 
 h1 {
-    margin: 0;
+    margin: 0 auto; /* Para centrar el título */
     font-size: 2em;
     text-align: center;
+}
+
+/* Botón de volver al panel */
+.btn-custom {
+    padding: 10px 20px;
+    background-color: var(--jade);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color: var(--dark-spring-green);
 }
 
 /* Main */
@@ -108,52 +120,9 @@ button[type="submit"]:hover {
     background-color: var(--dark-spring-green);
 }
 
-/* Botones de secciones */
-.section-button {
-    display: inline-block;
-    margin: 5px;
-    padding: 10px 20px;
-    background-color: var(--jade);
-    color: var(--white);
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.section-button:hover {
-    background-color: var(--dark-spring-green);
-}
-
 /* Footer */
 footer {
     background-color: var(--caladon);
     padding: 10px;
     text-align: center;
-}
-/* secciones grid */
-.seccion-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.seccion-card {
-    background-color: var(--white);
-    border: 2px solid var(--jade);
-    padding: 20px;
-    border-radius: 10px;
-    width: 150px;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.seccion-card a {
-    text-decoration: none;
-    color: var(--dark-spring-green);
-    font-weight: bold;
-}
-
-.seccion-card:hover {
-    border-color: var(--dark-spring-green);
-    transform: scale(1.05);
-    transition: all 0.2s ease;
 }
