@@ -67,7 +67,7 @@
         let solicitudes_pendientes = document.getElementsByClassName("solicitud");
         for (let i = 0; i < solicitudes_pendientes.length; i++) {       // Agregar evento a cada solicitud
             solicitudes_pendientes[i].addEventListener("click", function() {
-                window.location.href = `solicitud?idsoli=${encodeURIComponent(solicitudes_pendientes[i].value)}`;  // Cambiar a la pagina de la solicitud
+                window.location.href = `/mis_solicitudes/solicitud?idsoli=${encodeURIComponent(solicitudes_pendientes[i].value)}`;  // Cambiar a la pagina de la solicitud
             });
         }
     </script>

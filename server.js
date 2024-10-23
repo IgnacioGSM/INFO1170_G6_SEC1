@@ -33,59 +33,15 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Ruta principal
-const indexRouter = require('./rutas/index/index');
+const indexRouter = require('./rutas/index');
 
 app.use('/', indexRouter);
 
-app.get('/mis_solicitudes', (req, res) => {
-  if (req.session.usuario) {
-    let querySolicitudes = "SELECT * FROM Solicitud WHERE IdUsuario = ?";
-    db.query(querySolicitudes, [req.session.usuario.IdUsuario], (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-      res.render('mis_solicitudes', {user: req.session.usuario, solicitudes: result});
-      }
-    });
-  } else {
-    res.render('index', {user: 0}); // No se debería poder acceder a esta página sin estar logeado
-  }
-});
 
-app.get('/solicitud', (req, res) => {
-  console.log("Entrando a la solicitud: " + req.query.idsoli);  // asi se recibe el id de la solicitud
-  if (req.session.usuario) {
-    let queryPaginaSolicitud = "SELECT soli.*, sec.NombreSeccion, cen.Nombre AS NombreHospital \
-                                FROM Solicitud soli \
-                                INNER JOIN Seccion sec ON soli.IdSeccion = sec.IdSeccion \
-                                INNER JOIN CentroSalud cen ON cen.IdCentro = sec.IdCentro \
-                                WHERE soli.IdSolicitud = ?";
-    db.query(queryPaginaSolicitud, [req.query.idsoli], (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        if (result[0].Estado === 'pendiente') {
-          res.render('solicitud', {user: req.session.usuario, solicitud: result[0], respuesta: 0});
-        }
-        else {
-          let queryRespuesta = "SELECT * FROM RespuestaSolicitud WHERE IdSolicitud = ?";
-          db.query(queryRespuesta, [req.query.idsoli], (err, result2) => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.render('solicitud', {user: req.session.usuario, solicitud: result[0], respuesta: result2[0]});
-            }
-          });
-        }
-      }
-    });
-  }
-});
+// Ruta Mis Solicitudes
+const misSolicitudesRouter = require('./rutas/missolicitudes.js');
 
-app.get('/cancelarsolicitud', (req, res) => {
-  console.log("Cancelando solicitud: " + req.query.idsoli);  // asi se recibe el id de la solicitud
-  res.send("Solicitud cancelada uwu");
-});
+app.use('/mis_solicitudes', misSolicitudesRouter);
 
 // Rutas para páginas a las que se accede desde index, direcciones temporales hasta que todas estén bien organizadas
 app.get('/iniciosesion', (req, res) => {
@@ -121,45 +77,6 @@ app.get('/inter_recepcionista', (req, res) => {
   res.sendFile(path.join(__dirname,'inter_recepcionista.html'));
 });
 
-
-app.post('/submit_solicitud', (req, res) => {
-    console.log(req.body);
-    let idSeccion = 1;
-    let date = new Date();
-    let hora_solicitud = date.getFullYear() + '/' +
-      ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
-      ('0' + date.getDate()).slice(-2) + ' ' +
-      ('0' + date.getHours()).slice(-2) + ':' +
-      ('0' + date.getMinutes()).slice(-2) + ':' +
-      ('0' + date.getSeconds()).slice(-2);
-    let estado = 'pendiente';
-
-    let rut = req.body.rut.replace(/[^\dkK]/g, ''); // Quita puntos y guión recibidos en el rut
-    let correo = req.body.correo;
-    let motivo_consulta = req.body.motivo_consulta;
-
-    let queryUser = "SELECT * FROM Usuario WHERE RUT = ?";
-    db.query(queryUser, [rut], (err, result) => {
-        if (err) {
-            console.log(err);
-        }
-        if (result.length === 0) {
-            console.log("Usuario no encontrado");
-            res.send("Usuario no encontrado");
-        } else {
-            let idUsuario = result[0].IdUsuario;
-            let querySolicitud = "INSERT INTO Solicitud (IdUsuario, IdSeccion, Mensaje, HoraSolicitud, Estado) VALUES (?, ?, ?, ?, ?)";
-            db.query(querySolicitud, [idUsuario, idSeccion, motivo_consulta, hora_solicitud, estado], (err, result) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("Solicitud enviada");
-                    res.redirect('/');
-                }
-            });
-        }
-      });
-    });
 
 
 // Ruta para el panel de administrador
