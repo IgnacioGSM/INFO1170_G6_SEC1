@@ -8,45 +8,41 @@
     <link rel="stylesheet" href="/css/editar_hospital.css">
 </head>
 <body>
-    <header class="d-flex align-items-center justify-content-between p-3" style="background-color: var(--caladon);">
-        <img src="/imagenes/logo.png" class="header-logo" alt="Logo de Hospitrack">
-        <h1 class="mb-0 text-center">Editar Hospital</h1>
-        <a href="/admin" class="btn btn-success">Volver al Panel de Administración</a> 
-    </header>
+    <%- include('partials/header') %>
 
     <main class="admin-main container my-4">
         <section id="editar-hospital" class="bg-white p-4 rounded shadow">
             <h2>Formulario para Editar Hospital</h2>
-            <form action="/editar_hospital/<%= hospital.id %>" method="POST">
+            
+            <!-- Formulario para editar hospital -->
+            <form action="/editar_hospital/<%= hospital.IdCentro %>" method="POST">
                 <div class="form-group mb-3">
                     <label for="id">ID del Hospital:</label>
-                    <input type="text" class="form-control" id="id" name="id" value="<%= hospital.id %>" required readonly>
+                    <input type="text" class="form-control" id="id" name="id" value="<%= hospital.IdCentro %>" required readonly>
                 </div>
                 <div class="form-group mb-3">
                     <label for="nombre">Nombre del Hospital:</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" value="<%= hospital.nombre %>" required>
+                    <input type="text" class="form-control" id="nombre" name="nombre" value="<%= hospital.Nombre %>" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="latitud">Latitud:</label>
-                    <input type="text" class="form-control" id="latitud" name="latitud" value="<%= hospital.latitud %>" required>
+                    <input type="text" class="form-control" id="latitud" name="latitud" value="<%= hospital.Latitud %>" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="longitud">Longitud:</label>
-                    <input type="text" class="form-control" id="longitud" name="longitud" value="<%= hospital.longitud %>" required>
+                    <input type="text" class="form-control" id="longitud" name="longitud" value="<%= hospital.Longitud %>" required>
                 </div>
                 <button type="submit" class="btn btn-success">Guardar Cambios</button>
             </form>
 
-            <!-- Formulario para eliminar hospital -->
-            <form action="/eliminar_hospital/<%= hospital.id %>" method="POST" class="mt-3">
-                <button type="submit" class="btn btn-danger">Eliminar Hospital</button>
-            </form>
-        </section>
+           <!-- Formulario para eliminar hospital -->
+          <form action="/eliminar_hospital/<%= hospital.IdCentro %>" method="POST" class="mt-3">
+            <button type="submit" class="btn btn-danger">Eliminar Hospital</button>
+          </form>
+
     </main>
 
-    <footer class="text-center mt-4">
-        <p>&copy; 2024 Hospitrack. Todos los derechos reservados.</p>
-    </footer>
+    <%- include('partials/footer') %>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
