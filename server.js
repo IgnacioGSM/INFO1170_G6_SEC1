@@ -108,11 +108,6 @@ app.post('/Agregar_hospital', (req, res) => {
     });
 });
 
-app.get('/logout', (req, res) => {
-  req.session.destroy();
-  res.redirect('/');
-});
-
 // Escuchar en el puerto 3000
 app.listen(3000, () => {
   console.log('Servidor escuchando en el puerto 3000');
