@@ -1,6 +1,5 @@
 module.exports = {host : 'localhost',
-                  user : 'root',
-                  password : '',
-                  database : 'hospitrack'
+                  user : 'ignaciog',
+                  password : 'nachojojo16',
+                  database : 'Hospitrack'
 }
-// Cambiar los valores de host, user, password y database por los valores de su base de datos
