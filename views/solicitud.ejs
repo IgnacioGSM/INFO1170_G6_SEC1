@@ -31,7 +31,7 @@
                 </tr>
                 <tr>
                     <th>Fecha:</th>
-                    <td><%= solicitud.HoraSolicitud.getDate() + "/" + solicitud.HoraSolicitud.getMonth() + "/" + solicitud.HoraSolicitud.getFullYear() + " " + solicitud.HoraSolicitud.getHours() + ":" + solicitud.HoraSolicitud.getMinutes() %></td>
+                    <td><%= ("0" + solicitud.HoraSolicitud.getDate()).slice(-2) + "/" + ("0" + (solicitud.HoraSolicitud.getMonth() + 1)).slice(-2) + "/" + solicitud.HoraSolicitud.getFullYear() + " " + ("0" + solicitud.HoraSolicitud.getHours()).slice(-2) + ":" + ("0" + solicitud.HoraSolicitud.getMinutes()).slice(-2) %></td>
                 </tr>
                 <tr>
                     <th>Mensaje enviado:</th>
@@ -51,7 +51,7 @@
                 <tbody>
                     <tr>
                         <th>Recepcionista:</th>
-                        <td><%= respuesta.Nombre + respuesta.Apellido %></td>
+                        <td><%= respuesta.Nombre + " " + respuesta.Apellido %></td>
                     </tr>
                     <tr>
                         <th>Respuesta:</th>
@@ -59,6 +59,7 @@
                     </tr>
                 </tbody>
             </table>
+            <button class="btn btn-danger">Reportar Respuesta</button>
             <% } else {%>
                 <h1 class="text-bg-dark rounded mb-4">No se ha encontrado la respuesta a esta solicitud</h1>
             <% } %>

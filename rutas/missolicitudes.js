@@ -13,7 +13,7 @@ router.get('/', (req, res) => { // /mis_solicitudes
         }
       });
     } else {
-      res.render('index', {user: 0}); // No se debería poder acceder a esta página sin estar logeado
+      res.redirect('/'); // Si no está logeado, redirige a la página principal
     }
   });
 
@@ -40,7 +40,6 @@ router.get('/solicitud', (req, res) => {    // /mis_solicitudes/solicitud
               if (err) {
                 console.log(err);
               } else {
-                console.log(result2);
                 if (result2.length === 0) { // Si no hay respuesta en la base de datos
                   res.render('solicitud', {user: req.session.usuario, solicitud: result[0], respuesta: 0});
                 } else {
@@ -52,7 +51,7 @@ router.get('/solicitud', (req, res) => {    // /mis_solicitudes/solicitud
         }
       });
     } else {
-      res.render('index', {user: 0}); // No se debería poder acceder a esta página sin estar logeado
+      res.redirect('/');  // Si no está logeado, redirige a la página principal
     }
   });
   
