@@ -7,9 +7,22 @@ app.use(express.json());
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'password',
-    database: 'Hospitrack'
+    password: '',
+    database: 'hospitrack'
 });
+
+
+const bodyParser = require('body-parser');
+
+app.use(express.json());
+
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
+app.use(express.static(__dirname));
+
+
+
+
 
 // Cambiar contraseña (olvidé mi contraseña)
 app.post('/forgot-password', async (req, res) => {
