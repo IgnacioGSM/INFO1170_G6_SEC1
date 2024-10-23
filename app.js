@@ -182,7 +182,7 @@ app.post('/cambiarcontraseña', (req, res) => {
     }); 
 });
 
-app.get('/views/perfilUsuario', (req,res) =>{
+app.get('/perfilUsuario', (req,res) =>{
     const userId = 4;
 
     const query = 'SELECT Nombre, CorreoElectronico, RUT, NumeroTelefono FROM usuario WHERE IdUsuario = ?';

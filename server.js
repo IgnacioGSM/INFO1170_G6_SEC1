@@ -1,12 +1,25 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
+const bcrypt = require('bcrypt');
+const multer = require('multer');
 const path = require('path');
 const session = require('express-session');
 const { host, user, password, database } = require('./credenciales_mysql.js');  // cambiar los datos en el archivo credenciales_mysql.js para que funcione en sus equipos
 const { rmSync } = require('fs');
 
 const app = express();
+
+// Configuración de multer
+const storage = multer.diskStorage({
+  destination: function(req, file, cb){
+      cb(null, 'uploads/'); // Carpeta donde se almacenarán los archivos
+  },
+  filename: function(req, file, cb) {
+      cb(null, Date.now() + '-' + file.originalname); // Nombre del archivo
+  }
+});
+
 
 // Conexión a la base de datos
 const db = mysql.createConnection({
@@ -63,16 +76,6 @@ app.get('/agregar_hospital', (req, res) => {
 });
 
 
-
-app.get('/perfilUsuario', (req, res) => {
-  res.sendFile(path.join(__dirname,'perfilUsuario.html'));
-});
-
-
-
-app.get('/inter_recepcionista', (req, res) => {
-  res.sendFile(path.join(__dirname,'inter_recepcionista.html'));
-});
 
 
 
@@ -150,6 +153,220 @@ app.post('/eliminar_hospital/:id', (req, res) => {
 app.get('/logout', (req, res) => {
   req.session.destroy();
   res.redirect('/');
+});
+
+// -------- INICIO DE SESION, REGISTRO Y CONTRASEÑA OLVIDADA --------
+app.get('/registropersona', (req, res) => {
+  res.render('registropersona', { user: 0 });
+});
+app.get('/iniciosesion', (req, res) => {
+  // Para testear, al entrar a iniciosesion se simula que se inicia sesión como usuario
+  let logQuery = "SELECT * FROM Usuario WHERE RUT = ?";
+  db.query(logQuery, ['123456789'], (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    if (result.length === 0) {
+      res.send("Usuario no encontrado");
+    } else {
+      req.session.usuario = result[0];
+      res.redirect('/');
+    }
+  });
+});
+/*app.get('/iniciosesion', (req, res) => {
+  res.render('iniciosesion', { user: 0 });
+});*/
+// Cambiar contraseña (olvidé mi contraseña)
+app.post('/forgot-password', async (req, res) => {
+  const { CorreoElectronico, NuevaContrasenia } = req.body;
+  // Verificar si el correo existe
+  db.query('SELECT * FROM Usuario WHERE CorreoElectronico = ?', [CorreoElectronico], async (err, results) => {
+      if (err) return res.status(500).send('Error en el servidor');
+      if (results.length === 0) return res.status(400).send('Correo no encontrado');
+      // Encriptar la nueva contraseña
+      const hashedPassword = await bcrypt.hash(NuevaContrasenia, 10);
+      // Actualizar contraseña
+      db.query('UPDATE Usuario SET Contrasenia = ? WHERE CorreoElectronico = ?', [hashedPassword, CorreoElectronico], (err, result) => {
+          if (err) return res.status(500).send('Error al actualizar la contraseña');
+          res.status(200).send('Contraseña actualizada exitosamente');
+      });
+  });
+});
+app.post('/register', async (req, res) => {
+  const { RUT, Nombre, CorreoElectronico, Contrasenia } = req.body;
+  try {
+      // Verificar si el correo ya existe
+      const [existingUsers] = await pool.query('SELECT * FROM usuario WHERE CorreoElectronico = ?', [CorreoElectronico]);
+      if (existingUsers.length > 0) {
+          return res.status(400).send('El correo ya está registrado');
+      }
+      // Encriptar la contraseña
+      const hashedPassword = await bcrypt.hash(Contrasenia, 10);
+      // Insertar nuevo usuario
+      await pool.query('INSERT INTO usuario (RUT, Nombre, CorreoElectronico, Contrasenia) VALUES (?, ?, ?, ?)', 
+          [RUT, Nombre, CorreoElectronico, hashedPassword]);
+      res.redirect('/iniciosesion');
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error en el servidor');
+  }
+});
+app.post('/login', async (req, res) => {
+  const {rut, Contrasenia } = req.body;
+  try {
+      // Buscar usuario por correo
+      const [results] = await db.query('SELECT * FROM Usuario WHERE RUT = ?', [rut]);
+      if (results.length === 0) {
+          return res.status(400).send('Correo no registrado');
+      }
+      const user = results[0];
+      // Comparar contraseñas
+      const isPasswordValid = await bcrypt.compare(Contrasenia, user.Contrasenia);
+      if (!isPasswordValid) {
+          return res.status(400).send('Contraseña incorrecta');
+      }
+      req.session.usuario = user;
+      res.redirect('/');
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error en el servidor');
+  }
+});
+
+
+
+// -------- PERFIL DE USUARIO --------
+const upload = multer({storage:storage});
+
+app.post('/envexp', upload.array('archivo', 5), (req, res) =>{
+    const userId = 4;
+    const archivos = req.files;
+
+    if(archivos.length === 0){
+        return res.status(400).send('No se subio ningun archivo');
+    }
+    archivos.forEach((archivo) =>{
+        const query = 'INSERT INTO expedientes_medicos (IdUsuario, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)';
+        db.query(query, [userId, archivo.originalname, archivo.path], (err, result) =>{
+            if(err){
+                console.error('Error al guardar el archivo en la base de datos', err);
+                return res.status(500).send('Error en el servidor');
+            }
+        });
+    });
+    res.send('Expedientes medicos subidos con exito');
+});
+
+
+app.post('/cambiarcorreo', (req, res) => {
+    const {nuevoCorreo, confirmarCorreo} = req.body;
+    const userId = 4;
+
+    db.query('SELECT contrasenia FROM usuario WHERE IdUsuario = ?', [userId], (error, results) => {
+        if (error) return res.status(500).send('Error en el servidor');
+
+        const storedPassword = results[0].contrasenia;
+        if (confirmarCorreo == storedPassword) {
+            bd.query('UPDATE usuario SET CorreoElectronico = ? WHERE IdUsuario = ?', [nuevoCorreo, userId], (error) =>{
+                if (error) return res.status(500).send('Error al actualizar el correo');
+                res.send('Correo actualizado');
+            });
+        } else {
+            res.send("Contraseña incorrecta");
+        }
+        /*bcrypt.compare(confirmarCorreo, storedPassword, (err, isMatch) => {
+            if (err) return res.status(500).send('Error en el servidor');
+            if (!isMatch) return res.status(400).send('Contraseña incorrecta');
+
+            connection.query('UPDATE usuarios SET CorreoElectronico = ? WHERE IdUsuario = ?', [nuevoCorreo, userId], (error) =>{
+                if (error) return res.status(500).send('Error al actualizar el correo');
+                res.send('Correo actualizado');
+            });
+        });*/
+    });
+});
+
+app.post('/cambiartelefono', (req, res) => {
+    const {nuevoTelefono, confirmarTelefono} = req.body;
+    const userId = 4;
+
+    db.query('SELECT contrasenia FROM usuario WHERE IdUsuario = ?', [userId], (error, results) => {
+        if (error) return res.status(500).send('Error en el servidor');
+
+        const storedPassword = results[0].contrasenia;
+        if (confirmarTelefono == storedPassword) {
+            db.query('UPDATE usuario SET NumeroTelefono = ? WHERE IdUsuario = ?', [nuevoTelefono, userId], (error) =>{
+                if (error) return res.status(500).send('Error al actualizar el telefono');
+                res.send('Telefono actualizado');
+            });
+        } else {
+            res.send("Contraseña incorrecta");
+        }
+    });
+});
+
+app.post('/cambiardireccion', (req, res) => {
+    const {nuevaDireccion, confirmarDireccion} = req.body;
+    const userId = 4;
+
+    db.query('SELECT contrasenia FROM Usuario WHERE IdUsuario = ?', [userId], (error, results) => {
+        if (error) return res.status(500).send('Error en el servidor');
+
+        const storedPassword = results[0].contrasenia;
+        if (confirmarDireccion == storedPassword) {
+            db.query('UPDATE Usuario SET Direccion = ? WHERE IdUsuario = ?', [nuevaDireccion, userId], (error) =>{
+                if (error) return res.status(500).send('Error al actualizar la direccion');
+                res.send('Direccion actualizada');
+            });
+        } else {
+            res.send("Contraseña incorrecta");
+        }
+    });
+});
+
+app.post('/cambiarcontraseña', (req, res) => {
+    const {nuevaContraseña, confirmarContraseña, contraseñaActual} = req.body;
+    const userId = 4;
+
+    db.query('SELECT contrasenia FROM Usuario WHERE IdUsuario = ?', [userId], (error, results) => {
+        if (error) return res.status(500).send('Error en el servidor');
+
+        const storedPassword = results[0].contrasenia;
+        if (contraseñaActual === storedPassword) {
+
+            if (nuevaContraseña === confirmarContraseña) {
+
+                db.query('UPDATE Usuario SET Contrasenia = ? WHERE IdUsuario = ?', [nuevaContraseña, userId], (error) =>{
+                    if (error) return res.status(500).send('Error al actualizar la contraseña');
+                    res.send('Contraseña actualizada');
+                });
+            } else {
+                res.send("Contraseña incorrecta");
+            }
+        } else {
+            res.send('La contraseña actual no coincide')
+        }
+    }); 
+});
+
+app.get('/perfilUsuario', (req,res) =>{
+    const userId = 4;
+
+    const query = 'SELECT Nombre, CorreoElectronico, RUT, NumeroTelefono FROM Usuario WHERE IdUsuario = ?';
+
+    db.query(query, [userId], (err, result) =>{
+        if (err){
+            console.error('Error al obtener los datos del usuario: ', err);
+            return res.status(500).send('Error al obtener los datos del usuario');
+        }
+
+        if (result.length > 0){
+            res.render('perfilUsuario', {usuario: result[0]});
+        }else{
+            res.status(404).send('Usuario no encontrado');
+        }
+    });
 });
 
 // Escuchar en el puerto 3000
