@@ -60,7 +60,7 @@
                     </div>
                     <h3>Valora HospiTrack</h3>
                     <div class="valoracion">
-                        <form id="valor">
+                        <form id="valor" method="post" action="/enviarvaloracion">
                             <label for="rating">Valora nuestro servicio</label>
                             <div class="estrellas">
                                 <input type="radio" name="rating" id="estrella5" value="5">
@@ -155,7 +155,7 @@
                     <h2>Expedientes Medicos</h2>
                     <div class="MedExp">
                         <h3>Sube tus expedientes aqui</h3>
-                        <form id="formulario">
+                        <form id="formulario" method="post" action="/envexp">
                             <label for="archivo">Seleccione un archivo:</label>
                             <input type="file" id="archivo" accept=".pdf, .doc" multiple required>
                             <br><br>
@@ -205,7 +205,7 @@
                     <div class="borrarcuenta">
                         <h3>Borrar Cuenta</h3>
                         <p>¿Seguro de borrar tu cuenta? Todos tus datos y registros se perderan y no podras recuperarlos</p>
-                        <form id="BorrarCuenta">
+                        <form id="BorrarCuenta" method="post" action="/borrarcuenta">
                             <label for="confirmarContra">Ingrese su contraseña para confirmar:</label>
                             <input type="password" name="confirmarContra" id="confirmarContra" placeholder="Contraseña" required>
 
