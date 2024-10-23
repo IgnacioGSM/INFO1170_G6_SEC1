@@ -162,18 +162,19 @@
           </thead>
           <tbody id="solicitudes-list">
             <!-- Mostrar solicitudes de la base de datos -->
-            <% solicitudes.forEach(function(solicitud) { %>
+            <td %= solicitudes.forEach(function(solicitud) %>
               <tr>
-                <td><%= solicitud.nombre %></td>
-                <td><%= solicitud.servicio %></td>
+                <td %= solicitud.nombre %>pepito</td>
+                <td %= solicitud.servicio %>dentista</td>
                 <td>
                   <button class="btn btn-success btn-sm" onclick="aceptarSolicitud(this)">Aceptar</button>
                   <button class="btn btn-danger btn-sm" onclick="rechazarSolicitud(this)">Rechazar</button>
                   <input type="file" id="subir-archivo-<%= solicitud.id %>" accept=".pdf" class="form-control mt-2" />
                 </td>
               </tr>
-            <% }); %>
+            solicitudes pendientes</td>
           </tbody>
+          
         </table>
       </section>
 
