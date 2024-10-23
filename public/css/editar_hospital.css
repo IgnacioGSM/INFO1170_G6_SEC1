@@ -29,9 +29,6 @@ header {
     padding: 10px 20px;
 }
 
-.header-logo {
-    height: 50px;
-}
 
 h1 {
     margin: 0 auto; /* Para centrar el título */
@@ -118,11 +115,4 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: var(--dark-spring-green);
-}
-
-/* Footer */
-footer {
-    background-color: var(--caladon);
-    padding: 10px;
-    text-align: center;
 }

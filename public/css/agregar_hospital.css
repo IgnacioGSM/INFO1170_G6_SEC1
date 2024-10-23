@@ -78,8 +78,8 @@ input:focus {
     border-color: var(--jade);
 }
 
-/* Botón de envío */
-button[type="submit"], .btn {
+/* Botón de envío en el formulario */
+form .btn {
     align-self: flex-start;
     padding: 10px 20px;
     background-color: var(--jade);
@@ -89,7 +89,7 @@ button[type="submit"], .btn {
     cursor: pointer;
 }
 
-button[type="submit"]:hover, .btn:hover {
+form .btn:hover {
     background-color: var(--dark-spring-green);
-    color: var(--white); /* Asegura que el texto siga siendo visible */
+    color: var(--white);
 }
