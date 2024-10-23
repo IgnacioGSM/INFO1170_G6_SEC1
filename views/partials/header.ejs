@@ -5,12 +5,8 @@
         
         <ul class="nav nav-pills">
             <% if (user) { %> <!-- Revisa si la variable usuario existe (user se entrega desde el servidor con render) -->
-
-                <!-- Mostrar solo para usuarios que no son admin -->
-                <% if (user.TipoUsuario !== 'admin') { %>
-                    <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/perfilUsuario"><img class="me-2" width="30px" height="30px" src="imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
-                    <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/mis_solicitudes">Mis solicitudes</a></li>
-                <% } %>
+                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/perfilUsuario"><img class="me-2" width="30px" height="30px" src="/imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
+                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/mis_solicitudes">Mis solicitudes</a></li>
 
                 <!-- Mostrar solo para admin -->
                 <% if (user.TipoUsuario == 'admin') { %>
@@ -28,6 +24,10 @@
             <% } else { %>
                 <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" role="button" href="iniciosesion">Iniciar Sesión</a></li>
                 <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="registropersona">Registrarse</a></li>
+            <% } %>
+
+            <% if (!index) { %>     <!-- Si index es false (no se llamó este partial desde index) se mostrará un boton para volver al inicio -->
+                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/">Inicio</a></li>
             <% } %>
         </ul>
     
