@@ -50,6 +50,17 @@ const misSolicitudesRouter = require('./rutas/missolicitudes.js');
 app.use('/mis_solicitudes', misSolicitudesRouter);
 
 
+// Ruta inicio de sesión
+const loginRouter = require('./rutas/login');
+
+app.use('/login', loginRouter);
+
+
+// Ruta registro
+const registroRouter = require('./rutas/registro');
+
+app.use('/registro', registroRouter);
+
 // Rutas para páginas a las que se accede desde index, direcciones temporales hasta que todas estén bien organizadas
 
 
@@ -87,7 +98,7 @@ app.get('/admin', (req, res) => {
 // Ruta para agregar un hospital
 app.post('/agregar_hospital', (req, res) => {
   const { Latitud, Longitud, Nombre } = req.body;
-  const query = 'INSERT INTO CentroSalud (Latitud, Longitud, Nombre) VALUES (?, ?, ?)';
+  const query = 'INSERT INTO CentroSalud (latitud, longitud, nombre) VALUES (?, ?, ?)';
 
   db.query(query, [Latitud, Longitud, Nombre], (err, result) => {
       if (err) {
@@ -101,7 +112,7 @@ app.post('/agregar_hospital', (req, res) => {
 // Ruta para mostrar el formulario de edición de hospital
 app.get('/editar_hospital/:id', (req, res) => {
   const hospitalId = req.params.id;
-  const query = 'SELECT * FROM CentroSalud WHERE IdCentro = ?';
+  const query = 'SELECT * FROM CentroSalud WHERE idcentro = ?';
 
   db.query(query, [hospitalId], (err, results) => {
     if (err) {
@@ -119,7 +130,7 @@ app.get('/editar_hospital/:id', (req, res) => {
 app.post('/editar_hospital/:id', (req, res) => {
   const hospitalId = req.params.id;
   const { nombre, latitud, longitud } = req.body;
-  const query = 'UPDATE CentroSalud SET Nombre = ?, Latitud = ?, Longitud = ? WHERE IdCentro = ?';
+  const query = 'UPDATE CentroSalud SET nombre = ?, latitud = ?, longitud = ? WHERE idcentro = ?';
 
   db.query(query, [nombre, latitud, longitud, hospitalId], (err) => {
     if (err) {
@@ -132,7 +143,7 @@ app.post('/editar_hospital/:id', (req, res) => {
 // Ruta para eliminar un hospital
 app.post('/eliminar_hospital/:id', (req, res) => {
   const hospitalId = req.params.id;
-  const query = 'DELETE FROM CentroSalud WHERE IdCentro = ?';
+  const query = 'DELETE FROM CentroSalud WHERE idcentro = ?';
 
   db.query(query, [hospitalId], (err) => {
     if (err) {
@@ -148,83 +159,22 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-// -------- INICIO DE SESION, REGISTRO Y CONTRASEÑA OLVIDADA --------
-app.get('/registropersona', (req, res) => {
-  res.render('registropersona', { user: 0 });
-});
-app.get('/iniciosesion', (req, res) => {
-  // Para testear, al entrar a iniciosesion se simula que se inicia sesión como usuario
-  let logQuery = "SELECT * FROM Usuario WHERE RUT = ?";
-  db.query(logQuery, ['123456789'], (err, result) => {
-    if (err) {
-      console.log(err);
-    }
-    if (result.length === 0) {
-      res.send("Usuario no encontrado");
-    } else {
-      req.session.usuario = result[0];
-      res.redirect('/');
-    }
-  });
-});
-/*app.get('/iniciosesion', (req, res) => {
-  res.render('iniciosesion', { user: 0 });
-});*/
+
 // Cambiar contraseña (olvidé mi contraseña)
 app.post('/forgot-password', async (req, res) => {
   const { CorreoElectronico, NuevaContrasenia } = req.body;
   // Verificar si el correo existe
-  db.query('SELECT * FROM Usuario WHERE CorreoElectronico = ?', [CorreoElectronico], async (err, results) => {
+  db.query('SELECT * FROM Usuario WHERE correoelectronico = ?', [CorreoElectronico], async (err, results) => {
       if (err) return res.status(500).send('Error en el servidor');
       if (results.length === 0) return res.status(400).send('Correo no encontrado');
       // Encriptar la nueva contraseña
       const hashedPassword = await bcrypt.hash(NuevaContrasenia, 10);
       // Actualizar contraseña
-      db.query('UPDATE Usuario SET Contrasenia = ? WHERE CorreoElectronico = ?', [hashedPassword, CorreoElectronico], (err, result) => {
+      db.query('UPDATE Usuario SET contrasenia = ? WHERE correoelectronico = ?', [hashedPassword, CorreoElectronico], (err, result) => {
           if (err) return res.status(500).send('Error al actualizar la contraseña');
           res.status(200).send('Contraseña actualizada exitosamente');
       });
   });
-});
-app.post('/register', async (req, res) => {
-  const { RUT, Nombre, CorreoElectronico, Contrasenia } = req.body;
-  try {
-      // Verificar si el correo ya existe
-      const [existingUsers] = await pool.query('SELECT * FROM usuario WHERE CorreoElectronico = ?', [CorreoElectronico]);
-      if (existingUsers.length > 0) {
-          return res.status(400).send('El correo ya está registrado');
-      }
-      // Encriptar la contraseña
-      const hashedPassword = await bcrypt.hash(Contrasenia, 10);
-      // Insertar nuevo usuario
-      await pool.query('INSERT INTO usuario (RUT, Nombre, CorreoElectronico, Contrasenia) VALUES (?, ?, ?, ?)', 
-          [RUT, Nombre, CorreoElectronico, hashedPassword]);
-      res.redirect('/iniciosesion');
-  } catch (err) {
-      console.error(err);
-      res.status(500).send('Error en el servidor');
-  }
-});
-app.post('/login', async (req, res) => {
-  const {rut, Contrasenia } = req.body;
-  try {
-      // Buscar usuario por correo
-      const [results] = await db.query('SELECT * FROM Usuario WHERE RUT = ?', [rut]);
-      if (results.length === 0) {
-          return res.status(400).send('Correo no registrado');
-      }
-      const user = results[0];
-      // Comparar contraseñas
-      const isPasswordValid = await bcrypt.compare(Contrasenia, user.Contrasenia);
-      if (!isPasswordValid) {
-          return res.status(400).send('Contraseña incorrecta');
-      }
-      req.session.usuario = user;
-      res.redirect('/');
-  } catch (err) {
-      console.error(err);
-      res.status(500).send('Error en el servidor');
-  }
 });
 
 
@@ -256,12 +206,12 @@ app.post('/cambiarcorreo', (req, res) => {
     const {nuevoCorreo, confirmarCorreo} = req.body;
     const userId = 4;
 
-    db.query('SELECT contrasenia FROM usuario WHERE IdUsuario = ?', [userId], (error, results) => {
+    db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
         if (error) return res.status(500).send('Error en el servidor');
 
         const storedPassword = results[0].contrasenia;
         if (confirmarCorreo == storedPassword) {
-            bd.query('UPDATE usuario SET CorreoElectronico = ? WHERE IdUsuario = ?', [nuevoCorreo, userId], (error) =>{
+            bd.query('UPDATE Usuario SET correoelectronico = ? WHERE idusuario = ?', [nuevoCorreo, userId], (error) =>{
                 if (error) return res.status(500).send('Error al actualizar el correo');
                 res.send('Correo actualizado');
             });
@@ -284,12 +234,12 @@ app.post('/cambiartelefono', (req, res) => {
     const {nuevoTelefono, confirmarTelefono} = req.body;
     const userId = 4;
 
-    db.query('SELECT contrasenia FROM usuario WHERE IdUsuario = ?', [userId], (error, results) => {
+    db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
         if (error) return res.status(500).send('Error en el servidor');
 
         const storedPassword = results[0].contrasenia;
         if (confirmarTelefono == storedPassword) {
-            db.query('UPDATE usuario SET NumeroTelefono = ? WHERE IdUsuario = ?', [nuevoTelefono, userId], (error) =>{
+            db.query('UPDATE usuario SET NumeroTelefono = ? WHERE idusuario = ?', [nuevoTelefono, userId], (error) =>{
                 if (error) return res.status(500).send('Error al actualizar el telefono');
                 res.send('Telefono actualizado');
             });
@@ -303,12 +253,12 @@ app.post('/cambiardireccion', (req, res) => {
     const {nuevaDireccion, confirmarDireccion} = req.body;
     const userId = 4;
 
-    db.query('SELECT contrasenia FROM Usuario WHERE IdUsuario = ?', [userId], (error, results) => {
+    db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
         if (error) return res.status(500).send('Error en el servidor');
 
         const storedPassword = results[0].contrasenia;
         if (confirmarDireccion == storedPassword) {
-            db.query('UPDATE Usuario SET Direccion = ? WHERE IdUsuario = ?', [nuevaDireccion, userId], (error) =>{
+            db.query('UPDATE Usuario SET Direccion = ? WHERE idusuario = ?', [nuevaDireccion, userId], (error) =>{
                 if (error) return res.status(500).send('Error al actualizar la direccion');
                 res.send('Direccion actualizada');
             });
@@ -322,7 +272,7 @@ app.post('/cambiarcontraseña', (req, res) => {
     const {nuevaContraseña, confirmarContraseña, contraseñaActual} = req.body;
     const userId = 4;
 
-    db.query('SELECT contrasenia FROM Usuario WHERE IdUsuario = ?', [userId], (error, results) => {
+    db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
         if (error) return res.status(500).send('Error en el servidor');
 
         const storedPassword = results[0].contrasenia;
@@ -330,7 +280,7 @@ app.post('/cambiarcontraseña', (req, res) => {
 
             if (nuevaContraseña === confirmarContraseña) {
 
-                db.query('UPDATE Usuario SET Contrasenia = ? WHERE IdUsuario = ?', [nuevaContraseña, userId], (error) =>{
+                db.query('UPDATE Usuario SET Contrasenia = ? WHERE idusuario = ?', [nuevaContraseña, userId], (error) =>{
                     if (error) return res.status(500).send('Error al actualizar la contraseña');
                     res.send('Contraseña actualizada');
                 });
@@ -346,7 +296,7 @@ app.post('/cambiarcontraseña', (req, res) => {
 app.get('/perfilUsuario', (req,res) =>{
     const userId = 4;
 
-    const query = 'SELECT Nombre, CorreoElectronico, RUT, NumeroTelefono FROM Usuario WHERE IdUsuario = ?';
+    const query = 'SELECT nombre, correoElectronico, rut, numerotelefono FROM Usuario WHERE idusuario = ?';
 
     db.query(query, [userId], (err, result) =>{
         if (err){

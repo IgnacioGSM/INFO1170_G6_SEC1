@@ -9,12 +9,12 @@
                 <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/mis_solicitudes">Mis solicitudes</a></li>
 
                 <!-- Mostrar solo para admin -->
-                <% if (user.TipoUsuario == 'admin') { %>
+                <% if (user.tipousuario == 'admin') { %>
                     <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/admin">Panel de administrador</a></li>
                 <% } %>
 
                 <!-- Mostrar solo para recepcionista -->
-                <% if (user.TipoUsuario == 'recepcionista') { %>
+                <% if (user.tipousuario == 'recepcionista') { %>
                     <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/recepcionista">Panel de recepcionista</a></li>
                 <% } %>
 
@@ -22,8 +22,8 @@
                 <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/logout">Cerrar Sesión</a></li>
 
             <% } else { %>
-                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" role="button" href="iniciosesion">Iniciar Sesión</a></li>
-                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="registropersona">Registrarse</a></li>
+                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" role="button" href="/login">Iniciar Sesión</a></li>
+                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/registro">Registrarse</a></li>
             <% } %>
 
             <% if (!index) { %>     <!-- Si index es false (no se llamó este partial desde index) se mostrará un boton para volver al inicio -->
