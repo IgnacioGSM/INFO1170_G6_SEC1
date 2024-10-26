@@ -1,5 +1,5 @@
 module.exports = {host : 'localhost',
-                  user : 'ignaciog',
-                  password : 'nachojojo16',
+                  user : 'root',
+                  password : '',
                   database : 'Hospitrack'
 }
