@@ -1,11 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 const multer = require('multer');
 const path = require('path');
 const session = require('express-session');
-const { host, user, password, database } = require('./credenciales_mysql.js');  // cambiar los datos en el archivo credenciales_mysql.js para que funcione en sus equipos
 const { rmSync } = require('fs');
 
 const app = express();
@@ -20,14 +18,9 @@ const storage = multer.diskStorage({
   }
 });
 
+// La conexión a la base de datos se encuentra en database.js
+const db = require('./database');
 
-// Conexión a la base de datos
-const db = mysql.createConnection({
-  host: host,
-  user: user,
-  password: password,
-  database: database
-});
 // Configuraciones de la app
 app.use(bodyParser.urlencoded({ extended: true }));
 
