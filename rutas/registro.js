@@ -7,6 +7,7 @@ const saltrounds = 10;
 
 function registrarUsuario(rut, password, correo,req, res) {
     // Esta función se ejecuta cuando el rut no está registrado en la tabla Usuario pero sí en la tabla Persona
+    // Osea cuando se puede registrar el usuario
     try {
         bcrypt.hash(password, saltrounds, (err, hash) => {
             if (err) {
@@ -65,10 +66,13 @@ router.get('/', (req, res) => {
     if (req.session.loggeado) {
         res.redirect('/');
     } else {
-        res.render('registro', {user: 0});
+        // La validación de contraseña se realiza en el frontend
+        const rutError = {Text: '', Display: 'none'};
+        res.render('registro', {user: 0, rutError});
     }
 });
 
+// Por ahora solo se revisa el rut, la contraseña se ve en frontend y el correo aún no se usa
 router.post('/', (req, res) => {
     if (req.session.user) {
         res.redirect('/');
@@ -82,7 +86,8 @@ router.post('/', (req, res) => {
             }
             if (result.length === 0) {
                 console.log("Rut no encontrado");
-                res.send("Rut no encontrado");
+                rutError = {Text: 'Rut no encontrado', Display: 'block'};
+                res.render('registro', {user: 0, rutError});
             } else {
                 // Si el rut está en la tabla Persona, se verifica que no esté en la tabla Usuario
                 let query = "SELECT * FROM Usuario WHERE rut = ?";
@@ -91,12 +96,13 @@ router.post('/', (req, res) => {
                         console.log(err);
                     }
                     if (result.length === 0) {
-                        console.log("Rut no registrado");
+                        console.log("Agregando usuario...");
                         // Si el rut no está en la tabla Usuario, se registra
                         registrarUsuario(rut, password, correo, req, res);
                     } else {
                         console.log("Rut ya registrado");
-                        res.send("Rut ya registrado");
+                        rutError = {Text: 'Este Rut ya está registrado', Display: 'block'};
+                        res.render('registro', {user: 0, rutError});
                     }
                 });
             }

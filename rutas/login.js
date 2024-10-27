@@ -7,12 +7,16 @@ router.get('/', (req, res) => {
     if (req.session.loggeado) {
         res.redirect('/');
     } else {
-        res.render('iniciosesion', {user: 0});
+        const userError ={TextContent: '', display: 'none'};
+        const passwordError ={TextContent: '', display: 'none'};
+        res.render('iniciosesion', {user: 0, userError, passwordError});
     }
 });
 
 router.post('/', (req, res) => {
     const {rut, password } = req.body;
+    const userError ={TextContent: '', display: 'none'};
+    const passwordError ={TextContent: '', display: 'none'};
     try {
         db.query('SELECT * FROM Usuario WHERE rut = ?', [rut], (err, result) => {
             if (err) {
@@ -20,7 +24,9 @@ router.post('/', (req, res) => {
             }
             if (result.length == 0) {
                 console.log("Usuario no encontrado");
-                res.send("Usuario no encontrado");
+                userError.TextContent = "Usuario no encontrado";
+                userError.display = 'block';
+                res.render('iniciosesion', {user: 0, userError, passwordError});
             } else {
                 // Si el usuario existe, se compara la contraseña
                 bcrypt.compare(password, result[0].contrasenia, (err, response) => {
@@ -30,7 +36,9 @@ router.post('/', (req, res) => {
                         res.redirect('/');
                     } else {
                         console.log("Contraseña incorrecta");
-                        res.send("Contraseña incorrecta");
+                        passwordError.TextContent = "Contraseña incorrecta";
+                        passwordError.display = 'block';
+                        res.render('iniciosesion', {user: 0, userError, passwordError});
                     }
                 });
             }
