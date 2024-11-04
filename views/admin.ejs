@@ -19,9 +19,9 @@
                         <div class="col-md-3 col-sm-6 mb-3 d-flex flex-column">
                             <div class="card hospital-card">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title"><%= hospital.Nombre %></h5>
+                                    <h5 class="card-title"><%= hospital.nombre %></h5>
                                     <!-- Cambiado para usar ejs en lugar de html -->
-                                    <a href="/editar_hospital/<%= hospital.IdCentro %>" class="btn btn-custom">Editar</a>
+                                    <a href="admin/editar_hospital/<%= hospital.idcentro %>" class="btn btn-custom">Editar</a>
 
                                 </div>
                             </div>
@@ -30,7 +30,7 @@
                     <!-- Agregar hospital -->
                     <div class="col-md-3 col-sm-6 mb-3 d-flex flex-column">
                         <div class="card hospital-add">
-                            <a href="/agregar_hospital" class="btn-add-hospital">
+                            <a href="admin/agregar_hospital" class="btn-add-hospital">
                                 <div class="card-body text-center">
                                     <span class="plus-icon">+</span>
                                     <p>Agregar Hospital</p>
