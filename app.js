@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql');
+const multer = require('multer');
 const bodyParser = require('body-parser');
 const path = require('path');
 
@@ -23,12 +24,23 @@ bd.connect((err) => {
     console.log('Conectado a la base de datos mysql');
 });
 
+// Configuración de multer
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, 'uploads/'); // Carpeta donde se almacenarán los archivos
+    },
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname); // Nombre del archivo
+    }
+});
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, 'views'))
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.render('index', { user: null });
 });
 
 // Ruta principal para la interfaz de recepcionista
@@ -41,7 +53,27 @@ app.get('/recepcionista', async (req, res) => {
       res.status(500).send('Error al cargar las solicitudes');
     }
   });
-  
+
+const upload = multer({storage:storage});
+
+app.post('/envexp', upload.array('archivo', 5), (req, res) =>{
+    const userId = 4;
+    const archivos = req.files;
+
+    if(archivos.length === 0){
+        return res.status(400).send('No se subio ningun archivo');
+    }
+    archivos.forEach((archivo) =>{
+        const query = 'INSERT INTO expedientes_medicos (IdUsuario, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)';
+        bd.query(query, [userId, archivo.originalname, archivo.path], (err, result) =>{
+            if(err){
+                console.error('Error al guardar el archivo en la base de datos', err);
+                return res.status(500).send('Error en el servidor');
+            }
+        });
+    });
+    res.send('Expedientes medicos subidos con exito');
+});
 
 app.post('/register', (req, res) => {
     let {Nombre, rut, correo, contraseña} = req.body;
@@ -150,7 +182,7 @@ app.post('/cambiarcontraseña', (req, res) => {
     }); 
 });
 
-app.get('/views/perfilUsuario', (req,res) =>{
+app.get('/perfilUsuario', (req,res) =>{
     const userId = 4;
 
     const query = 'SELECT Nombre, CorreoElectronico, RUT, NumeroTelefono FROM usuario WHERE IdUsuario = ?';
@@ -166,6 +198,64 @@ app.get('/views/perfilUsuario', (req,res) =>{
         }else{
             res.status(404).send('Usuario no encontrado');
         }
+    });
+});
+
+/* implementacion al futuro se nesecita corregir la base de datos 
+app.post('/enviarvaloracion', (req, res) => {
+    const rating = req.body.rating;
+    const usuarioID = req.session.userId;
+
+    bd.query('INSERT INTO Valoraciones (userId, rating) VALUES (?, ?)', [usuarioID, rating], (err, result) =>{
+        if(err){
+            console.error('Error al guardar la valoracion:', err);
+            return res.status(500).send('Error al enviar la valoracion');
+        }
+        res.redirect('/perfil');
+    });
+});*/
+
+/*
+app.post('/borrarcuenta', (req, res) => {
+    const usuarioID = req.session.userId;
+    const password = req.body.confirmarContra;
+
+    bd.query('DELETE FROM usuarios WHERE id = ?', [usuarioID], (err, result) => {
+        if(err){
+            console.error('Error eliminando la cuenta:', err);
+            return res.status(500).send('Error al borrar la cuenta');
+        }
+        req.session.destroy();
+        res.redirect('/');
+    });
+});*/
+
+app.get('/hospitales', (req, res) =>{
+    const query = `
+        SELECT 
+            centrosalud.nombre AS nombreHospital,
+            centrosalud.latitud AS latitud,
+            centrosalud.longitud AS longitud,
+            seccion.NombreSeccion AS nombreSeccion,
+            COUNT(enespera.idRegistr) AS filasEspera
+        FROM 
+            centrosalud
+        LEFT JOIN 
+            seccion ON centrosalud.id = seccion.IdCentro
+        LEFT JOIN 
+            enespera ON seccion.IdSeccion = enespera.IdSeccion
+        GROUP BY 
+            centrosalud.id, seccion.IdSeccion;
+    `;
+
+    bd.query(query, (err, results) =>{
+        if(err){
+            console.error('Error al obtener los datos:', err);
+            return res.status(500).send('Error en el servidor');
+        }
+        console.log('Datos obtenidos', results);
+
+        res.render('hospitales', {hospitales: results});
     });
 });
 

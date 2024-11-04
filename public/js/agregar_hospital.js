@@ -4,13 +4,6 @@ document.addEventListener("DOMContentLoaded", function() {
     form.addEventListener("submit", function(event) {
         let isValid = true;
 
-        // Validación del ID del Hospital
-        const id = document.getElementById("id").value;
-        if (id.trim() === "" || !/^[a-zA-Z0-9]+$/.test(id)) {
-            isValid = false;
-            alert("Por favor, ingresa un ID válido (alfanumérico).");
-        }
-
         // Validación del Nombre del Hospital
         const nombre = document.getElementById("nombre").value;
         if (nombre.trim() === "") {

@@ -20,19 +20,7 @@ body {
 }
 
 /* Estilo del header */
-header {
-    background-color: var(--caladon);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    position: relative;
-}
 
-/* Ajuste del logo */
-.header-logo {
-    height: 50px;
-}
 
 /* Botón de ir a página principal */
 .btn.btn-custom {

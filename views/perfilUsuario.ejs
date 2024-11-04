@@ -4,23 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!--<link rel="stylesheet" href="perfilCuenta.css">-->
-    <link rel="stylesheet" href="/perfilCuenta2.css">
+    <link rel="stylesheet" href="/css/perfilCuenta2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <%- include('partials/header', {index: 0}) %>
     <div class="container my-custom-container">
-        <header class="my-2">
-            <img src="/logo.png" class="header-logo" alt="logo">
-            <h1>Bienvenido a tu Perfil</h1>
-            <button class="btn" onclick="window.location.href='index.html';">Ir al Inicio</button>
-        </header>
-
         <div class="row">
             <aside class="col-md-4 my-4 mx-3">
                 <div class="text-center my-4">
-                    <img src="/default_profile.png" alt="Foto de perfil" class="img-fluid rounded-circle">
+                    <img src="/imagenes/default_profile.png" alt="Foto de perfil" class="img-fluid rounded-circle">
                     <p>Usuario</p>
                 </div>
                 <div class="list-group mt-4 h4">
@@ -41,10 +36,10 @@
                     <div class="ContenidoCU">
                         <h3>Informacion General</h3>
                         <p>
-                            Nombre: <%= usuario.Nombre %><br>
-                            Correo: <%= usuario.CorreoElectronico %><br>
-                            RUT: <%= usuario.RUT %><br>
-                            Telefono: <%= usuario.NumeroTelefono %><br>
+                            Nombre: <%= usuario.nombre + " " + usuario.apellido%><br>
+                            Correo: <%= usuario.correoelectronico %><br>
+                            RUT: <%= usuario.rut %><br>
+                            Telefono: <%= usuario.numerotelefono ? usuario.numerotelefono : "No registrado" %><br> <!-- Ternaria, si hay numero lo muestra, sino muestra "No registrado" -->
                             Direccion: Calle falsa 123 
                         </p>
                     </div>
@@ -60,7 +55,7 @@
                     </div>
                     <h3>Valora HospiTrack</h3>
                     <div class="valoracion">
-                        <form id="valor">
+                        <form id="valor" method="post" action="/perfilUsuario/enviarvaloracion">
                             <label for="rating">Valora nuestro servicio</label>
                             <div class="estrellas">
                                 <input type="radio" name="rating" id="estrella5" value="5">
@@ -88,7 +83,7 @@
 
                     <div class="cambiarCor mt-4">
                         <h3>Actualiza tu Correo</h3>
-                        <form id="CambiarCorreo" method="post" action="/cambiarcorreo">
+                        <form id="CambiarCorreo" method="post" action="/perfilUsuario/cambiarcorreo">
                             <div class="form-group">
                                 <label for="nuevoCorreo">Nuevo Correo</label>
                                 <input type="email" class="form-control" name="nuevoCorreo" id="nuevoCorreo" placeholder="Ingrese su nuevo correo">
@@ -103,7 +98,7 @@
 
                     <div class="cambiarTel mt-4">
                         <h3>Actualiza tu Telefono</h3>
-                        <form id="CambiarTelefono" method="post" action="/cambiartelefono">
+                        <form id="CambiarTelefono" method="post" action="/perfilUsuario/cambiartelefono">
                             <div class="form-group">
                                 <label for="nuevoTelefono">Nuevo Telefono</label>
                                 <input type="tel" class="form-control" name="nuevoTelefono" id="nuevoTelefono" placeholder="Ingrese su nuevo telefono">
@@ -118,7 +113,7 @@
 
                     <div class="cambiarDir mt-4">
                         <h3>Actualiza tu Direccion</h3>
-                        <form id="CambiarDireccion" method="post" action="/cambiardireccion">
+                        <form id="CambiarDireccion" method="post" action="/perfilUsuario/cambiardireccion">
                             <div class="form-group">
                                 <label for="nuevaDireccion">Nueva Direccion</label>
                                 <input type="text" class="form-control" name="nuevaDireccion" id="nuevaDireccion" placeholder="Ingrese su nueva direccion">
@@ -133,7 +128,7 @@
 
                     <div class="cambiarContra mt-4">
                         <h3>Actualiza tu contraseña</h3>
-                        <form id="CambiarContraseña" method="post" action="/cambiarcontraseña">
+                        <form id="CambiarContraseña" method="post" action="/perfilUsuario/cambiarcontrasenia">
                             <div class="form-group">
                                 <label for="contraseñaActual">Contraseña Actual</label>
                                 <input type="password" class="form-control" name="contraseñaActual" id="contraseñaActual" placeholder="Ingrese su contraseña actual" required>
@@ -155,7 +150,7 @@
                     <h2>Expedientes Medicos</h2>
                     <div class="MedExp">
                         <h3>Sube tus expedientes aqui</h3>
-                        <form id="formulario">
+                        <form id="formulario" method="post" action="/perfilUsuario/envexp">
                             <label for="archivo">Seleccione un archivo:</label>
                             <input type="file" id="archivo" accept=".pdf, .doc" multiple required>
                             <br><br>
@@ -205,7 +200,7 @@
                     <div class="borrarcuenta">
                         <h3>Borrar Cuenta</h3>
                         <p>¿Seguro de borrar tu cuenta? Todos tus datos y registros se perderan y no podras recuperarlos</p>
-                        <form id="BorrarCuenta">
+                        <form id="BorrarCuenta" method="post" action="/perfilUsuario/borrarcuenta">
                             <label for="confirmarContra">Ingrese su contraseña para confirmar:</label>
                             <input type="password" name="confirmarContra" id="confirmarContra" placeholder="Contraseña" required>
 
@@ -216,10 +211,8 @@
             </main>
         </div>
     </div>
+    <%- include('partials/footer') %>
     <script src="/perfilUsuario.js"></script>
-    <footer>
-        <p>&copy; 2024 Hospitrack</p>
-    </footer>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
