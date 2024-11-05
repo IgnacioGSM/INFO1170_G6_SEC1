@@ -29,7 +29,7 @@ CREATE TABLE `CentroSalud` (
   `longitud` varchar(20) DEFAULT NULL,
   `nombre` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idcentro`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,8 +39,7 @@ CREATE TABLE `CentroSalud` (
 LOCK TABLES `CentroSalud` WRITE;
 /*!40000 ALTER TABLE `CentroSalud` DISABLE KEYS */;
 INSERT INTO `CentroSalud` VALUES
-(1,'-38.736703','-72.610633','Clinica Alemana'),
-(9,'23','4','fafafasf');
+(1,'-38.736703','-72.610633','Clinica Alemana');
 /*!40000 ALTER TABLE `CentroSalud` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,8 +188,6 @@ CREATE TABLE `RespuestaSolicitud` (
 
 LOCK TABLES `RespuestaSolicitud` WRITE;
 /*!40000 ALTER TABLE `RespuestaSolicitud` DISABLE KEYS */;
-INSERT INTO `RespuestaSolicitud` VALUES
-(1,5,5,'omg','aceptada');
 /*!40000 ALTER TABLE `RespuestaSolicitud` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,7 +208,7 @@ CREATE TABLE `Seccion` (
   KEY `idusuario` (`idusuario`),
   CONSTRAINT `Seccion_ibfk_1` FOREIGN KEY (`idcentro`) REFERENCES `CentroSalud` (`idcentro`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Seccion_ibfk_2` FOREIGN KEY (`idusuario`) REFERENCES `Usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,7 +218,7 @@ CREATE TABLE `Seccion` (
 LOCK TABLES `Seccion` WRITE;
 /*!40000 ALTER TABLE `Seccion` DISABLE KEYS */;
 INSERT INTO `Seccion` VALUES
-(1,1,'Consultas',5);
+(2,1,'consultas',14);
 /*!40000 ALTER TABLE `Seccion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,7 +241,7 @@ CREATE TABLE `Solicitud` (
   KEY `idseccion` (`idseccion`),
   CONSTRAINT `Solicitud_ibfk_1` FOREIGN KEY (`idusuario`) REFERENCES `Usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Solicitud_ibfk_2` FOREIGN KEY (`idseccion`) REFERENCES `Seccion` (`idseccion`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,10 +251,7 @@ CREATE TABLE `Solicitud` (
 LOCK TABLES `Solicitud` WRITE;
 /*!40000 ALTER TABLE `Solicitud` DISABLE KEYS */;
 INSERT INTO `Solicitud` VALUES
-(4,4,1,'hola me duele el estomago','2024-10-15 16:42:39','pendiente'),
-(5,4,1,'aceptaa :3','2024-10-20 19:28:38','aceptada'),
-(6,4,1,'aceptaa parte 2','2024-10-20 19:29:31','rechazada'),
-(7,4,1,'test','2024-10-22 21:01:23','pendiente');
+(10,10,2,'holi me duele el estomago',NULL,'pendiente');
 /*!40000 ALTER TABLE `Solicitud` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,7 +274,7 @@ CREATE TABLE `Usuario` (
   PRIMARY KEY (`idusuario`),
   KEY `rut` (`rut`),
   CONSTRAINT `Usuario_ibfk_1` FOREIGN KEY (`rut`) REFERENCES `Persona` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -290,8 +284,10 @@ CREATE TABLE `Usuario` (
 LOCK TABLES `Usuario` WRITE;
 /*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
 INSERT INTO `Usuario` VALUES
-(4,'123456789','Juan','Pérez','correousuario@email.com','111111111','usuario','wiwi1234@'),
-(5,'321654987','Ana','Martínez','correrece@email.com','111111112','recepcionista','wiwi1234@');
+(10,'456789123','Carlos','López','asdad@gmail.com',NULL,'usuario','$2b$10$8ZTWqRYDY3ejQ56sGMYFy.L/h0Hss50MJ5RKtEV/JR0PX4S9VNz/.'),
+(12,'123456789','Juan','Pérez','perez777@gmail.com',NULL,'admin','$2b$10$1t0LnJIBxOXbey71hH9ZSemIrdelw9ERhC4zgI6yMEUJ76Oe06gpi'),
+(13,'987654321','María','González','mariawa777@gmail.com','999888777','usuario','$2b$10$gsUN8hkIFEr3AJc37Wbize5bTmFuui5cPt47xLILHHm/ZaHzPOveW'),
+(14,'321654987','Ana','Martínez','correorecep2@email.com',NULL,'recepcionista','$2b$10$7/2UZcxvBIkAUBMr9ePyc.t7tTGWlMI04tufIA.vIdNIKlw3FIjH.');
 /*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -304,4 +300,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-26 16:09:13
+-- Dump completed on 2024-11-04 21:17:41

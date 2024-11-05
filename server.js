@@ -1,10 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
-const multer = require('multer');
 const path = require('path');
 const session = require('express-session');
-const { rmSync } = require('fs');
 
 const app = express();
 
