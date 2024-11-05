@@ -57,6 +57,10 @@ app.use('/admin', adminRouter);
 const perfilRouter = require('./rutas/perfil');
 app.use('/perfilUsuario', perfilRouter);
 
+// Ruta recepcionista
+const recepcionistaRouter = require('./rutas/recepcionista');
+app.use('/recepcionista', recepcionistaRouter);
+
 
 // Cambiar contraseña (olvidé mi contraseña)
 app.post('/forgot-password', async (req, res) => {
