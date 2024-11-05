@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Para poder usar leaflet se debe incluir el link de su CSS y LUEGO su JavaScript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Para que un mapa aparezca necesita tener sus dimensiones definidas en CSS */
+        .mapa {
+            height: 400px;
+            width: 800px;
+        }
+    </style>
+    <title>Tutorial de leaflet</title>
+</head>
+<body>
+    <h1>Inclusion de un mapa</h1>
+    <div id="map" class="mapa"></div>
+
+    <h2>Mapa con marcador</h2>
+    <div id="map2" class="mapa"></div>
+
+    <h2>Mapa con eventos de popups</h2>
+    <div id="map3" class="mapa"></div>
+
+    <h2>Mapa con marcador personalizado</h2>
+    <div id="map4" class="mapa"></div>
+
+    <script>
+        // ---------------------------------------- MAPA 1 ---------------------------------------------------
+
+        // Para inicializar un mapa se debe crear una variable que contenga un objeto L.map
+
+        var map = L.map('map').setView([-38.703182, -72.549301], 13); // Se debe indicar el id del contenedor y las coordenadas iniciales junto con el nivel de zoom
+
+        // Para agregar un mapa base se debe usar L.tileLayer
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // Se debe indicar la URL del mapa base, usamos openstreetmap
+            maxZoom: 19,
+        }).addTo(map);
+
+        // ---------------------------------------- MAPA 2 ---------------------------------------------------
+
+        // Ahora hagamos un mapa con un marcador
+
+        var map2 = L.map('map2').setView([-38.703182, -72.549301], 13); // Se pueden incluir varios mapas diferentes
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map2);
+
+        // Para agregar un marcador se debe usar L.marker
+
+        var marker = L.marker([-38.703182, -72.549301]).addTo(map2); // Se debe indicar las coordenadas del marcador
+
+        // Agreguemosle un "popup" al marcador
+
+        marker.bindPopup("<b>Hola mundo!</b><br>Soy un popup.").openPopup(); // Se debe indicar el contenido del popup, openPopup() lo abre automaticamente
+
+        // ---------------------------------------- MAPA 3 ---------------------------------------------------
+
+        // Los popup se pueden abrir con eventos
+
+        var map3 = L.map('map3').setView([-38.703182, -72.549301], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map3);
+
+        var popup = L.popup(); // Se debe crear un objeto popup antes de utilizarlo
+        
+        function clickMapa(evento) {
+            popup
+                .setLatLng(evento.latlng) // Se debe indicar la ubicacion del popup
+                .setContent("Has hecho click en " + evento.latlng.toString()) // Se debe indicar el contenido del popup
+                .openOn(map3); // Se debe indicar en que mapa se abrira el popup
+        }
+
+        map3.on('click', clickMapa); // Se debe indicar el evento que activara el popup
+
+        // ---------------------------------------- MAPA 4 ---------------------------------------------------
+
+        // Los marcadores pueden tener imagenes personalizadas
+
+        var map4 = L.map('map4').setView([-38.703182, -72.549301], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map4);
+
+        var IconoVerde = L.icon({             // Se debe crear un objeto icono
+            iconUrl: 'marcador_verde.png',    // Se debe indicar la URL de la imagen
+            shadowUrl: 'marcador_sombra.png', // Se debe indicar la URL de la sombra
+            iconSize: [69, 93],               // Se debe indicar el tamaño de la imagen
+            shadowSize: [68, 67],             // Se debe indicar el tamaño de la sombra
+            iconAnchor: [34,92],              // Punto del icono correspondiente a la ubicacion del marcador
+            shadowAnchor: [1, 67],            // Punto de la sombra correspondiente a la ubicacion del marcador
+            popupAnchor: [0, -93]             // Punto donde se abre el popup en caso de haberlo
+        });
+
+        L.marker([-38.703182, -72.549301], {icon: IconoVerde}).addTo(map4); // Se debe indicar el icono del marcador
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+/* ---------------------------HEADER------------------------------- */
+
+header {
+    background-color: #A0D6B4;
+    width: 100%;
+
+    display: flex;
+    flex-flow: wrap row;
+    justify-content:space-evenly;
+    padding: 20px;
+}
+
+.header-logo {
+    display: inline-block;
+    margin-left: 20px;
+    height: 80px;
+}
+.header-nav {
+    display: flex;
+    align-items: center;
+}
+
+.header-list {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    list-style: none;
+}
+
+.header-link{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    background-color: #2E8B57;
+    border-radius: 50px;
+    text-decoration: none;
+    color: white;
+    font-size: larger;
+}
+
+.header-link:hover {
+    background-color: #1B4D3E;
+}
+
+.header-link:visited {
+    color: white;
+}
+
+#profile-icon {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin-right: 15px;
+}

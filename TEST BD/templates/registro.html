@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="registropersonal.css">
+    <title>Registro usuario</title>
+</head>
+<body>
+    <header>
+        <img src="hospitracklogo.jpg" class="header-logo">
+        <nav class="header-nav"></nav>
+    </header>
+    <div class="container">
+        <h1>Bienvenido a Hospitrack</h1>
+        <form action="/" method="POST">
+            <label for="nombre">Ingrese su Nombre:</label>
+            <input type="text" id="nombre" name="Nombre" required>
+            <span id="nombre-error" style="color: red; display: none;"></span>
+
+            <label for="rut">Ingrese su RUT:</label>
+            <input type="text" id="rut" name="rut" required>
+            <span id="rut-error" style="color: red; display: none;"></span>
+
+            <label for="correo">Ingrese su correo electrónico:</label>
+            <input type="email" id="correo" name="correo" required>
+            <span id="correo-error" style="color: red; display: none;"></span>
+            <button type="submit">Registrarme</button>
+
+            <a href="../iniciosesion.html">Volver al inicio</a>
+        </form>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <p>© 2024 Hospitrack. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
