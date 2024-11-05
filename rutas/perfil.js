@@ -7,10 +7,10 @@ const db = require('../database.js');
 
 // Configuración de multer
 const storage = multer.diskStorage({
-    destination: function(req, file, cb){
+    destination: (req, file, cb)=>{
         cb(null, 'uploads/'); // Carpeta donde se almacenarán los archivos
     },
-    filename: function(req, file, cb) {
+    filename: (req, file, cb) => {
         cb(null, Date.now() + '-' + file.originalname); // Nombre del archivo
     }
   });
@@ -102,17 +102,17 @@ router.post('/cambiarcontrasenia', (req, res) => {
     }
 });
 
-router.post('/envex', upload.single('archivo'), (req, res) => {
+router.post('/envexp', upload.array('archivo[]'), (req, res) => {
     const userId = req.session.usuario.idusuario;
     const archivos = req.files;
 
-    if(!archivos){
-        return res.status(400).send('No se subio ningun archivo');
+    if(!archivos || archivos.length === 0){
+        return res.status(400).send('No se subió ningún archivo');
     }
 
     archivos.forEach((archivo)=>{
         const query = 'INSERT INTO expedientes_medicos (IdUsuario, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)';
-        bd.query(query, [userId, archivo.originalname, archivo.path], (err, result)=>{
+        db.query(query, [userId, archivo.originalname, archivo.path], (err) => {
             if(err){
                 console.error('Error al guardar el archivo en la base de datos', err);
                 return res.status(500).send('Error en el servidor');
@@ -120,6 +120,35 @@ router.post('/envex', upload.single('archivo'), (req, res) => {
         });
     });
     res.send('Expedientes medicos subidos con exito');
+});
+
+//ruta para la lista de expedientes
+router.get('/listarExp', (req, res) => {
+    const userId = req.session.usuario.idusuario;
+
+    const query = 'SELECT idexpediente, nombre_archivo, ruta_archivo FROM expedientes_medicos WHERE IdUsuario = ?';
+    db.query(query, [userId], (err, results) => {
+        if(err){
+            console.error('Error al obtener el expediente', err);
+            return res.status(500).send('Error al obtener los expedientes');
+        }
+        res.json(results);//se envia la lista de expedientes al usuario
+    });
+});
+
+//ruta para descargar un expediente
+router.get('/descargarExp/:id', (req, res) =>{
+    const expedienteId = req.params.id;
+
+    const query = 'SELECT ruta_archivo FROM expedientes_medicos WHERE idexpediente = ?';
+    db.query(query, [expedienteId], (err, results) => {
+        if(err || results.length === 0){
+            console.error('Error al obtener el archivo', err);
+            return res.status(404).send('Archivo no encontrado');
+        }
+        const rutaArch = results[0].ruta_archivo;
+        res.download(rutaArch);
+    });
 });
 
 module.exports = router;

@@ -150,46 +150,48 @@
                     <h2>Expedientes Medicos</h2>
                     <div class="MedExp">
                         <h3>Sube tus expedientes aqui</h3>
-                        <form id="formulario" method="post" action="/perfilUsuario/envexp">
+                        <form id="formulario" method="post" action="/perfilUsuario/envexp" enctype="multipart/form-data">
                             <label for="archivo">Seleccione un archivo:</label>
-                            <input type="file" id="archivo" accept=".pdf, .doc" multiple required>
+                            <input type="file" id="archivo" name="archivo[]" accept=".pdf, .doc" multiple required>
                             <br><br>
                             <button type="submit">Subir archivo</button>
                         </form>
 
-                        <div id="resultado"></div>
-                        <button id="borrar" style="display: none;">Borrar Archivos</button>
+                        <h3>Archivos subidos</h3>
+                        <div id="listaExpedientes"></div>
+                        
 
                         <script>
-                            document.getElementById('formulario').addEventListener('submit', function(event){
-                                event.preventDefault();
+                            //funcion para cargar la lista de expedientes
+                            function cargarexp(){
+                                fetch('/perfilUsuario/listarExp')
+                                    .then(response => response.json())
+                                    .then(expedientes =>{
+                                        const listaExp = document.getElementById('listaExpedientes');
+                                        listaExp.innerHTML = '';
 
-                                const archivoInput = document.getElementById('archivo');
-                                const archivos = archivoInput.files;
-                                const resultadoDiv = document.getElementById('resultado')
-                                const botonDel = document.getElementById('borrar')
+                                        if(expedientes.length > 0){
+                                            expedientes.forEach(exp => {
+                                                const epxItem = document.createElement('div');
+                                                epxItem.innerHTML = `
+                                                    <p>${exp.nombre_archivo}</p>
+                                                    <button onclick="descargarExpediente(${exp.idexpediente})">Descargar</button>
+                                                    <button onclick="eliminarExpediente(${exp.idexpediente})">Eliminar</button>
+                                                `;
+                                                listaExp.appendChild(epxItem);
+                                            });
+                                        } else {
+                                            listaExp.innerHTML = '<p>No hay expedientes subidos</p>';
+                                        }
+                                    })
+                                    .catch(error => console.error('Error al cargar el archivo:', error));
+                            }
 
-                                if (archivos.length > 0){
-                                    if (!resultadoDiv.innerHTML){
-                                        resultadoDiv.innerHTML = '<h3>Archivos subidos:</h3><ul>';
-                                    }
-                                    for (let i = 0; i < archivos.length; i++){
-                                        resultadoDiv.innerHTML += `<li>${archivos[i].name}</li>`;
-                                    }
-                                    resultadoDiv.innerHTML += '</ul>';
-
-                                    botonDel.style.display = 'block';
-
-                                }else{
-                                    resultadoDiv.innerHTML += '<p>no se seleccionaron archivos</p>'
-                                }
-                            });
-
-                            document.getElementById('borrar').addEventListener('click', function(){
-                                document.getElementById('resultado').innerHTML = '';
-                                document.getElementById('archivo').value = '';
-                                this.style.display = 'none';
-                            });
+                            function descargarExp(id){
+                                window.location.href = `/perfilUsuario/descargarExpediente/${id}`;
+                            }
+                            
+                            document.addEventListener('DOMContentLoaded', cargarexp);
                         </script>
 
                     </div>
