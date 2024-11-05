@@ -102,4 +102,24 @@ router.post('/cambiarcontrasenia', (req, res) => {
     }
 });
 
+router.post('/envex', upload.single('archivo'), (req, res) => {
+    const userId = req.session.usuario.idusuario;
+    const archivos = req.files;
+
+    if(!archivos){
+        return res.status(400).send('No se subio ningun archivo');
+    }
+
+    archivos.forEach((archivo)=>{
+        const query = 'INSERT INTO expedientes_medicos (IdUsuario, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)';
+        bd.query(query, [userId, archivo.originalname, archivo.path], (err, result)=>{
+            if(err){
+                console.error('Error al guardar el archivo en la base de datos', err);
+                return res.status(500).send('Error en el servidor');
+            };
+        });
+    });
+    res.send('Expedientes medicos subidos con exito');
+});
+
 module.exports = router;
