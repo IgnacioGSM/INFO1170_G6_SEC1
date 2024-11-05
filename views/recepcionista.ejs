@@ -146,6 +146,18 @@
       <!-- Sección de Recepción de Solicitudes -->
       <section id="recepcion-solicitudes" class="d-none">
         <h2 class="text-center bg-success text-white py-3 rounded">Recepción de Solicitudes</h2>
+
+        <!-- Formulario de Filtro -->
+        <form id="filter-form" method="GET" action="/recepcionista/filtrar" class="mb-3">
+          <label for="filter">Filtrar por:</label>
+          <select id="filter" name="filter" class="form-select">
+            <option value="order">Orden de llegada</option>
+            <option value="section">Por sección</option>
+            <option value="status">Por estado</option>
+          </select>
+          <button type="submit" class="btn btn-success mt-2">Aplicar filtro</button>
+        </form>
+
         <input
           type="text"
           id="search-solicitudes"
@@ -159,17 +171,17 @@
               <th>Nombre</th>
               <th>Apellido</th>
               <th>Mensaje</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody id="solicitudes-list">
-            <!-- Mostrar solicitudes de la base de datos -->
-            <td %= solicitudes.forEach(function(solicitud) %>
+            <% solicitudes.forEach(function(solicitud) { %>
               <tr>
                 <td %= solicitud.nombre %>pepito</td>
                 <td %= solicitud.servicio %>dentista</td>
                 <td><%= solicitud.rut %></td>
-                <td><%= solicitud.nombre%></td>
-                <td><%= solicitud.apellido%></td>
+                <td><%= solicitud.nombre %></td>
+                <td><%= solicitud.apellido %></td>
                 <td><%= solicitud.mensaje %></td>
                 <td>
                   <button class="btn btn-success btn-sm" onclick="aceptarSolicitud(this)">Aceptar</button>
@@ -177,10 +189,14 @@
                   <input type="file" id="subir-archivo-<%= solicitud.id %>" accept=".pdf" class="form-control mt-2" />
                 </td>
               </tr>
-            solicitudes pendientes</td>
+            <% }) %>
           </tbody>
-          
         </table>
+
+        <!-- Botón para reportar solicitudes -->
+        <button id="btn-reportar-solicitudes" class="btn btn-secondary mt-3">
+          Reportar Solicitudes
+        </button>
       </section>
 
       <!-- Sección para Aceptar Solicitud -->
@@ -246,7 +262,7 @@
 
     <%- include('partials/footer') %>
 
-    <script src="/js/scripts_recep.js"></script>
+    <script src="/public/js/scripts_recep.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

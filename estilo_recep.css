@@ -1,0 +1,167 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #E8F5E9; /* Fondo claro */
+    color: #1B4D3E; /* Texto oscuro */
+    margin: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    min-height: 100vh;
+    overflow-x: hidden; /* Evita el desplazamiento horizontal */
+}
+
+/* ---------------------------HEADER------------------------------- */
+.header-logo-grande {
+    width: 280px; /* Tamaño grande del logo */
+    height: auto;
+    display: block;
+    margin: -100; /* Centra el logo horizontalmente */
+    position: relative;
+    top: 0px; /* Ajusta la posición del logo hacia arriba sin cambiar el tamaño del header */
+}
+
+header {
+    background-color: #A0D6B4;
+    width: 100%; /* Asegura que el header ocupe el ancho completo de la ventana */
+    height: 150px; /* Fija la altura del header */
+    display: flex; /* Usa flex para alinear elementos */
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño del header */
+}
+
+
+
+.header-nav {
+    display: flex;
+    align-items: center;
+}
+
+.header-list {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+}
+
+.header-list a {
+    padding: 8px 16px; /* Tamaño reducido de los botones */
+    background-color: #2E8B57;
+    border-radius: 50px;
+    text-decoration: none;
+    color: white;
+    font-size: medium;
+    transform: translateX(-20px); /* Mueve los botones ligeramente a la izquierda */
+    transition: transform 0.3s ease;
+}
+
+.header-list a:hover {
+    background-color: #1B4D3E;
+    transform: translateX(-20px);
+}
+
+/* ---------------------------MAIN------------------------------- */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    flex-grow: 1;
+    max-width: 1200px; /* Limita el ancho máximo del contenido */
+    margin: 0 auto; /* Centra el contenido */
+    box-sizing: border-box;
+    width: 100%; /* Se ajusta al ancho de la ventana */
+}
+
+.container {
+    background-color: #C5E1A5;
+    padding: 20px;
+    border-radius: 30px;
+    border: 1px solid #1B4D3E;
+    width: 100%;
+    max-width: 600px;
+}
+
+h1, h2, h3 {
+    background-color: #2E8B57;
+    color: white;
+    padding: 10px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h1 {
+    text-align: center; /* Centra el título */
+}
+
+/* ---------------------------FORMULARIO------------------------------- */
+form {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 15px;
+    padding: 20px;
+}
+
+input, textarea {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #1B4D3E;
+    font-size: 16px;
+}
+
+input[type="submit"], button {
+    background-color: #2E8B57;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #1B4D3E;
+    font-size: medium;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: #1B4D3E;
+}
+
+/* ---------------------------PREVISUALIZACIÓN DE SOLICITUDES------------------------------- */
+.previsualizacion-solicitudes {
+    background-color: #C5E1A5;
+    border-radius: 30px;
+    border: 1px solid #1B4D3E;
+    padding: 20px;
+    width: 100%; /* Igual de ancho que el formulario */
+    max-width: 600px; /* Limita el ancho máximo */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table, th, td {
+    border: 1px solid #1B4D3E;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #2E8B57;
+    color: white;
+}
+
+td {
+    background-color: #C5E1A5;
+}
+
+/* ---------------------------FOOTER------------------------------- */
+footer {
+    background-color: #A0D6B4;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    margin-top: auto;
+    box-sizing: border-box;
+}
