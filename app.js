@@ -43,16 +43,7 @@ app.get('/', (req, res) => {
     res.render('index', { user: null });
 });
 
-// Ruta principal para la interfaz de recepcionista
-app.get('/recepcionista', async (req, res) => {
-    try {
-      const solicitudes = await db.query('SELECT * FROM solicitudes'); // Obtener solicitudes de la base de datos
-      res.render('recepcionista', { solicitudes });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Error al cargar las solicitudes');
-    }
-  });
+
 
 const upload = multer({storage:storage});
 

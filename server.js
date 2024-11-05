@@ -1,10 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
-const multer = require('multer');
 const path = require('path');
 const session = require('express-session');
-const { rmSync } = require('fs');
 
 const app = express();
 
@@ -56,6 +54,10 @@ app.use('/admin', adminRouter);
 // Ruta perfil
 const perfilRouter = require('./rutas/perfil');
 app.use('/perfilUsuario', perfilRouter);
+
+// Ruta recepcionista
+const recepcionistaRouter = require('./rutas/recepcionista');
+app.use('/recepcionista', recepcionistaRouter);
 
 
 // Cambiar contraseña (olvidé mi contraseña)
