@@ -43,16 +43,7 @@ app.get('/', (req, res) => {
     res.render('index', { user: null });
 });
 
-// Ruta principal para la interfaz de recepcionista
-app.get('/recepcionista', async (req, res) => {
-    try {
-      const solicitudes = await db.query('SELECT * FROM solicitudes'); // Obtener solicitudes de la base de datos
-      res.render('recepcionista', { solicitudes });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Error al cargar las solicitudes');
-    }
-  });
+
 
 const upload = multer({storage:storage});
 
@@ -182,7 +173,7 @@ app.post('/cambiarcontraseña', (req, res) => {
     }); 
 });
 
-app.get('/views/perfilUsuario', (req,res) =>{
+app.get('/perfilUsuario', (req,res) =>{
     const userId = 4;
 
     const query = 'SELECT Nombre, CorreoElectronico, RUT, NumeroTelefono FROM usuario WHERE IdUsuario = ?';

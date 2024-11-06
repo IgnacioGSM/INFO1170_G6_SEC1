@@ -20,14 +20,6 @@ body {
     min-height: 100vh;
 }
 
-/* Encabezado */
-header {
-    background-color: var(--caladon);
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Distribuir elementos en los extremos */
-    padding: 10px 20px;
-}
 
 
 h1 {

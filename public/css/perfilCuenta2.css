@@ -10,25 +10,6 @@ body{
     max-width: 1200%;
 }
 
-header{
-    background-color: #A0D6B4;
-    border-radius: 8px 8px 0 0;
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
-}
-
-.header-logo{
-    width: 30%;
-    height: auto;
-}
-
-header h1{
-    flex-grow: 1;
-    text-align: center;
-    margin: 0;
-}
 
 aside{
     background: #1B4D3E;
@@ -83,7 +64,7 @@ button:hover{
     background-color: #09b049;
 }
 
-.btn{
+main .btn{
     background-color: #10823bfe;
 }
 
@@ -173,13 +154,4 @@ button:hover{
     font-size: 1rem;
     border-radius: 5px;
     border: 1px solid #ccc;
-}
-
-footer{
-    background-color: #333;
-    color: white;
-    padding: 1rem;
-    margin-top: 2rem;
-    text-align: center;
-    border-radius: 0 0 8px 8px;
 }

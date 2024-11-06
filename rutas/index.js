@@ -35,8 +35,8 @@ router.post('/submit_solicitud', (req, res) => {
             console.log("Usuario no encontrado");
             res.send("Usuario no encontrado");
         } else {
-            let idUsuario = result[0].IdUsuario;
-            let querySolicitud = "INSERT INTO Solicitud (IdUsuario, IdSeccion, Mensaje, HoraSolicitud, Estado) VALUES (?, ?, ?, ?, ?)";
+            let idUsuario = result[0].idusuario;
+            let querySolicitud = "INSERT INTO Solicitud (idusuario, idseccion, mensaje, horasolicitud, estado) VALUES (?, ?, ?, ?, ?)";
             db.query(querySolicitud, [idUsuario, idSeccion, motivo_consulta, hora_solicitud, estado], (err, result) => {
                 if (err) {
                     console.log(err);

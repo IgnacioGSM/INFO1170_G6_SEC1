@@ -1,7 +1,13 @@
 const mysql = require('mysql2');
+require('dotenv').config();
 
 
-const { host, user, password, database } = require('./credenciales_mysql.js');  // cambiar los datos en el archivo credenciales_mysql.js para que funcione en sus equipos
+// Configuración de la base de datos usando variables de entorno
+const host = process.env.DB_HOST;
+const user = process.env.DB_USER;
+const password = process.env.DB_PASS;
+const database = process.env.DB_NAME;
+
 
 const db = mysql.createConnection({
     host: host,

@@ -24,12 +24,12 @@ DROP TABLE IF EXISTS `CentroSalud`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `CentroSalud` (
-  `IdCentro` int(11) NOT NULL AUTO_INCREMENT,
-  `Latitud` varchar(20) DEFAULT NULL,
-  `Longitud` varchar(20) DEFAULT NULL,
-  `Nombre` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`IdCentro`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `idcentro` int(11) NOT NULL AUTO_INCREMENT,
+  `latitud` varchar(20) DEFAULT NULL,
+  `longitud` varchar(20) DEFAULT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idcentro`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +38,8 @@ CREATE TABLE `CentroSalud` (
 
 LOCK TABLES `CentroSalud` WRITE;
 /*!40000 ALTER TABLE `CentroSalud` DISABLE KEYS */;
+INSERT INTO `CentroSalud` VALUES
+(1,'-38.736703','-72.610633','Clinica Alemana');
 /*!40000 ALTER TABLE `CentroSalud` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -49,16 +51,16 @@ DROP TABLE IF EXISTS `EnEspera`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `EnEspera` (
-  `IdRegistro` int(11) NOT NULL AUTO_INCREMENT,
-  `RUT` char(9) DEFAULT NULL,
-  `IdSeccion` int(11) DEFAULT NULL,
-  `HoraRegistro` datetime DEFAULT NULL,
-  `Prioridad` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`IdRegistro`),
-  KEY `IdSeccion` (`IdSeccion`),
-  KEY `RUT` (`RUT`),
-  CONSTRAINT `EnEspera_ibfk_1` FOREIGN KEY (`IdSeccion`) REFERENCES `Seccion` (`IdSeccion`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `EnEspera_ibfk_2` FOREIGN KEY (`RUT`) REFERENCES `Persona` (`RUT`) ON DELETE CASCADE ON UPDATE CASCADE
+  `idregistro` int(11) NOT NULL AUTO_INCREMENT,
+  `rut` char(9) DEFAULT NULL,
+  `idseccion` int(11) DEFAULT NULL,
+  `horaregistro` datetime DEFAULT NULL,
+  `prioridad` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`idregistro`),
+  KEY `idseccion` (`idseccion`),
+  KEY `rut` (`rut`),
+  CONSTRAINT `EnEspera_ibfk_1` FOREIGN KEY (`idseccion`) REFERENCES `Seccion` (`idseccion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `EnEspera_ibfk_2` FOREIGN KEY (`rut`) REFERENCES `Persona` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -79,15 +81,15 @@ DROP TABLE IF EXISTS `ExpedienteMedico`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ExpedienteMedico` (
-  `IdExpediente` int(11) NOT NULL AUTO_INCREMENT,
-  `IdUsuario` int(11) DEFAULT NULL,
+  `idexpediente` int(11) NOT NULL AUTO_INCREMENT,
+  `idusuario` int(11) DEFAULT NULL,
   `tratamiento` varchar(9) DEFAULT NULL,
   `diagnostico` varchar(300) DEFAULT NULL,
-  `Hora` datetime DEFAULT NULL,
-  `Estado` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`IdExpediente`),
-  KEY `IdUsuario` (`IdUsuario`),
-  CONSTRAINT `ExpedienteMedico_ibfk_1` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`) ON DELETE CASCADE ON UPDATE CASCADE
+  `hora` datetime DEFAULT NULL,
+  `estado` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`idexpediente`),
+  KEY `idusuario` (`idusuario`),
+  CONSTRAINT `ExpedienteMedico_ibfk_1` FOREIGN KEY (`idusuario`) REFERENCES `Usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -108,10 +110,10 @@ DROP TABLE IF EXISTS `Persona`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Persona` (
-  `RUT` char(9) NOT NULL,
-  `Nombre` varchar(50) DEFAULT NULL,
-  `Apellido` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`RUT`)
+  `rut` char(9) NOT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  `apellido` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`rut`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -138,15 +140,15 @@ DROP TABLE IF EXISTS `ReporteUsuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ReporteUsuario` (
-  `IdReporte` int(11) NOT NULL AUTO_INCREMENT,
-  `IdUsuario` int(11) DEFAULT NULL,
-  `TipoReporte` varchar(50) DEFAULT NULL,
-  `Mensaje` varchar(300) DEFAULT NULL,
+  `idreporte` int(11) NOT NULL AUTO_INCREMENT,
+  `idusuario` int(11) DEFAULT NULL,
+  `tiporeporte` varchar(50) DEFAULT NULL,
+  `mensaje` varchar(300) DEFAULT NULL,
   `descripcion` varchar(250) DEFAULT NULL,
   `fechareporte` datetime DEFAULT NULL,
-  PRIMARY KEY (`IdReporte`),
-  KEY `IdUsuario` (`IdUsuario`),
-  CONSTRAINT `ReporteUsuario_ibfk_1` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`idreporte`),
+  KEY `idusuario` (`idusuario`),
+  CONSTRAINT `ReporteUsuario_ibfk_1` FOREIGN KEY (`idusuario`) REFERENCES `Usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -167,17 +169,17 @@ DROP TABLE IF EXISTS `RespuestaSolicitud`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `RespuestaSolicitud` (
-  `Idrespuesta` int(11) NOT NULL AUTO_INCREMENT,
-  `IdSolicitud` int(11) DEFAULT NULL,
-  `IdUsuario` int(11) DEFAULT NULL,
-  `Mensaje` varchar(300) DEFAULT NULL,
-  `Estado` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`Idrespuesta`),
-  KEY `IdSolicitud` (`IdSolicitud`),
-  KEY `IdUsuario` (`IdUsuario`),
-  CONSTRAINT `RespuestaSolicitud_ibfk_1` FOREIGN KEY (`IdSolicitud`) REFERENCES `Solicitud` (`IdSolicitud`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `RespuestaSolicitud_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `idrespuesta` int(11) NOT NULL AUTO_INCREMENT,
+  `idsolicitud` int(11) DEFAULT NULL,
+  `idusuario` int(11) DEFAULT NULL,
+  `mensaje` varchar(300) DEFAULT NULL,
+  `estado` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`idrespuesta`),
+  KEY `idsolicitud` (`idsolicitud`),
+  KEY `idusuario` (`idusuario`),
+  CONSTRAINT `RespuestaSolicitud_ibfk_1` FOREIGN KEY (`idsolicitud`) REFERENCES `Solicitud` (`idsolicitud`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `RespuestaSolicitud_ibfk_2` FOREIGN KEY (`idusuario`) REFERENCES `Usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,16 +199,16 @@ DROP TABLE IF EXISTS `Seccion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Seccion` (
-  `IdSeccion` int(11) NOT NULL AUTO_INCREMENT,
-  `IdCentro` int(11) DEFAULT NULL,
-  `NombreSeccion` varchar(30) DEFAULT NULL,
-  `IdUsuario` int(11) DEFAULT NULL,
-  PRIMARY KEY (`IdSeccion`),
-  KEY `IdCentro` (`IdCentro`),
-  KEY `IdUsuario` (`IdUsuario`),
-  CONSTRAINT `Seccion_ibfk_1` FOREIGN KEY (`IdCentro`) REFERENCES `CentroSalud` (`IdCentro`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Seccion_ibfk_2` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `idseccion` int(11) NOT NULL AUTO_INCREMENT,
+  `idcentro` int(11) DEFAULT NULL,
+  `nombreseccion` varchar(30) DEFAULT NULL,
+  `idusuario` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idseccion`),
+  KEY `idcentro` (`idcentro`),
+  KEY `idusuario` (`idusuario`),
+  CONSTRAINT `Seccion_ibfk_1` FOREIGN KEY (`idcentro`) REFERENCES `CentroSalud` (`idcentro`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Seccion_ibfk_2` FOREIGN KEY (`idusuario`) REFERENCES `Usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,6 +217,8 @@ CREATE TABLE `Seccion` (
 
 LOCK TABLES `Seccion` WRITE;
 /*!40000 ALTER TABLE `Seccion` DISABLE KEYS */;
+INSERT INTO `Seccion` VALUES
+(2,1,'consultas',14);
 /*!40000 ALTER TABLE `Seccion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,18 +230,18 @@ DROP TABLE IF EXISTS `Solicitud`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Solicitud` (
-  `IdSolicitud` int(11) NOT NULL AUTO_INCREMENT,
-  `IdUsuario` int(11) DEFAULT NULL,
-  `IdSeccion` int(11) DEFAULT NULL,
-  `Mensaje` varchar(300) DEFAULT NULL,
-  `HoraSolicitud` datetime DEFAULT NULL,
-  `Estado` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`IdSolicitud`),
-  KEY `IdUsuario` (`IdUsuario`),
-  KEY `IdSeccion` (`IdSeccion`),
-  CONSTRAINT `Solicitud_ibfk_1` FOREIGN KEY (`IdUsuario`) REFERENCES `Usuario` (`IdUsuario`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Solicitud_ibfk_2` FOREIGN KEY (`IdSeccion`) REFERENCES `Seccion` (`IdSeccion`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `idsolicitud` int(11) NOT NULL AUTO_INCREMENT,
+  `idusuario` int(11) DEFAULT NULL,
+  `idseccion` int(11) DEFAULT NULL,
+  `mensaje` varchar(300) DEFAULT NULL,
+  `horasolicitud` datetime DEFAULT NULL,
+  `estado` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`idsolicitud`),
+  KEY `idusuario` (`idusuario`),
+  KEY `idseccion` (`idseccion`),
+  CONSTRAINT `Solicitud_ibfk_1` FOREIGN KEY (`idusuario`) REFERENCES `Usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Solicitud_ibfk_2` FOREIGN KEY (`idseccion`) REFERENCES `Seccion` (`idseccion`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -246,6 +250,8 @@ CREATE TABLE `Solicitud` (
 
 LOCK TABLES `Solicitud` WRITE;
 /*!40000 ALTER TABLE `Solicitud` DISABLE KEYS */;
+INSERT INTO `Solicitud` VALUES
+(10,10,2,'holi me duele el estomago',NULL,'pendiente');
 /*!40000 ALTER TABLE `Solicitud` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -257,18 +263,18 @@ DROP TABLE IF EXISTS `Usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Usuario` (
-  `IdUsuario` int(11) NOT NULL AUTO_INCREMENT,
-  `RUT` char(9) DEFAULT NULL,
-  `Nombre` varchar(50) DEFAULT NULL,
-  `Apellido` varchar(50) DEFAULT NULL,
-  `CorreoElectronico` varchar(75) DEFAULT NULL,
-  `NumeroTelefono` char(9) DEFAULT NULL,
-  `TipoUsuario` varchar(20) DEFAULT NULL,
-  `Contrasenia` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`IdUsuario`),
-  KEY `RUT` (`RUT`),
-  CONSTRAINT `Usuario_ibfk_1` FOREIGN KEY (`RUT`) REFERENCES `Persona` (`RUT`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `idusuario` int(11) NOT NULL AUTO_INCREMENT,
+  `rut` char(9) DEFAULT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  `apellido` varchar(50) DEFAULT NULL,
+  `correoelectronico` varchar(75) DEFAULT NULL,
+  `numerotelefono` char(9) DEFAULT NULL,
+  `tipousuario` varchar(20) DEFAULT NULL,
+  `contrasenia` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idusuario`),
+  KEY `rut` (`rut`),
+  CONSTRAINT `Usuario_ibfk_1` FOREIGN KEY (`rut`) REFERENCES `Persona` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -277,6 +283,11 @@ CREATE TABLE `Usuario` (
 
 LOCK TABLES `Usuario` WRITE;
 /*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
+INSERT INTO `Usuario` VALUES
+(10,'456789123','Carlos','López','asdad@gmail.com',NULL,'usuario','$2b$10$8ZTWqRYDY3ejQ56sGMYFy.L/h0Hss50MJ5RKtEV/JR0PX4S9VNz/.'),
+(12,'123456789','Juan','Pérez','perez777@gmail.com',NULL,'admin','$2b$10$1t0LnJIBxOXbey71hH9ZSemIrdelw9ERhC4zgI6yMEUJ76Oe06gpi'),
+(13,'987654321','María','González','mariawa777@gmail.com','999888777','usuario','$2b$10$gsUN8hkIFEr3AJc37Wbize5bTmFuui5cPt47xLILHHm/ZaHzPOveW'),
+(14,'321654987','Ana','Martínez','correorecep2@email.com',NULL,'recepcionista','$2b$10$7/2UZcxvBIkAUBMr9ePyc.t7tTGWlMI04tufIA.vIdNIKlw3FIjH.');
 /*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -289,4 +300,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-01 17:54:11
+-- Dump completed on 2024-11-04 21:17:41
