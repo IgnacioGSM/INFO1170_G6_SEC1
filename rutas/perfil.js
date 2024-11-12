@@ -111,7 +111,7 @@ router.post('/envexp', upload.array('archivo[]'), (req, res) => {
     }
 
     archivos.forEach((archivo)=>{
-        const query = 'INSERT INTO expedientes_medicos (IdUsuario, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)';
+        const query = 'INSERT INTO ExpedienteMedico(IdUsuario, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)';
         db.query(query, [userId, archivo.originalname, archivo.path], (err) => {
             if(err){
                 console.error('Error al guardar el archivo en la base de datos', err);
@@ -126,7 +126,7 @@ router.post('/envexp', upload.array('archivo[]'), (req, res) => {
 router.get('/listarExp', (req, res) => {
     const userId = req.session.usuario.idusuario;
 
-    const query = 'SELECT idexpediente, nombre_archivo, ruta_archivo FROM expedientes_medicos WHERE IdUsuario = ?';
+    const query = 'SELECT idexpediente, nombre_archivo, ruta_archivo FROM ExpedienteMedico WHERE IdUsuario = ?';
     db.query(query, [userId], (err, results) => {
         if(err){
             console.error('Error al obtener el expediente', err);
@@ -140,7 +140,7 @@ router.get('/listarExp', (req, res) => {
 router.get('/descargarExp/:id', (req, res) =>{
     const expedienteId = req.params.id;
 
-    const query = 'SELECT ruta_archivo FROM expedientes_medicos WHERE idexpediente = ?';
+    const query = 'SELECT ruta_archivo FROM ExpedienteMedico WHERE idexpediente = ?';
     db.query(query, [expedienteId], (err, results) => {
         if(err || results.length === 0){
             console.error('Error al obtener el archivo', err);
@@ -151,4 +151,46 @@ router.get('/descargarExp/:id', (req, res) =>{
     });
 });
 
+//ruta para eliminar un expediente
+router.delete('/eliminarExp/:id', (req, res) => {
+    const expedienteId = req.params.id;
+
+    const query = 'SELECT ruta_archivo FROM ExpedienteMedico WHERE idexpediente = ?';
+    db.query(query, [expedienteId], (err, results) => {
+        if(err || results.length === 0) {
+            console.error('Error al obtener el archivo a eliminar', err);
+            return res.status(404).send('Archivo no encontrado')
+        }
+
+        const rutaArchivo = results[0].ruta_archivo;
+        fs.unlink(rutaArchivo, (err) => {
+            if(err) {
+                console.error('Error al eliminar el archivo', err);
+                return res.status(500).send('Error al eliminar el archivo');
+            }
+
+            const deleteQuery = 'DELETE FROM ExpedienteMedico WHERE idexpediente = ?';
+            db.query(query, [expedienteId], (err) => {
+                if (err) {
+                    console.error('Error al elinar el archivo de la bd', err);
+                    return req.status(500).send('Error al eliminar el archivo');
+                }
+                res.send('Expediente eliminado correctamente');
+            });
+        });
+    });
+});
+
+app.post('enviarVal', (req, res) => {
+    const rating = req.body.rating;
+    const userId = req.session.usuario.idusuario;
+
+    db.query('INSERT INTO valoraciones (userId, rating) VALUES (?, ?)', [userId, rating], (err, result) => {
+        if(err){
+            console.error('Error al guardar la valoracion', err);
+            return req.status(500).send('Error al enviar la valoracion');
+        }
+        res.send('Valoracion enviada con extito');
+    });
+});
 module.exports = router;

@@ -53,9 +53,17 @@
                             <button type="submit" class="btn">Actualizar Nombre</button>
                         </form>
                     </div>
+                    <h3>Cambia tu foto de perfil</h3>
+                    <div class="cambiarFoto">
+                        <form id="uploadForm" method="post" action="/upload" enctype="multipart/form-data">
+                            <input type="file" name="perfilFot" accept="image/*" required>
+                            <button type="submit">Cambiar foto de perfil</button>
+                        </form>
+                    </div>
+
                     <h3>Valora HospiTrack</h3>
                     <div class="valoracion">
-                        <form id="valor" method="post" action="/perfilUsuario/enviarvaloracion">
+                        <form id="valor" method="post" action="/perfilUsuario/enviarVal">
                             <label for="rating">Valora nuestro servicio</label>
                             <div class="estrellas">
                                 <input type="radio" name="rating" id="estrella5" value="5">
@@ -188,9 +196,21 @@
                             }
 
                             function descargarExp(id){
-                                window.location.href = `/perfilUsuario/descargarExpediente/${id}`;
+                                window.location.href = `/perfilUsuario/descargarExp/${id}`;
                             }
                             
+                            function eliminarExp(id){
+                                fetch(`/perfilUsuario/eliminarExp/${id}`, {
+                                    method: 'DELETE'
+                                })
+                                .then(response => response.text())
+                                .then(message =>{
+                                    alert(message);
+                                    cargarexp();
+                                })
+                                .catch(error => console.error('Error al eliminar el archivo', error));
+                            }
+
                             document.addEventListener('DOMContentLoaded', cargarexp);
                         </script>
 
