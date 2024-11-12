@@ -1,3 +1,6 @@
+var socket = io();     // conexion a websocket
+
+
 // Mostrar/Ocultar el menú de navegación con Bootstrap
 document.getElementById("toggle-menu-button").addEventListener("click", function() {
     const navMenu = document.getElementById("nav-menu");
@@ -77,14 +80,14 @@ document.getElementById("profile-button").addEventListener("click", function() {
 });
 
 // Ocultar el menú de perfil si se hace clic fuera
-document.addEventListener("click", function(event) {
+/*document.addEventListener("click", function(event) {
     const profileMenu = document.getElementById("profile-menu");
     const profileButton = document.getElementById("profile-button");
 
     if (!profileMenu.contains(event.target) && event.target !== profileButton) {
         profileMenu.classList.add("d-none");
     }
-});
+});*/
 
 // Función para búsqueda y filtrado de solicitudes
 document.getElementById("search-solicitudes").addEventListener("input", function() {
@@ -217,6 +220,8 @@ function aceptarSolicitud(button) {
         const puesto = document.getElementById("puesto-input").value.trim();
         const comentario = document.getElementById("comentario-input").value.trim();
 
+        console.log("Emitiendo respuesta-soli");
+        socket.emit('respuesta-soli', 'aceptada');
         if (puesto !== "") {
             alert(`Puesto asignado: ${puesto}\nComentario: ${comentario || 'Ninguno'}`);
             row.remove();  // Simular que la solicitud fue atendida
