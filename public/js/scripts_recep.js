@@ -203,6 +203,20 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("motivo-input").value = '';
     }
 
+
+    // Adjuntar listeners de eventos para los botones de aceptar y rechazar
+    document.querySelectorAll('.btn-aceptar').forEach(button => {
+        button.addEventListener('click', function() {
+            aceptarSolicitud(this);
+        });
+    });
+
+    document.querySelectorAll('.btn-rechazar').forEach(button => {
+        button.addEventListener('click', function() {
+            rechazarSolicitud(this);
+        });
+    });
+
     // Función al aceptar una solicitud
     function aceptarSolicitud(button) {
         const row = button.closest('tr');
@@ -258,6 +272,63 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("cancelar-rechazar").onclick = resetearSecciones;
     }
 
+    
+    // Adjuntar listeners de eventos para los botones de aceptar y rechazar
+    document.querySelectorAll('.btn-aceptar').forEach(button => {
+        button.addEventListener('click', function() {
+            mostrarModal('aceptar', this);
+        });
+    });
+    
+    document.querySelectorAll('.btn-rechazar').forEach(button => {
+        button.addEventListener('click', function() {
+            mostrarModal('rechazar', this);
+        });
+    });
+    
+    // Función para mostrar el modal
+    function mostrarModal(tipo, button) {
+        const modal = new bootstrap.Modal(document.getElementById('solicitudModal'));
+        const aceptarContent = document.getElementById('aceptar-content');
+        const rechazarContent = document.getElementById('rechazar-content');
+        const modalAceptarBtn = document.getElementById('modal-aceptar-btn');
+    
+        // Resetear contenido del modal
+        aceptarContent.classList.add('d-none');
+        rechazarContent.classList.add('d-none');
+    
+        if (tipo === 'aceptar') {
+            aceptarContent.classList.remove('d-none');
+            modalAceptarBtn.onclick = function() {
+                const puesto = document.getElementById('puesto-input').value.trim();
+                const comentario = document.getElementById('comentario-input').value.trim();
+    
+                if (puesto !== "") {
+                    alert(`Puesto asignado: ${puesto}\nComentario: ${comentario || 'Ninguno'}`);
+                    button.closest('tr').remove();  // Simular que la solicitud fue atendida
+                    modal.hide();
+                } else {
+                    alert("Por favor asigna un puesto.");
+                }
+            };
+        } else if (tipo === 'rechazar') {
+            rechazarContent.classList.remove('d-none');
+            modalAceptarBtn.onclick = function() {
+                const motivo = document.getElementById('motivo-input').value.trim();
+    
+                if (motivo !== "") {
+                    alert(`Solicitud rechazada. Motivo: ${motivo}`);
+                    button.closest('tr').remove();  // Simular que la solicitud fue rechazada
+                    modal.hide();
+                } else {
+                    alert("Por favor proporciona un motivo de rechazo.");
+                }
+            };
+        }
+    
+        modal.show();
+    }
+    
     // Manejo de subida de archivos PDF
     document.querySelectorAll('input[type="file"]').forEach(input => {
         input.addEventListener('change', function() {

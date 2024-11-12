@@ -147,16 +147,6 @@
       <section id="recepcion-solicitudes" class="d-none">
         <h2 class="text-center bg-success text-white py-3 rounded">Recepción de Solicitudes</h2>
 
-        <!-- Formulario de Filtro -->
-        <form id="filter-form" method="GET" action="/recepcionista/filtrar" class="mb-3">
-          <label for="filter">Filtrar por:</label>
-          <select id="filter" name="filter" class="form-select">
-            <option value="order">Orden de llegada</option>
-            <option value="section">Por sección</option>
-            <option value="status">Por estado</option>
-          </select>
-          <button type="submit" class="btn btn-success mt-2">Aplicar filtro</button>
-        </form>
 
         <input
           type="text"
@@ -177,8 +167,6 @@
           <tbody id="solicitudes-list">
             <% solicitudes.forEach(function(solicitud) { %>
               <tr>
-                <td %= solicitud.nombre %>pepito</td>
-                <td %= solicitud.servicio %>dentista</td>
                 <td><%= solicitud.rut %></td>
                 <td><%= solicitud.nombre %></td>
                 <td><%= solicitud.apellido %></td>
@@ -223,6 +211,17 @@
       <!-- Historial de Solicitudes Atendidas -->
       <section id="historial-solicitudes" class="d-none">
         <h2 class="text-center bg-success text-white py-3 rounded">Historial de Solicitudes Atendidas</h2>
+        <!-- Formulario de Filtro -->
+        <form id="filter-form" method="GET" action="/recepcionista/filtrar" class="mb-3">
+          <label for="filter">Filtrar por:</label>
+          <select id="filter" name="filter" class="form-select">
+            <option value="order">Orden de llegada</option>
+            <option value="section">Por sección</option>
+            <option value="status">alfabeticamente</option>
+          </select>
+          <button type="submit" class="btn btn-success mt-2">Aplicar filtro</button>
+        </form>
+
         <table class="table table-hover">
           <thead class="table-success">
             <tr>
@@ -260,6 +259,41 @@
       </section>
     </main>
 
+    <!-- Modal para reportar solicitudes -->  
+     <!-- Modal -->
+    <div class="modal fade" id="solicitudModal" tabindex="-1" aria-labelledby="solicitudModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="solicitudModalLabel">Solicitud</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Contenido dinámico del modal -->
+            <div id="aceptar-content" class="d-none">
+              <div class="mb-3">
+                <label for="puesto-input" class="form-label">Asignación de Puesto</label>
+                <input type="text" class="form-control" id="puesto-input">
+              </div>
+              <div class="mb-3">
+                <label for="comentario-input" class="form-label">Comentario (opcional)</label>
+                <textarea class="form-control" id="comentario-input"></textarea>
+              </div>
+            </div>
+            <div id="rechazar-content" class="d-none">
+              <div class="mb-3">
+                <label for="motivo-input" class="form-label">Motivo</label>
+                <textarea class="form-control" id="motivo-input"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" id="modal-aceptar-btn">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <%- include('partials/footer') %>
 
     <script src="/public/js/scripts_recep.js"></script>
