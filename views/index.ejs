@@ -109,9 +109,31 @@
     </main>
 
     <%- include('partials/footer.ejs') %>
+
+    <!-- Modal (de prueba) para notificar respuesta -->
+    <div class="modal fade" id="respuestaModal" data-bd-backdrop="static" tabindex="-1" aria-labelledby="reporteModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Reportar Respuesta</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+              <h2>Te llegó una respuesta :333</h2>
+              <p>Respuesta: <span id="respuesta"></span></p>
+              <textarea class="form-control" id="reporte" rows="3" placeholder="Escriba aquí el motivo de su reporte"></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button id="enviar-reporte" type="button" class="btn btn-danger">Reportar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="js/index/script_mapa.js"></script>
     <script src="js/index/validacion_reserva.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

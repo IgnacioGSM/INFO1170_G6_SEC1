@@ -110,24 +110,7 @@ fetch("fetch_testing/json_prueba.json")     // este fetch crea los marcadores en
                         }
                     })
                 });
-
-
-
-                    /*lista_secciones.childNodes[j].addEventListener("click", function() {        // cambia el color de la seccion seleccionada
-                        for (let k = 0; k < hospitales_en_json[i].secciones.length; k++) {
-                            lista_secciones.childNodes[k].class = '';
-                        }
-                        this.class = "selected";
-
-                        document.getElementById("index-filas-subtitulo").innerHTML = this.innerHTML;    // muestra el nombre de la seccion seleccionada en el cuadro de filas
-                        for (let k = 0; k < hospitales_en_json[i].secciones.length; k++) {          // busca el numero de fila correspondiente a la seccion seleccionada
-                            if (hospitales_en_json[i].secciones[k] == this.innerHTML) {
-                                document.getElementById("index-filas-value").innerHTML = hospitales_en_json[i].filas[k] + " personas";
-                            }
-                        }
-                    })*/
                 
-
                 selectingHospital();
             });
             hospitales_en_json[i].marker = marker;
@@ -142,18 +125,12 @@ var current_hospital = 0;
         
 selectingHospital();
 
+const socket = io();     // conexion a websocket
+const modalrespuesta = new bootstrap.Modal(document.getElementById('respuestaModal'))
 
-
-/* marker.bindPopup("<b>Clinica Alemana</b>");  // Popup del marcador
-marker.on('click', function(marker){        // Al clickear un hospital se recolecta se información en el servidor y se muestra en la pagina
-fetch("fetch_testing/json_prueba.json")
-    .then((response) => {
-        return response.json();
-    })
-    .then((data) => {
-        document.getElementById("index-hospital-name").innerHTML = data.nombre;
-        current_hospital = data.nombre;
-        selectingHospital();
-    });
-}) */
-        
+socket.on('respuesta-soli', (data) => {
+    console.log(data);
+    let respuesta = document.getElementById("respuesta");
+    respuesta.innerHTML = data;
+    modalrespuesta.show();
+});

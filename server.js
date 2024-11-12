@@ -1,12 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const http = require('http');
 const path = require('path');
 const session = require('express-session');
+const { Server } = require('socket.io');
+const socketconf = require('./socketconf');
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+    connectionStateRecovery: {}
+});
 
-
+socketconf(io);
 
 // La conexión a la base de datos se encuentra en database.js
 const db = require('./database');
@@ -120,6 +127,6 @@ app.post('/cambiardireccion', (req, res) => {
 });*/
 
 // Escuchar en el puerto 3000
-app.listen(3000, () => {
+server.listen(3000, () => {
   console.log('Servidor escuchando en el puerto 3000');
 });
