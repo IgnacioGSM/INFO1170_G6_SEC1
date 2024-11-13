@@ -35,3 +35,24 @@ app.get('/hospitales', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener los hospitales' });
   }
 });
+
+app.listen(3000, () => {
+    console.log('Servidor escuchando en el puerto 3000');
+  });
+  
+  app.get ("/recepcionista/solicitudes",async(req,res)=>{
+      try{
+      const [rows] = await db.query(`
+              SELECT idseccion, COUNT(*) AS totalSolicitudes,
+                     SUM(CASE WHEN estado = "pendiente" THEN 1 ELSE 0 END) AS pendientes,
+                     SUM(CASE WHEN estado = "procesada" THEN 1 ELSE 0 END) AS procesadas
+              FROM Solicitud
+              GROUP BY idseccion
+            `);
+      res.json(rows);
+                catch (error){
+              console.error(error);
+              res.status(500).json({message:"Error al obtener informacion de los hospitales"})
+          }
+      }
+  })
