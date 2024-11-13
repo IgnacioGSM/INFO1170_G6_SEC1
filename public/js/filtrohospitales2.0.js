@@ -35,7 +35,3 @@ app.get('/hospitales', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener los hospitales' });
   }
 });
-
-app.listen(3000, () => {
-  console.log('Servidor escuchando en el puerto 3000');
-});
