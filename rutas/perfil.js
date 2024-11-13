@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const multer = require('multer');
 const path = require('path');
 const db = require('../database.js');
+const fs = require('fs');
 
 // Configuración de multer
 const storage = multer.diskStorage({
@@ -111,7 +112,7 @@ router.post('/envexp', upload.array('archivo[]'), (req, res) => {
     }
 
     archivos.forEach((archivo)=>{
-        const query = 'INSERT INTO ExpedienteMedico(IdUsuario, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)';
+        const query = 'INSERT INTO ExpedienteMedico(idusuario, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)';
         db.query(query, [userId, archivo.originalname, archivo.path], (err) => {
             if(err){
                 console.error('Error al guardar el archivo en la base de datos', err);
@@ -126,7 +127,7 @@ router.post('/envexp', upload.array('archivo[]'), (req, res) => {
 router.get('/listarExp', (req, res) => {
     const userId = req.session.usuario.idusuario;
 
-    const query = 'SELECT idexpediente, nombre_archivo, ruta_archivo FROM ExpedienteMedico WHERE IdUsuario = ?';
+    const query = 'SELECT idexpediente, nombre_archivo, ruta_archivo FROM ExpedienteMedico WHERE idusuario = ?';
     db.query(query, [userId], (err, results) => {
         if(err){
             console.error('Error al obtener el expediente', err);
@@ -170,7 +171,7 @@ router.delete('/eliminarExp/:id', (req, res) => {
             }
 
             const deleteQuery = 'DELETE FROM ExpedienteMedico WHERE idexpediente = ?';
-            db.query(query, [expedienteId], (err) => {
+            db.query(deleteQuery, [expedienteId], (err) => {
                 if (err) {
                     console.error('Error al elinar el archivo de la bd', err);
                     return req.status(500).send('Error al eliminar el archivo');
@@ -181,39 +182,32 @@ router.delete('/eliminarExp/:id', (req, res) => {
     });
 });
 
-router.post('enviarVal', (req, res) => {
+router.post('/enviarVal', (req, res) => {
     const rating = req.body.rating;
     const userId = req.session.usuario.idusuario;
 
     db.query('INSERT INTO valoraciones (userId, rating) VALUES (?, ?)', [userId, rating], (err, result) => {
         if(err){
             console.error('Error al guardar la valoracion', err);
-            return req.status(500).send('Error al enviar la valoracion');
+            return res.status(500).send('Error al enviar la valoracion');
         }
         res.send('Valoracion enviada con extito');
     });
 });
 
-const storage = multer.diskStorage({
-    destination: '/uploads',
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
-    }
-});
-
-const upload = multer({storage});
-
 router.post('/upload', upload.single('perfilFot'), (req, res) => {
     const userId = req.session.usuario.idusuario;
     const fotoURL = `/uploads/${req.file.filename}`;
 
-    const query = 'UPDATE Usuario SET fotoURL = ? WHERE id ?';
-    db.query(query, [fotoURL, userId], (err, result) => {
-        if(err) throw err;
-        res.redirect('/perfil') //rederige al perfil luego de actualizar
+    db.query('UPDATE Usuario SET fotoURL = ? WHERE idusuario = ?', [fotoURL, userId], (err, result) => {
+        if(err){
+            console.error('Error al subir la foto', err);
+            return res.status(500).send('Error en el servidor');
+        }
+        res.send('foto de perfil subida');
     });
 });
-
+/* falta revision
 router.get('/perfilUsuario', (req, res) => {
     const userId = req.session.usuario.idusuario;
     db.query('SELECT fotoURL FROM Usuario WHERE id = ?', [userId], (err, results) => {
@@ -221,5 +215,5 @@ router.get('/perfilUsuario', (req, res) => {
         res.render('perfilUsuario', {user: results[0]});
     });
 });
-
+*/
 module.exports = router;
