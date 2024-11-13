@@ -181,7 +181,7 @@ router.delete('/eliminarExp/:id', (req, res) => {
     });
 });
 
-app.post('enviarVal', (req, res) => {
+router.post('enviarVal', (req, res) => {
     const rating = req.body.rating;
     const userId = req.session.usuario.idusuario;
 
@@ -193,4 +193,33 @@ app.post('enviarVal', (req, res) => {
         res.send('Valoracion enviada con extito');
     });
 });
+
+const storage = multer.diskStorage({
+    destination: '/uploads',
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`);
+    }
+});
+
+const upload = multer({storage});
+
+router.post('/upload', upload.single('perfilFot'), (req, res) => {
+    const userId = req.session.usuario.idusuario;
+    const fotoURL = `/uploads/${req.file.filename}`;
+
+    const query = 'UPDATE Usuario SET fotoURL = ? WHERE id ?';
+    db.query(query, [fotoURL, userId], (err, result) => {
+        if(err) throw err;
+        res.redirect('/perfil') //rederige al perfil luego de actualizar
+    });
+});
+
+router.get('/perfilUsuario', (req, res) => {
+    const userId = req.session.usuario.idusuario;
+    db.query('SELECT fotoURL FROM Usuario WHERE id = ?', [userId], (err, results) => {
+        if(err) throw err;
+        res.render('perfilUsuario', {user: results[0]});
+    });
+});
+
 module.exports = router;
