@@ -34,6 +34,29 @@ const storage = multer.diskStorage({
     }
 });
 
+app.get('/recepcionista/filtrar', (req, res) => {
+    const filter = req.query.filter;
+    const userId = 4; // Suponiendo que el ID del usuario es 4
+
+    let query = 'SELECT * FROM solicitudes_atendidas WHERE IdUsuario = ?';
+
+    if (filter === 'order') {
+        query += ' ORDER BY fecha';
+    } else if (filter === 'section') {
+        query += ' ORDER BY seccion';
+    } else if (filter === 'status') {
+        query += ' ORDER BY nombre';
+    }
+
+    bd.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error('Error al obtener las solicitudes:', err);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        res.render('recepcionista', { solicitudes: results });
+    });
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.set("view engine", "ejs")

@@ -1,16 +1,84 @@
 document.addEventListener("DOMContentLoaded", function() {
+    const modalElement = document.getElementById('solicitudModal');
+    const bootstrapModal = new bootstrap.Modal(modalElement);
+
     // Mostrar/Ocultar el menú de navegación con Bootstrap
+    const toggleMenuButton = document.getElementById("toggle-menu-button");
+    const navMenu = document.getElementById("nav-menu");
+
+    toggleMenuButton.addEventListener("click", function(event) {
+        event.stopPropagation();
+        navMenu.classList.toggle("d-none");
+    });
+
+    document.addEventListener("click", function(event) {
+        if (!navMenu.contains(event.target) && event.target !== toggleMenuButton) {
+            navMenu.classList.add("d-none");
+        }
+    });
+
+    // Función para mostrar el modal y configurar la acción
+    function mostrarModal(tipo, button) {
+        const aceptarContent = document.getElementById('aceptar-content');
+        const rechazarContent = document.getElementById('rechazar-content');
+        const modalAceptarBtn = document.getElementById('modal-aceptar-btn');
+
+        aceptarContent.classList.add('d-none');
+        rechazarContent.classList.add('d-none');
+
+        if (tipo === 'aceptar') {
+            aceptarContent.classList.remove('d-none');
+            modalAceptarBtn.onclick = function() {
+                const puesto = document.getElementById('puesto-input').value.trim();
+                const comentario = document.getElementById('comentario-input').value.trim();
+
+                if (puesto !== "") {
+                    alert(`Puesto asignado: ${puesto}\nComentario: ${comentario || 'Ninguno'}`);
+                    button.closest('tr').remove();
+                    bootstrapModal.hide();
+                } else {
+                    alert("Por favor asigna un puesto.");
+                }
+            };
+        } else if (tipo === 'rechazar') {
+            rechazarContent.classList.remove('d-none');
+            modalAceptarBtn.onclick = function() {
+                const motivo = document.getElementById('motivo-input').value.trim();
+
+                if (motivo !== "") {
+                    alert(`Solicitud rechazada. Motivo: ${motivo}`);
+                    button.closest('tr').remove();
+                    bootstrapModal.hide();
+                } else {
+                    alert("Por favor proporciona un motivo de rechazo.");
+                }
+            };
+        }
+
+        bootstrapModal.show();
+    }
+
+    // Delegación de eventos para los botones de aceptar y rechazar dentro de la tabla de solicitudes
+    document.getElementById('recepcion-solicitudes').addEventListener('click', function(event) {
+        const target = event.target;
+
+        if (target.classList.contains('btn-aceptar')) {
+            mostrarModal('aceptar', target);
+        } else if (target.classList.contains('btn-rechazar')) {
+            mostrarModal('rechazar', target);
+        }
+    });
+
+    // Mostrar/Ocultar el menú de navegación
     document.getElementById("toggle-menu-button").addEventListener("click", function() {
         const navMenu = document.getElementById("nav-menu");
-        navMenu.classList.toggle("d-none");  // Usamos 'd-none' de Bootstrap para ocultar/mostrar
+        navMenu.classList.toggle("d-none");
     });
 
     // Ocultar el menú desplegable si se hace clic fuera del botón o del menú
     document.addEventListener("click", function(event) {
         const navMenu = document.getElementById("nav-menu");
         const mainButton = document.getElementById("toggle-menu-button");
-
-        // Si haces clic fuera del botón o del menú, se cierra el menú
         if (!navMenu.contains(event.target) && event.target !== mainButton) {
             navMenu.classList.add("d-none");
         }
@@ -19,26 +87,25 @@ document.addEventListener("DOMContentLoaded", function() {
     // Función para ocultar todas las secciones
     function hideAllSections() {
         const sections = document.querySelectorAll('main section');
-        sections.forEach(section => section.classList.add("d-none"));  // Usamos 'd-none' para ocultar
+        sections.forEach(section => section.classList.add("d-none"));
     }
 
     // Función para mostrar una sección específica
     function showSection(sectionId) {
-        hideAllSections();  // Ocultamos todas
-        document.getElementById(sectionId).classList.remove("d-none");  // Mostramos la seleccionada
+        hideAllSections();
+        document.getElementById(sectionId).classList.remove("d-none");
     }
 
     // Redirigir a index.html al hacer clic en el botón "Inicio"
     document.getElementById("btn-inicio").addEventListener("click", function() {
-        window.location.href = "/";  // Redirige a la página index.html
+        window.location.href = "/";
     });
 
     // Redirigir a perfilUsuario.html al hacer clic en el botón "Perfil"
     document.getElementById("btn-perfil").addEventListener("click", function() {
-        window.location.href = "perfilUsuario";  // Redirige a la página perfilUsuario.html
+        window.location.href = "perfilUsuario";
     });
-
-    // Funcionalidad para los botones de navegación
+        // Funcionalidad para los botones de navegación
     document.getElementById("btn-home").addEventListener("click", function() {
         showSection("home-view");
         updateActiveMenu(this);
@@ -74,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Mostrar/ocultar el menú de perfil
     document.getElementById("profile-button").addEventListener("click", function() {
         const profileMenu = document.getElementById("profile-menu");
-        profileMenu.classList.toggle("d-none");  // Mostrar/ocultar el menú de perfil
+        profileMenu.classList.toggle("d-none");
     });
 
     // Ocultar el menú de perfil si se hace clic fuera
@@ -142,7 +209,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const celular = document.getElementById("celular-paciente").value;
         const servicio = document.getElementById("servicio-paciente").value;
 
-        // Crear una nueva fila para la tabla
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${nombre}</td>
@@ -157,7 +223,6 @@ document.addEventListener("DOMContentLoaded", function() {
         `;
         document.getElementById("lista-registros").appendChild(row);
 
-        // Limpiar el formulario
         document.getElementById("gestion-form").reset();
     }
 
@@ -188,147 +253,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Función para resetear las secciones
-    function resetearSecciones() {
-        // Ocultar ambas secciones
-        document.getElementById("aceptar-solicitud").classList.add("d-none");
-        document.getElementById("rechazar-solicitud").classList.add("d-none");
-        
-        // Mostrar la sección de Recepción de Solicitudes nuevamente
-        document.getElementById("recepcion-solicitudes").classList.remove("d-none");
-        
-        // Limpiar los inputs
-        document.getElementById("puesto-input").value = '';
-        document.getElementById("comentario-input").value = '';
-        document.getElementById("motivo-input").value = '';
-    }
-
-
-    // Adjuntar listeners de eventos para los botones de aceptar y rechazar
-    document.querySelectorAll('.btn-aceptar').forEach(button => {
-        button.addEventListener('click', function() {
-            aceptarSolicitud(this);
-        });
-    });
-
-    document.querySelectorAll('.btn-rechazar').forEach(button => {
-        button.addEventListener('click', function() {
-            rechazarSolicitud(this);
-        });
-    });
-
-    // Función al aceptar una solicitud
-    function aceptarSolicitud(button) {
-        const row = button.closest('tr');
-
-        // Ocultar la sección de Recepción de Solicitudes
-        document.getElementById("recepcion-solicitudes").classList.add("d-none");
-
-        // Mostrar la sección para aceptar la solicitud
-        document.getElementById("aceptar-solicitud").classList.remove("d-none");
-
-        // Manejar el evento de guardar
-        document.getElementById("guardar-aceptar").onclick = function () {
-            const puesto = document.getElementById("puesto-input").value.trim();
-            const comentario = document.getElementById("comentario-input").value.trim();
-
-            if (puesto !== "") {
-                alert(`Puesto asignado: ${puesto}\nComentario: ${comentario || 'Ninguno'}`);
-                row.remove();  // Simular que la solicitud fue atendida
-                resetearSecciones();
-            } else {
-                alert("Por favor asigna un puesto.");
-            }
-        };
-
-        // Manejar el evento de cancelar
-        document.getElementById("cancelar-aceptar").onclick = resetearSecciones;
-    }
-
-    // Función al rechazar una solicitud
-    function rechazarSolicitud(button) {
-        const row = button.closest('tr');
-
-        // Ocultar la sección de Recepción de Solicitudes
-        document.getElementById("recepcion-solicitudes").classList.add("d-none");
-
-        // Mostrar la sección para rechazar la solicitud
-        document.getElementById("rechazar-solicitud").classList.remove("d-none");
-
-        // Manejar el evento de guardar
-        document.getElementById("guardar-rechazar").onclick = function () {
-            const motivo = document.getElementById("motivo-input").value.trim();
-
-            if (motivo !== "") {
-                alert(`Solicitud rechazada. Motivo: ${motivo}`);
-                row.remove();  // Simular que la solicitud fue rechazada
-                resetearSecciones();
-            } else {
-                alert("Por favor proporciona un motivo de rechazo.");
-            }
-        };
-
-        // Manejar el evento de cancelar
-        document.getElementById("cancelar-rechazar").onclick = resetearSecciones;
-    }
-
-    
-    // Adjuntar listeners de eventos para los botones de aceptar y rechazar
-    document.querySelectorAll('.btn-aceptar').forEach(button => {
-        button.addEventListener('click', function() {
-            mostrarModal('aceptar', this);
-        });
-    });
-    
-    document.querySelectorAll('.btn-rechazar').forEach(button => {
-        button.addEventListener('click', function() {
-            mostrarModal('rechazar', this);
-        });
-    });
-    
-    // Función para mostrar el modal
-    function mostrarModal(tipo, button) {
-        const modal = new bootstrap.Modal(document.getElementById('solicitudModal'));
-        const aceptarContent = document.getElementById('aceptar-content');
-        const rechazarContent = document.getElementById('rechazar-content');
-        const modalAceptarBtn = document.getElementById('modal-aceptar-btn');
-    
-        // Resetear contenido del modal
-        aceptarContent.classList.add('d-none');
-        rechazarContent.classList.add('d-none');
-    
-        if (tipo === 'aceptar') {
-            aceptarContent.classList.remove('d-none');
-            modalAceptarBtn.onclick = function() {
-                const puesto = document.getElementById('puesto-input').value.trim();
-                const comentario = document.getElementById('comentario-input').value.trim();
-    
-                if (puesto !== "") {
-                    alert(`Puesto asignado: ${puesto}\nComentario: ${comentario || 'Ninguno'}`);
-                    button.closest('tr').remove();  // Simular que la solicitud fue atendida
-                    modal.hide();
-                } else {
-                    alert("Por favor asigna un puesto.");
-                }
-            };
-        } else if (tipo === 'rechazar') {
-            rechazarContent.classList.remove('d-none');
-            modalAceptarBtn.onclick = function() {
-                const motivo = document.getElementById('motivo-input').value.trim();
-    
-                if (motivo !== "") {
-                    alert(`Solicitud rechazada. Motivo: ${motivo}`);
-                    button.closest('tr').remove();  // Simular que la solicitud fue rechazada
-                    modal.hide();
-                } else {
-                    alert("Por favor proporciona un motivo de rechazo.");
-                }
-            };
-        }
-    
-        modal.show();
-    }
-    
     // Manejo de subida de archivos PDF
     document.querySelectorAll('input[type="file"]').forEach(input => {
         input.addEventListener('change', function() {
@@ -336,5 +260,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 alert("Archivo " + this.files[0].name + " cargado exitosamente.");
             }
         });
+    });
+
+    // Función para manejo de reportes de solicitudes
+    document.getElementById('btn-reportar-solicitudes').addEventListener('click', function() {
+        alert("Generando reporte de solicitudes...");
     });
 });

@@ -26,7 +26,7 @@
       </button>
 
       <!-- Menú desplegable con los botones de navegación -->
-      <nav id="nav-menu" class="nav-menu d-none bg-white">
+      <nav id="nav-menu" class="toggle-menu-button">
         <button id="btn-inicio" class="btn btn-outline-success w-100 my-1">Index</button>
         <button id="btn-home" class="btn btn-outline-success w-100 my-1">Inicio</button>
         <button id="btn-gestion" class="btn btn-outline-success w-100 my-1">Gestión de Registros</button>
@@ -172,8 +172,9 @@
                 <td><%= solicitud.apellido %></td>
                 <td><%= solicitud.mensaje %></td>
                 <td>
-                  <button class="btn btn-success btn-sm" onclick="aceptarSolicitud(this)">Aceptar</button>
-                  <button class="btn btn-danger btn-sm" onclick="rechazarSolicitud(this)">Rechazar</button>
+                  <button class="btn-aceptar" onclick="aceptarSolicitud(this)">Aceptar</button>
+                  <button class="btn-rechazar" onclick="rechazarSolicitud(this)">Rechazar</button>
+                  <button class="btn-reportar-solicitudes" onclick="reportarSolicitud(this)">Reportar</button>
                   <input type="file" id="subir-archivo-<%= solicitud.id %>" accept=".pdf" class="form-control mt-2" />
                 </td>
               </tr>
@@ -182,13 +183,17 @@
         </table>
 
         <!-- Botón para reportar solicitudes -->
-        <button id="btn-reportar-solicitudes" class="btn btn-secondary mt-3">
-          Reportar Solicitudes
+        <section id="btn-reportar-solicitudes" class="btn-reportar-solicitudes">
+          <h2 class="text-report-Solicitudes">reportar</h2> 
+          <div class="container">
+            <input type="text" id="puesto-input" class="form-control my-2" placeholder="Asignar puesto" />
+            <button id="guardar-aceptar" class="btn btn-primary w-100">Guardar</button>
+            <button id="cancelar-aceptar" class="btn btn-secondary w-100 mt-2">Cancelar</button>
         </button>
       </section>
 
       <!-- Sección para Aceptar Solicitud -->
-      <section id="aceptar-solicitud" class="d-none">
+      <section id="aceptar-solicitud" class="btn-aceptar">
         <h2 class="text-center bg-success text-white py-3 rounded">Aceptar Solicitud</h2>
         <div class="container">
           <input type="text" id="puesto-input" class="form-control my-2" placeholder="Asignar puesto" />
@@ -199,7 +204,7 @@
       </section>
 
       <!-- Sección para Rechazar Solicitud -->
-      <section id="rechazar-solicitud" class="d-none">
+      <section id="rechazar-solicitud" class="btn-rechazar">
         <h2 class="text-center bg-danger text-white py-3 rounded">Rechazar Solicitud</h2>
         <div class="container">
           <textarea id="motivo-input" class="form-control my-2" placeholder="Motivo de rechazo" required></textarea>
@@ -259,42 +264,41 @@
       </section>
     </main>
 
-    <!-- Modal para reportar solicitudes -->  
-     <!-- Modal -->
-    <div class="modal fade" id="solicitudModal" tabindex="-1" aria-labelledby="solicitudModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="solicitudModalLabel">Solicitud</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <!-- Contenido dinámico del modal -->
-            <div id="aceptar-content" class="d-none">
-              <div class="mb-3">
-                <label for="puesto-input" class="form-label">Asignación de Puesto</label>
-                <input type="text" class="form-control" id="puesto-input">
-              </div>
-              <div class="mb-3">
-                <label for="comentario-input" class="form-label">Comentario (opcional)</label>
-                <textarea class="form-control" id="comentario-input"></textarea>
-              </div>
+    <!-- Modal para Reportar Solicitud -->
+    <div class="modal fade" id="reportarModal" tabindex="-1" aria-labelledby="reportarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reportarModalLabel">Reportar Solicitud</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="motivo-reporte" class="form-label">Motivo de Reporte</label>
+                        <select class="form-select" id="motivo-reporte">
+                            <option value="falso">Usuario falso o solicitud falsa</option>
+                            <option value="spam">Spam</option>
+                            <option value="abuso">Abuso</option>
+                            <option value="contenido">Contenido inapropiado</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comentario-reporte" class="form-label">Comentario (opcional)</label>
+                        <textarea class="form-control" id="comentario-reporte"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="modal-reportar-btn">Reportar</button>
+                </div>
             </div>
-            <div id="rechazar-content" class="d-none">
-              <div class="mb-3">
-                <label for="motivo-input" class="form-label">Motivo</label>
-                <textarea class="form-control" id="motivo-input"></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" id="modal-aceptar-btn">Aceptar</button>
-          </div>
         </div>
-      </div>
     </div>
-    <%- include('partials/footer') %>
+
+    <footer>
+      <%- include('partials/footer') %>
+    </footer>
 
     <script src="/public/js/scripts_recep.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
