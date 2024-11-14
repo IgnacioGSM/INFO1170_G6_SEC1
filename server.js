@@ -85,47 +85,6 @@ app.post('/forgot-password', async (req, res) => {
 });
 
 
-
-// -------- PERFIL DE USUARIO --------
-
-/*app.post('/envexp', upload.array('archivo', 5), (req, res) =>{
-    const userId = 4;
-    const archivos = req.files;
-
-    if(archivos.length === 0){
-        return res.status(400).send('No se subio ningun archivo');
-    }
-    archivos.forEach((archivo) =>{
-        const query = 'INSERT INTO expedientes_medicos (idusuario, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)';
-        db.query(query, [userId, archivo.originalname, archivo.path], (err, result) =>{
-            if(err){
-                console.error('Error al guardar el archivo en la base de datos', err);
-                return res.status(500).send('Error en el servidor');
-            }
-        });
-    });
-    res.send('Expedientes medicos subidos con exito');
-});
-
-app.post('/cambiardireccion', (req, res) => {
-    const {nuevaDireccion, confirmarDireccion} = req.body;
-    const userId = 4;
-
-    db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
-        if (error) return res.status(500).send('Error en el servidor');
-
-        const storedPassword = results[0].contrasenia;
-        if (confirmarDireccion == storedPassword) {
-            db.query('UPDATE Usuario SET Direccion = ? WHERE idusuario = ?', [nuevaDireccion, userId], (error) =>{
-                if (error) return res.status(500).send('Error al actualizar la direccion');
-                res.send('Direccion actualizada');
-            });
-        } else {
-            res.send("Contraseña incorrecta");
-        }
-    });
-});*/
-
 // Escuchar en el puerto 3000
 server.listen(3000, () => {
   console.log('Servidor escuchando en el puerto 3000');

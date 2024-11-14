@@ -10,6 +10,14 @@ router.get('/', (req, res) => {
     }
 });
 
+router.get('/userid', (req, res) => {
+    if (req.session.usuario) {
+        res.json({userid: req.session.usuario.idusuario});
+    } else {
+        res.json({userid: 'false'});
+    }
+});
+
 router.post('/submit_solicitud', (req, res) => {
     console.log(req.body);
     let idSeccion = 1;

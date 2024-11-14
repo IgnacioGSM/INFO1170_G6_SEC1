@@ -124,13 +124,3 @@ var current_hospital = 0;
 
         
 selectingHospital();
-
-const socket = io();     // conexion a websocket
-const modalrespuesta = new bootstrap.Modal(document.getElementById('respuestaModal'))
-
-socket.on('respuesta-soli', (data) => {
-    console.log(data);
-    let respuesta = document.getElementById("respuesta");
-    respuesta.innerHTML = data;
-    modalrespuesta.show();
-});
