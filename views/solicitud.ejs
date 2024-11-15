@@ -22,24 +22,24 @@
             <tbody>
                 <tr>
                     <th>Hospital:</th>
-                    <td><%= solicitud.NombreHospital %></td>
+                    <td><%= solicitud.nombrehospital %></td>
                 </tr>
                 <tr>
                     <th>Sección:</th>
-                    <td><%= solicitud.NombreSeccion %></td>
+                    <td><%= solicitud.nombreseccion %></td>
                 </tr>
                 <tr>
                     <th>Fecha:</th>
-                    <td><%= ("0" + solicitud.HoraSolicitud.getDate()).slice(-2) + "/" + ("0" + (solicitud.HoraSolicitud.getMonth() + 1)).slice(-2) + "/" + solicitud.HoraSolicitud.getFullYear() + " " + ("0" + solicitud.HoraSolicitud.getHours()).slice(-2) + ":" + ("0" + solicitud.HoraSolicitud.getMinutes()).slice(-2) %></td>
+                    <td><%= ("0" + solicitud.horasolicitud.getDate()).slice(-2) + "/" + ("0" + (solicitud.horasolicitud.getMonth() + 1)).slice(-2) + "/" + solicitud.horasolicitud.getFullYear() + " " + ("0" + solicitud.horasolicitud.getHours()).slice(-2) + ":" + ("0" + solicitud.horasolicitud.getMinutes()).slice(-2) %></td>
                 </tr>
                 <tr>
                     <th>Mensaje enviado:</th>
-                    <td><%= solicitud.Mensaje %></td>
+                    <td><%= solicitud.mensaje %></td>
                 </tr>
             </tbody>
         </table>
-        <% if (solicitud.Estado == "pendiente") { %>
-            <a class="btn btn-danger" href="<%= '/mis_solicitudes/cancelarsolicitud?idsoli=' + encodeURIComponent(solicitud.IdSolicitud) %>">Cancelar Solicitud</a>
+        <% if (solicitud.estado == "pendiente") { %>
+            <a class="btn btn-danger" href="<%= '/mis_solicitudes/cancelarsolicitud?idsoli=' + encodeURIComponent(solicitud.idsolicitud) %>">Cancelar Solicitud</a>
             <h1 class="text-bg-dark rounded mb-4">Respuesta pendiente</h1>
         <% } else { %>
             <% if (respuesta) { %>
@@ -50,11 +50,11 @@
                 <tbody>
                     <tr>
                         <th>Recepcionista:</th>
-                        <td><%= respuesta.Nombre + " " + respuesta.Apellido %></td>
+                        <td><%= respuesta.nombre + " " + respuesta.apellido %></td>
                     </tr>
                     <tr>
                         <th>Respuesta:</th>
-                        <td><%= respuesta.Mensaje %></td>
+                        <td><%= respuesta.mensaje %></td>
                     </tr>
                 </tbody>
             </table>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="modal-body text-center">
                       <h2>¿Está seguro de que quiere reportar esta respuesta?</h2>
-                      <p><%= respuesta.Mensaje %></p>
+                      <p><%= respuesta.mensaje %></p>
                       <textarea class="form-control" id="reporte" rows="3" placeholder="Escriba aquí el motivo de su reporte"></textarea>
                     </div>
                     <div class="modal-footer">

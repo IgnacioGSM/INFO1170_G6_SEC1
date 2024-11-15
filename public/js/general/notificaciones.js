@@ -15,13 +15,19 @@ function socketListo(socket) {
             for (let i = 0; i < notificaciones.length; i++) {
                 let notif = notificaciones[i];
                 // Obtener id de la solicitud respondida
-                fetch('/id-soli-from-respuesta?idrespuesta=' + notif.idrespuesta)
+                fetch('/mis_solicitudes/id-soli-from-respuesta?idrespuesta=' + notif.idrespuesta)
                 .then(response => response.json())
                 .then(data => {
                     let idSoli = data.idsoli;
                     let notif_element = document.createElement("li");
-                    notif_element.className = "dropdown-item";
-                    notif_element.innerHTML = "<a href='/mis_solicitudes/solicitud?idsoli=" + idSoli + "'><span class='d-inline-block bg-success rounded-circle p-1'></span>" + notif.mensaje + "</a>";
+                    notif_link = document.createElement("a");
+                    notif_link.className = "dropdown-item";
+                    notif_link.href = "/mis_solicitudes/solicitud?idsoli=" + idSoli;
+                    notif_link.innerHTML = "<span class='d-inline-block bg-success rounded-circle p-1'></span>" + notif.mensaje;
+                    if (notif.leido == 1) {
+                        notif_link.classList.add("disabled");
+                    }
+                    notif_element.appendChild(notif_link);
                     notificaciones_list.appendChild(notif_element);
                 });
             }

@@ -5,7 +5,7 @@ const db = require('../database.js');
 router.get('/', (req, res) => { // /mis_solicitudes
     if (req.session.usuario) {
       let querySolicitudes = "SELECT * FROM Solicitud WHERE idusuario = ?";
-      db.query(querySolicitudes, [req.session.usuario.IdUsuario], (err, result) => {
+      db.query(querySolicitudes, [req.session.usuario.idusuario], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -23,7 +23,6 @@ router.get('/id-soli-from-respuesta', (req, res) => { // /mis_solicitudes/id-sol
   let querySolicitud = "SELECT idsolicitud FROM RespuestaSolicitud WHERE idrespuesta = ?";
   db.query(querySolicitud, [respuesta], (err, result) => {
     if (err) {
-      console.log(err);
       res.json({idsoli: 'error'});
     } else {
       res.json({idsoli: result[0].idsolicitud});

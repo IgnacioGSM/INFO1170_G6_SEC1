@@ -20,7 +20,7 @@ router.get('/userid', (req, res) => {
 
 router.post('/submit_solicitud', (req, res) => {
     console.log(req.body);
-    let idSeccion = 1;
+    let idSeccion = 2;
     let date = new Date();
     let hora_solicitud = date.getFullYear() + '/' +
       ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
