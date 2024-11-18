@@ -20,6 +20,18 @@ module.exports = (io) => {
             });
         }
 
+        socket.on('botontestToast', (test) => {
+            console.log("Botón de test de toast presionado");
+            db.query("SELECT * FROM Notificacion WHERE idnoti = 1", (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Notificacion de prueba obtenida");
+                    io.to(userid).emit('newnotif', result[0]);
+                }
+            });
+        });
+
         socket.on('disconnect', () => {
             console.log('Usuario desconectado');
         });

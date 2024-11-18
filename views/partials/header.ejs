@@ -12,6 +12,7 @@
                         <!-- Aquí van las notificaciones -->
                     </ul>
                 </div></li>
+                <button class="btn btn-danger" id="testoast">Simular notificación nueva</button>
                 <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/mis_solicitudes">Mis solicitudes</a></li>
 
                 <!-- Mostrar solo para admin -->
@@ -37,6 +38,18 @@
             <% } %>
         </ul>
     
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="notifToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header">
+                <strong class="me-auto">Nueva Notificación</strong>
+                <small class="text-muted">Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body d-flex align-items-center gap-2 py-2" id="toast-body">
+                <!-- Aquí va el contenido del toast -->
+              </div>
+            </div>
+          </div>
     </header>
     </div>
 </div>
