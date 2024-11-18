@@ -44,21 +44,22 @@ router.get('/buscar_usuarios', (req, res) => {
 
 // Ruta para suspender un usuario
 router.post('/suspender_usuario/:id', (req, res) => {
-    if (req.session.usuario && req.session.usuario.tipousuario === 'admin') {
-        const userId = req.params.id;
-        const suspendQuery = "UPDATE Usuario SET estado = 'suspendido' WHERE idusuario = ?";
+  if (req.session.usuario && req.session.usuario.tipousuario === 'admin') {
+      const userId = req.params.id;
+      const suspendQuery = "UPDATE Usuario SET tipousuario = 'suspendido' WHERE idusuario = ?";
 
-        db.query(suspendQuery, [userId], (err) => {
-            if (err) {
-                console.error('Error al suspender usuario:', err);
-                return res.status(500).send('Error al suspender usuario');
-            }
-            res.redirect('/admin');
-        });
-    } else {
-        res.redirect('/');
-    }
+      db.query(suspendQuery, [userId], (err) => {
+          if (err) {
+              console.error('Error al suspender usuario:', err);
+              return res.status(500).send('Error al suspender usuario');
+          }
+          res.redirect('/admin');
+      });
+  } else {
+      res.redirect('/');
+  }
 });
+
 
 // Ruta para eliminar un usuario
 router.post('/eliminar_usuario/:id', (req, res) => {
@@ -76,6 +77,25 @@ router.post('/eliminar_usuario/:id', (req, res) => {
     } else {
         res.redirect('/');
     }
+});
+
+router.post('/cambiar_tipo_usuario/:id', (req, res) => {
+  if (req.session.usuario && req.session.usuario.tipousuario === 'admin') {
+      const userId = req.params.id; // Obtiene el ID del usuario
+      const nuevoTipo = req.body.tipousuario; // Obtiene el tipo de usuario enviado
+
+      const updateQuery = "UPDATE Usuario SET tipousuario = ? WHERE idusuario = ?";
+
+      db.query(updateQuery, [nuevoTipo, userId], (err) => {
+          if (err) {
+              console.error('Error al cambiar tipo de usuario:', err);
+              return res.status(500).send('Error al cambiar tipo de usuario');
+          }
+          res.redirect('/admin');
+      });
+  } else {
+      res.redirect('/');
+  }
 });
 
 
