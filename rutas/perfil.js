@@ -28,7 +28,7 @@ router.get('/', (req,res) =>{
         }
 
         if (result.length > 0){
-            res.render('perfilUsuario', {user:req.session.usuario ,usuario: result[0]});
+            res.render('perfilUsuario', {user:req.session.usuario ,usuario: result[0], currentPage: 'perfil'});
         }else{
             res.status(404).send('Usuario no encontrado');
         }

@@ -4,13 +4,13 @@ const db = require('../database.js');
 
 router.get('/', (req, res) => {
     if (req.session.usuario) {
-        res.render('index', {user: req.session.usuario});
+        res.render('index', {user: req.session.usuario, currentPage: 'index'});
     } else {
-        res.render('index', {user: 0});
+        res.render('index', {user: 0, currentPage: 'index'});
     }
 });
 
-router.get('/userid', (req, res) => {
+router.get('/userid', (req, res) => {   // Solo para obtener el id del usuario
     if (req.session.usuario) {
         res.json({userid: req.session.usuario.idusuario});
     } else {

@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     } else {
         const userError ={TextContent: '', display: 'none'};
         const passwordError ={TextContent: '', display: 'none'};
-        res.render('iniciosesion', {user: 0, userError, passwordError});
+        res.render('iniciosesion', {user: 0, userError, passwordError, currentPage: 'login'});
     }
 });
 
@@ -26,7 +26,7 @@ router.post('/', (req, res) => {
                 console.log("Usuario no encontrado");
                 userError.TextContent = "Usuario no encontrado";
                 userError.display = 'block';
-                res.render('iniciosesion', {user: 0, userError, passwordError});
+                res.render('iniciosesion', {user: 0, userError, passwordError, currentPage: 'login'});
             } else {
                 // Si el usuario existe, se compara la contraseña
                 bcrypt.compare(password, result[0].contrasenia, (err, response) => {
@@ -38,7 +38,7 @@ router.post('/', (req, res) => {
                         console.log("Contraseña incorrecta");
                         passwordError.TextContent = "Contraseña incorrecta";
                         passwordError.display = 'block';
-                        res.render('iniciosesion', {user: 0, userError, passwordError});
+                        res.render('iniciosesion', {user: 0, userError, passwordError, currentPage: 'login'});
                     }
                 });
             }

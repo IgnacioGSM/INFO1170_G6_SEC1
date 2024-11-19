@@ -9,7 +9,7 @@ router.get('/', (req, res) => { // /mis_solicitudes
         if (err) {
           console.log(err);
         } else {
-        res.render('mis_solicitudes', {user: req.session.usuario, solicitudes: result});
+        res.render('mis_solicitudes', {user: req.session.usuario, solicitudes: result, currentPage: 'mis_solicitudes'});
         }
       });
     } else {
@@ -43,7 +43,7 @@ router.get('/solicitud', (req, res) => {    // /mis_solicitudes/solicitud
       console.log(err);
     } else {
       if (result[0].estado === 'pendiente') {
-      res.render('solicitud', {user: req.session.usuario, solicitud: result[0], respuesta: 0});
+      res.render('solicitud', {user: req.session.usuario, solicitud: result[0], respuesta: 0, currentPage: 'mis_solicitudes'});
       }
       else {
       let queryRespuesta = "SELECT res.*, rec.* FROM RespuestaSolicitud res \
@@ -54,9 +54,9 @@ router.get('/solicitud', (req, res) => {    // /mis_solicitudes/solicitud
         console.log(err);
         } else {
         if (result2.length === 0) { // Si no hay respuesta en la base de datos
-          res.render('solicitud', {user: req.session.usuario, solicitud: result[0], respuesta: 0});
+          res.render('solicitud', {user: req.session.usuario, solicitud: result[0], respuesta: 0, currentPage: 'mis_solicitudes'});
         } else {
-          res.render('solicitud', {user: req.session.usuario, solicitud: result[0], respuesta: result2[0]});
+          res.render('solicitud', {user: req.session.usuario, solicitud: result[0], respuesta: result2[0], currentPage: 'mis_solicitudes'});
         }
         }
       });
