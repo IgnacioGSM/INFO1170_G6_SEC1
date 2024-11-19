@@ -6,28 +6,42 @@ module.exports = (io) => {
         console.log('Usuario conectado: ', userid);
 
         if (userid != 'false') {   // Si el usuario está autenticado
-            socket.join(userid);    // Unirse a la sala del usuario, para recibir solo sus notificaciones
+            socket.join(userid);    // Se une a una sala con el id del usuario
             console.log("obteniendo notificaciones de usuario: ", userid);
 
-            let query = "SELECT * FROM Notificacion WHERE idusuario = ? ORDER BY fecha DESC";
-            db.query(query, [userid], (err, result) => {
+            // Al conectarse, se obtienen las notificaciones del usuario
+            db.query("SELECT * FROM Notificacion WHERE idusuario = ? ORDER BY idnoti DESC", [userid], (err, result) => {
                 if (err) {
                     console.log(err);
                 } else {
                     console.log("Notificaciones obtenidas");
-                    io.to(userid).emit('notificaciones', result);
+                    io.to(userid).emit('updatenotifs', result);
                 }
             });
         }
+        // Cuando el recepcionista responde una solicitud, debería emitir una señal además de modificar la base de datos
+        // Acá se recibe y se envía la notificación al usuario correspondiente (el usuario objetivo estará en alguna parte de lo que envía el recepcionista)
+        /* ejemplo
+        
+        socket.on('respuestanotif', (notif) => {
+            blablabla...
+            io.to(notif.idusuario).emit('newnotif', notif);
+            consulta de notificaciones...{
+                io.to(notif.idusuario).emit('updatenotifs', result);
+            }
+        });
 
+        */
+
+        // Este botón es solo para pruebas
         socket.on('botontestToast', (test) => {
             console.log("Botón de test de toast presionado");
-            db.query("SELECT * FROM Notificacion WHERE idnoti = 1", (err, result) => {
+            db.query("SELECT * FROM Notificacion", (err, result) => {
                 if (err) {
                     console.log(err);
                 } else {
                     console.log("Notificacion de prueba obtenida");
-                    io.to(userid).emit('newnotif', result[0]);
+                    io.to(userid).emit('testnotif', result[0]);
                 }
             });
         });

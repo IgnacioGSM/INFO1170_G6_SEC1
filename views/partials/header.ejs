@@ -40,7 +40,7 @@
     
         <div class="toast-container position-fixed top-0 end-0 p-3">
             <div id="notifToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-              <div class="toast-header">
+              <div class="toast-header bg-success-subtle">
                 <strong class="me-auto">Nueva Notificación</strong>
                 <small class="text-muted">Ahora</small>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -53,3 +53,7 @@
     </header>
     </div>
 </div>
+<!-- Por ahora las notificaciones solo afectan elementos del header, para que elementos del body usen sockets
+ sería necesario crear otro javascript (que use la conexión definida en general/notificaciones) -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/general/notificaciones.js"></script>

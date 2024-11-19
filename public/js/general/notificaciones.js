@@ -22,8 +22,8 @@ function activarToast(mensaje, link) {  // Link corresponde a la id de la solici
 
 function socketConfig(socket) {
     console.log("socket listo :3");
-    // Al unirse, el servidor envía las notificaciones al cliente
-    socket.on('notificaciones', (notificaciones) => {
+    // Al recibir updatenotifs, actualiza la lista de notificaciones en el dropdown del header
+    socket.on('updatenotifs', (notificaciones) => {
         console.log("Notificaciones recibidas");
         console.log(notificaciones);
         let notificaciones_list = document.getElementById("header-notifs-menu");    // lista de notificaciones en el dropdown del header
@@ -63,10 +63,22 @@ function socketConfig(socket) {
             }
         }
     });
+
     socket.on('newnotif', (notif) => {
+        fetch('/mis_solicitudes/id-soli-from-respuesta?idrespuesta=' + notif.idrespuesta)
+            .then(response => response.json())
+            .then(data => {
+                activarToast(notif.mensaje, data.idsoli);
+            })
+            .catch(error => console.error("Error en el fetch:", error));
+    });
+
+
+    // Notificación al presionar el botón de test
+    socket.on('testnotif', (notif) => {
         console.log("Nueva notificación recibida");
         console.log(notif);
-        // Agregar la notificación al dropdown
+        // Agregar la notificación al dropdown (esto no se hará normalmente, al recibir notificación se hará updatenotifs y newnotif)
         fetch('/mis_solicitudes/id-soli-from-respuesta?idrespuesta=' + notif.idrespuesta)
             .then(response => response.json())
             .then(data => {
