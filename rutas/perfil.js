@@ -5,6 +5,7 @@ const multer = require('multer');
 const path = require('path');
 const db = require('../database.js');
 const fs = require('fs');
+const { error } = require('console');
 
 // Configuración de multer
 const storage = multer.diskStorage({
@@ -183,15 +184,38 @@ router.delete('/eliminarExp/:id', (req, res) => {
 });
 
 router.post('/enviarVal', (req, res) => {
-    const rating = req.body.rating;
     const userId = req.session.usuario.idusuario;
+    const rating = req.body.rating;
 
-    db.query('INSERT INTO valoraciones (userId, rating) VALUES (?, ?)', [userId, rating], (err, result) => {
-        if(err){
-            console.error('Error al guardar la valoracion', err);
-            return res.status(500).send('Error al enviar la valoracion');
+    if (!userId) {
+        return res.status(401).send('usuario no autenticado');
+    }
+    if (!rating || isNaN(rating) || rating < 1 || rating > 5){
+        return res.status(400).send('Valoracion no valida');
+    }
+
+    const query = 'INSERT INTO Valoraciones (userId, rating) VALUES (?, ?)';
+    db.query(query, [userId, rating], (error, results) => {
+        if (error){
+            console.error('Error al enviar la valoracion');
+            return res.status(500).send('Error al eviar la valoracion');
         }
-        res.send('Valoracion enviada con extito');
+        res.redirect('/perfilUsuario');
+    });
+});
+
+router.get('/perfilUsuario', (req, res) => {
+    const userId = req.session.usuario;
+
+    const query = 'SELECT AVG(Valoracion) As promedio from Valoraciones WHERE usuario_id = ?';
+    db.query(query, [userId], (error, results) => {
+        if (error) {
+            console.error('Error al obtener la valoracion promedio', error);
+            return res.status(500).send('Error al cargar el perfil')
+        }
+
+        const promedio = results[0].promedio ? results[0].promedio.toFixed(2): 'No hay valoraciones';
+        res.render('perfilUsuario', {usuario: req.session.usuario, promedio});
     });
 });
 
