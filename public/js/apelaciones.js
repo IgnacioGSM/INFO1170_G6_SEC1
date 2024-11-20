@@ -53,6 +53,33 @@ app.post('/apelar', async (req, res) => {
   }
 });
 
+// Sistema de apelación de baneos
+//router.post('/', async (req, res) => {
+//     const { idusuario, mensaje } = req.body;
+
+  //   if (!idusuario || !mensaje) {
+  //       return res.status(400).json({ message: 'ID de usuario y mensaje son requeridos.' });
+  //   }
+
+  //   try {
+  //      const query = 'INSERT INTO ReporteUsuario (idusuario, tiporeporte, mensaje, descripcion, fechareporte) VALUES (?, "Apelación", ?, "Apelación de baneo", NOW())';
+   //      db.query(query, [idusuario, mensaje], (err, result) => {
+   //          if (err) {
+      //           console.error('Error al registrar la apelación:', err);
+     //            return res.status(500).json({ message: 'Error al registrar la apelación.' });
+      //       }
+
+     //        res.status(201).json({ message: 'Apelación registrada con éxito.', idReporte: result.insertId });
+    //     });
+    // } catch (error) {
+    //     console.error('Error al registrar la apelación:', error);
+   //      res.status(500).json({ message: 'Error al registrar la apelación.' });
+ //    }
+// });
+
+module.exports = router;
+
+
 // Iniciar el servidor
 const PORT = 3000;
 app.listen(PORT, () => {
