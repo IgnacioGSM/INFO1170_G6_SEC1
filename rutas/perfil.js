@@ -175,7 +175,7 @@ router.delete('/eliminarExp/:id', (req, res) => {
             db.query(deleteQuery, [expedienteId], (err) => {
                 if (err) {
                     console.error('Error al elinar el archivo de la bd', err);
-                    return req.status(500).send('Error al eliminar el archivo');
+                    return res.status(500).send('Error al eliminar el archivo');
                 }
                 res.send('Expediente eliminado correctamente');
             });
@@ -207,7 +207,7 @@ router.post('/enviarVal', (req, res) => {
 router.get('/perfilUsuario', (req, res) => {
     const userId = req.session.usuario;
 
-    const query = 'SELECT AVG(Valoracion) As promedio from Valoraciones WHERE usuario_id = ?';
+    const query = 'SELECT AVG(Valoracion) As promedio from Valoraciones WHERE idusuario = ?';
     db.query(query, [userId], (error, results) => {
         if (error) {
             console.error('Error al obtener la valoracion promedio', error);
@@ -221,6 +221,14 @@ router.get('/perfilUsuario', (req, res) => {
 
 router.post('/upload', upload.single('perfilFot'), (req, res) => {
     const userId = req.session.usuario.idusuario;
+
+    if (!req.file){
+        return res.status(400).send('No se subio foto')
+    }
+    if (!req.file.mimetype.startsWith('image/')) {
+        return res.status(400).send('Solo se permiten imagenes');
+    }
+
     const fotoURL = `/uploads/${req.file.filename}`;
 
     db.query('UPDATE Usuario SET fotoURL = ? WHERE idusuario = ?', [fotoURL, userId], (err, result) => {
@@ -231,7 +239,8 @@ router.post('/upload', upload.single('perfilFot'), (req, res) => {
         res.send('foto de perfil subida');
     });
 });
-/* falta revision
+
+//falta revision
 router.get('/perfilUsuario', (req, res) => {
     const userId = req.session.usuario.idusuario;
     db.query('SELECT fotoURL FROM Usuario WHERE id = ?', [userId], (err, results) => {
@@ -239,5 +248,60 @@ router.get('/perfilUsuario', (req, res) => {
         res.render('perfilUsuario', {user: results[0]});
     });
 });
+
+/*
+//posible reeconfiguracion para manejar la subida de foto perfil
+
+
+const storage2 = multer.diskStorage ({
+    destination: (req, file, cb) => {
+        const uploadPath = path.join(__dirname, 'public/uploads/profile_pictures');
+        if (!fs.existsSync(uploadPath)) {
+            fs.mkdirSync(uploadPath, {recursive:true});
+        }
+        cb(null, uploadPath);
+    },
+    filename: (req, file, cb) => {
+        const uniqueName = `${Date.now()}-${file.originalname}`;
+        cb(null, uniqueName)
+    }
+});
+
+const upload2 = multer({
+    storage2,
+    limits: {fileSize: 2*1024*1024},
+    fileFilter: (req, file, cb) => {
+        const filetypes = /jpeg|jpg|png/;
+        const mimetype = filetypes.test(file.mimetype)
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+        
+        if (mimetype && extname){
+            return cb(null, true);
+        }
+        cb(new Error('Solo se permiten imagenes de...'));
+    }
+});
+
+router.post('/upload2', upload.single('perfilFot'), (req, res) => {
+    if (!req.file){
+        return res.status(400).send('No se subio ninguna foto');
+    }
+
+    const fotoURL = `/uploads/profile_picture/${req.file.filename}`;
+    const userId = req.session.usuario.idusuario;
+
+    db.query(
+        'UPDATE Usuario SET foto_perfil = ? WHERE id = ?',
+        [fotoURL, userId],
+        (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send('Error al actualizar la foto');
+            }
+            res.redirect('/perfilUsuario');
+        }
+    );
+});
 */
+
 module.exports = router;
