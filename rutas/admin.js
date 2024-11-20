@@ -98,6 +98,37 @@ router.post('/cambiar_tipo_usuario/:id', (req, res) => {
   }
 });
 
+// Ruta para mostrar el formulario de edición de sección del hospital
+router.get('/editar_seccion/:idcentro', (req, res) => {
+  const hospitalId = req.params.idcentro;
+  const query = 'SELECT * FROM Seccion WHERE idcentro = ?'; // Asumiendo que hay una tabla Seccion
+
+  db.query(query, [hospitalId], (err, results) => {
+      if (err) {
+          return res.status(500).send('Error en la consulta de la sección');
+      }
+      if (results.length === 0) {
+          return res.status(404).send('Sección no encontrada');
+      }
+      const seccion = results[0];
+      res.render('editar_seccion', { seccion, hospitalId, user: req.session.usuario });
+  });
+});
+
+// Ruta para procesar la edición de la sección
+router.post('/editar_seccion/:idcentro', (req, res) => {
+  const hospitalId = req.params.idcentro;
+  const { nombre, descripcion } = req.body;
+  const query = 'UPDATE Seccion SET nombre = ?, descripcion = ? WHERE idcentro = ?';
+
+  db.query(query, [nombre, descripcion, hospitalId], (err) => {
+      if (err) {
+          return res.status(500).send('Error al actualizar la sección');
+      }
+      res.redirect('/admin');
+  });
+});
+
 
 // Ruta para mostrar el formulario de agregar hospital
 router.get('/agregar_hospital', (req, res) => {

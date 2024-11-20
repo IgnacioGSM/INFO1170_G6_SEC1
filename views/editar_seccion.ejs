@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Sección - Hospitrack</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <%- include('partials/header', { index: 0 }) %>
+
+    <main class="admin-main container my-4">
+        <section id="editar-seccion" class="mb-4 p-4 bg-white rounded shadow" style="max-width: 600px; margin: 0 auto;">
+            <h2 class="text-center mb-4">Editar Sección</h2>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form action="/admin/editar_seccion/<%= seccion.idseccion %>" method="POST">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre de la Sección</label>
+                            <input type="text" class="form-control" id="nombre" name="nombreseccion" value="<%= seccion.nombreseccion %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="idcentro" class="form-label">ID del Centro</label>
+                            <input type="number" class="form-control" id="idcentro" name="idcentro" value="<%= seccion.idcentro %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="idusuario" class="form-label">ID del Usuario Responsable</label>
+                            <input type="number" class="form-control" id="idusuario" name="idusuario" value="<%= seccion.idusuario %>" required>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a href="/admin" class="btn btn-secondary">Volver al Panel</a>
+                            <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <form action="/admin/eliminar_seccion/<%= seccion.idseccion %>" method="POST" onsubmit="return confirm('¿Está seguro de que desea eliminar esta sección?');">
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-danger">Eliminar Sección</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
