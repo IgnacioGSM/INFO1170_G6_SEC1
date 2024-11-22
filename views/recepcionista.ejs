@@ -1,300 +1,244 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Interfaz Recepción Mejorada</title>
-    <link rel="icon" href="/imagenes/hospitrackicono.png" type="image/png" />
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/public/css/estilo_recep.css" />
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recepcionista</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/estilo_recep.css">
+</head>
+<body>
     <header class="bg-success text-white p-3 d-flex justify-content-between align-items-center">
-      <img
-        src="/imagenes/hospitracklogo.png"
-        alt="Logo Hospitrack"
-        class="img-fluid"
-        style="width: 180px; height: 200px;"
-      />
-      <h1 class="h3">Interfaz de Recepción</h1>
-      <button id="toggle-menu-button" class="btn btn-outline-light">
-        <i class="fa-solid fa-bars">Menú</i>
-      </button>
+        <img src="/imagenes/hospitracklogo.png" alt="Logo Hospitrack" class="img-fluid" style="width: 180px; height: 200px;">
+        <h1 class="h3">Interfaz de Recepción</h1>
+    </header>
 
-      <!-- Menú desplegable con los botones de navegación -->
-      <nav id="nav-menu" class="toggle-menu-button">
+    <!-- Botón de Menú en la esquina superior derecha -->
+    <div class="position-fixed top-0 end-0 m-3">
+        <button id="toggle-menu-button" class="btn btn-outline-light">
+            <i class="fa-solid fa-bars"> Menú</i>
+        </button>
+    </div>
+
+    <!-- Menú desplegable con los botones de navegación -->
+    <nav id="nav-menu" class="d-none position-fixed top-0 end-0 m-3 bg-white shadow p-3 rounded">
         <button id="btn-inicio" class="btn btn-outline-success w-100 my-1">Index</button>
         <button id="btn-home" class="btn btn-outline-success w-100 my-1">Inicio</button>
         <button id="btn-gestion" class="btn btn-outline-success w-100 my-1">Gestión de Registros</button>
         <button id="btn-solicitudes" class="btn btn-outline-success w-100 my-1">Solicitudes</button>
         <button id="btn-historial" class="btn btn-outline-success w-100 my-1">Historial</button>
         <button id="btn-perfil" class="btn btn-outline-success w-100 my-1">Perfil</button>
-      </nav>
-    </header>
+    </nav>
 
     <main class="container my-4">
-      <!-- Primera vista (Home) -->
-      <section id="home-view" class="menu-principal text-center">
-        <div class="profile-container">
-          <img
-            src="/imagenes/nofoto.jpg"
-            alt="Perfil Recepcionista"
-            class="rounded-circle border border-success mb-3"
-            style="width: 150px; height: 150px;"
-            id="profile-button"
-          />
-          <div class="profile-info">
-            <p id="profile-name" class="fw-bold">Nombre del usuario</p>
-          </div>
-        </div>
-        <h2>Bienvenido a la Interfaz de Recepción Mejorada</h2>
-        <p class="lead">Aquí podrás gestionar las solicitudes y registros de los pacientes de manera eficiente.</p>
-      </section>
+        <!-- Primera vista (Home) -->
+        <section id="home-view" class="menu-principal text-center">
+            <h2>Bienvenido al sistema de gestión de solicitudes del recepcionista</h2>
+        </section>
 
-      <!-- Sección de Gestión de Registros de Espera -->
-      <section id="gestion-registros" class="d-none">
-        <h2 class="text-center bg-success text-white py-3 rounded">Gestión de Registros de Espera</h2>
-        <form id="gestion-form" class="row g-3">
-          <div class="col-md-6">
-            <label for="nombre-paciente" class="form-label">Nombre del paciente:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="nombre-paciente"
-              name="nombre"
-              placeholder="Juan Pérez"
-              required
-            />
-          </div>
+        <!-- Sección de Solicitudes -->
+        <section id="recepcion-solicitudes" class="d-none">
+            <h2 class="text-center bg-success text-white py-3 rounded">Solicitudes</h2>
+            <div class="container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="solicitud">
+                            <td>Solicitud 1</td>
+                            <td>Pendiente</td>
+                            <td>
+                                <button class="btn btn-primary btn-aceptar">Aceptar</button>
+                                <button class="btn btn-danger btn-rechazar">Rechazar</button>
+                                <button class="btn btn-secondary btn-reportar">Reportar</button>
+                            </td>
+                        </tr>
+                        <!-- Más filas de solicitudes -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-          <div class="col-md-6">
-            <label for="rut-paciente" class="form-label">RUT:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="rut-paciente"
-              name="rut"
-              placeholder="12345678-9"
-              pattern="\d{7,8}-[\dkK]"
-              required
-            />
-          </div>
+        <!-- Historial de Solicitudes Atendidas -->
+        <section id="historial-solicitudes" class="d-none">
+            <h2 class="text-center bg-success text-white py-3 rounded">Historial de Solicitudes Atendidas</h2>
+            <!-- Formulario de Filtro -->
+            <form id="filter-form" method="GET" action="/recepcionista/filtrar" class="mb-3">
+                <label for="filter">Filtrar por:</label>
+                <select id="filter" name="filter" class="form-select">
+                    <option value="order">Orden de llegada</option>
+                    <option value="section">Por sección</option>
+                    <option value="status">Alfabéticamente</option>
+                </select>
+                <button type="submit" class="btn btn-success mt-2">Aplicar filtro</button>
+            </form>
 
-          <div class="col-md-6">
-            <label for="correo-paciente" class="form-label">Correo:</label>
-            <input
-              type="email"
-              class="form-control"
-              id="correo-paciente"
-              name="correo"
-              placeholder="ejemplo@gmail.com"
-              required
-            />
-          </div>
+            <!-- Tabla de historial de solicitudes -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Sección</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% solicitudes.forEach(solicitud => { %>
+                        <tr>
+                            <td><%= solicitud.nombre %></td>
+                            <td><%= solicitud.seccion %></td>
+                            <td><%= solicitud.estado %></td>
+                            <td><%= solicitud.fecha.toLocaleDateString() %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </section>
 
-          <div class="col-md-6">
-            <label for="celular-paciente" class="form-label">Celular:</label>
-            <input
-              type="tel"
-              class="form-control"
-              id="celular-paciente"
-              name="celular"
-              placeholder="9 12345678"
-              required
-            />
-          </div>
-
-          <div class="col-md-6">
-            <label for="servicio-paciente" class="form-label">Servicio:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="servicio-paciente"
-              name="servicio"
-              placeholder="Cardiología"
-              required
-            />
-          </div>
-
-          <div class="col-12">
-            <button type="submit" class="btn btn-success w-100">Agregar Registro</button>
-          </div>
-        </form>
-
-        <!-- Tabla de Fila de Espera -->
-        <table class="table table-hover mt-4" id="tabla-registros-espera">
-          <thead class="table-success">
-            <tr>
-              <th>Nombre</th>
-              <th>RUT</th>
-              <th>Correo</th>
-              <th>Celular</th>
-              <th>Servicio</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="lista-registros">
-            <!-- Las filas serán agregadas dinámicamente -->
-          </tbody>
-        </table>
-      </section>
-
-      <!-- Sección de Recepción de Solicitudes -->
-      <section id="recepcion-solicitudes" class="d-none">
-        <h2 class="text-center bg-success text-white py-3 rounded">Recepción de Solicitudes</h2>
-
-
-        <input
-          type="text"
-          id="search-solicitudes"
-          class="form-control mb-3"
-          placeholder="Buscar solicitud..."
-        />
-        <table class="table table-hover">
-          <thead class="table-success">
-            <tr>
-              <th>RUT</th>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>Mensaje</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="solicitudes-list">
-            <% solicitudes.forEach(function(solicitud) { %>
-              <tr>
-                <td><%= solicitud.rut %></td>
-                <td><%= solicitud.nombre %></td>
-                <td><%= solicitud.apellido %></td>
-                <td><%= solicitud.mensaje %></td>
-                <td>
-                  <button class="btn-aceptar" onclick="aceptarSolicitud(this)">Aceptar</button>
-                  <button class="btn-rechazar" onclick="rechazarSolicitud(this)">Rechazar</button>
-                  <button class="btn-reportar-solicitudes" onclick="reportarSolicitud(this)">Reportar</button>
-                  <input type="file" id="subir-archivo-<%= solicitud.id %>" accept=".pdf" class="form-control mt-2" />
-                </td>
-              </tr>
-            <% }) %>
-          </tbody>
-        </table>
-
-        <!-- Botón para reportar solicitudes -->
-        <section id="btn-reportar-solicitudes" class="btn-reportar-solicitudes">
-          <h2 class="text-report-Solicitudes">reportar</h2> 
-          <div class="container">
-            <input type="text" id="puesto-input" class="form-control my-2" placeholder="Asignar puesto" />
-            <button id="guardar-aceptar" class="btn btn-primary w-100">Guardar</button>
-            <button id="cancelar-aceptar" class="btn btn-secondary w-100 mt-2">Cancelar</button>
-        </button>
-      </section>
-
-      <!-- Sección para Aceptar Solicitud -->
-      <section id="aceptar-solicitud" class="btn-aceptar">
-        <h2 class="text-center bg-success text-white py-3 rounded">Aceptar Solicitud</h2>
-        <div class="container">
-          <input type="text" id="puesto-input" class="form-control my-2" placeholder="Asignar puesto" />
-          <textarea id="comentario-input" class="form-control my-2" placeholder="Comentario (opcional)"></textarea>
-          <button id="guardar-aceptar" class="btn btn-primary w-100">Guardar</button>
-          <button id="cancelar-aceptar" class="btn btn-secondary w-100 mt-2">Cancelar</button>
-        </div>
-      </section>
-
-      <!-- Sección para Rechazar Solicitud -->
-      <section id="rechazar-solicitud" class="btn-rechazar">
-        <h2 class="text-center bg-danger text-white py-3 rounded">Rechazar Solicitud</h2>
-        <div class="container">
-          <textarea id="motivo-input" class="form-control my-2" placeholder="Motivo de rechazo" required></textarea>
-          <button id="guardar-rechazar" class="btn btn-warning w-100">Guardar</button>
-          <button id="cancelar-rechazar" class="btn btn-secondary w-100 mt-2">Cancelar</button>
-        </div>
-      </section>
-
-      <!-- Historial de Solicitudes Atendidas -->
-      <section id="historial-solicitudes" class="d-none">
-        <h2 class="text-center bg-success text-white py-3 rounded">Historial de Solicitudes Atendidas</h2>
-        <!-- Formulario de Filtro -->
-        <form id="filter-form" method="GET" action="/recepcionista/filtrar" class="mb-3">
-          <label for="filter">Filtrar por:</label>
-          <select id="filter" name="filter" class="form-select">
-            <option value="order">Orden de llegada</option>
-            <option value="section">Por sección</option>
-            <option value="status">alfabeticamente</option>
-          </select>
-          <button type="submit" class="btn btn-success mt-2">Aplicar filtro</button>
-        </form>
-
-        <table class="table table-hover">
-          <thead class="table-success">
-            <tr>
-              <th>Nombre</th>
-              <th>Servicio</th>
-              <th>Estado</th>
-              <th>Comentarios</th>
-              <th>Puesto Asignado</th>
-            </tr>
-          </thead>
-          <tbody id="historial-list">
-            <!-- Aquí se agregarían las solicitudes atendidas -->
-          </tbody>
-        </table>
-      </section>
-
-      <!-- Sección de Perfil -->
-      <section id="perfil-view" class="d-none">
-        <h2 class="text-center bg-success text-white py-3 rounded">Perfil del Recepcionista</h2>
-        <form id="perfil-form" class="row g-3">
-          <div class="col-md-6">
-            <label for="perfil-nombre" class="form-label">Nombre:</label>
-            <input type="text" class="form-control" id="perfil-nombre" name="nombre" value="Nombre del usuario" />
-          </div>
-
-          <div class="col-md-6">
-            <label for="perfil-email" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="perfil-email" name="email" value="email@dominio.com" />
-          </div>
-
-          <div class="col-12">
-            <button type="submit" class="btn btn-success w-100">Guardar Cambios</button>
-          </div>
-        </form>
-      </section>
-    </main>
-
-    <!-- Modal para Reportar Solicitud -->
-    <div class="modal fade" id="reportarModal" tabindex="-1" aria-labelledby="reportarModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="reportarModalLabel">Reportar Solicitud</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Sección de Perfil -->
+        <section id="perfil-view" class="d-none">
+            <h2 class="text-center bg-success text-white py-3 rounded">Perfil del Recepcionista</h2>
+            <form id="perfil-form" class="row g-3">
+                <div class="col-md-6">
+                    <label for="perfil-nombre" class="form-label">Nombre:</label>
+                    <input type="text" class="form-control" id="perfil-nombre" name="nombre" value="Nombre del usuario" />
                 </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="motivo-reporte" class="form-label">Motivo de Reporte</label>
-                        <select class="form-select" id="motivo-reporte">
-                            <option value="falso">Usuario falso o solicitud falsa</option>
-                            <option value="spam">Spam</option>
-                            <option value="abuso">Abuso</option>
-                            <option value="contenido">Contenido inapropiado</option>
-                            <option value="otro">Otro</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="comentario-reporte" class="form-label">Comentario (opcional)</label>
-                        <textarea class="form-control" id="comentario-reporte"></textarea>
-                    </div>
+
+                <div class="col-md-6">
+                    <label for="perfil-email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="perfil-email" name="email" value="email@dominio.com" />
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="modal-reportar-btn">Reportar</button>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success w-100">Guardar Cambios</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Modal para Aceptar/Rechazar Solicitud -->
+        <div class="modal fade" id="solicitudModal" tabindex="-1" aria-labelledby="solicitudModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="solicitudModalLabel">Solicitud</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Contenido dinámico del modal -->
+                        <div id="aceptar-content" class="d-none">
+                            <div class="mb-3">
+                                <label for="puesto-input" class="form-label">Asignación de Puesto</label>
+                                <input type="text" class="form-control" id="puesto-input">
+                            </div>
+                            <div class="mb-3">
+                                <label for="comentario-input" class="form-label">Comentario (opcional)</label>
+                                <textarea class="form-control" id="comentario-input"></textarea>
+                            </div>
+                        </div>
+                        <div id="rechazar-content" class="d-none">
+                            <div class="mb-3">
+                                <label for="motivo-input" class="form-label">Motivo</label>
+                                <textarea class="form-control" id="motivo-input"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="modal-aceptar-btn">Aceptar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Modal para Reportar Solicitud -->
+        <div class="modal fade" id="reportarModal" tabindex="-1" aria-labelledby="reportarModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reportarModalLabel">Reportar Solicitud</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="motivo-reporte" class="form-label">Motivo de Reporte</label>
+                            <select class="form-select" id="motivo-reporte">
+                                <option value="falso">Usuario falso o solicitud falsa</option>
+                                <option value="spam">Spam</option>
+                                <option value="abuso">Abuso</option>
+                                <option value="contenido">Contenido inapropiado</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comentario-reporte" class="form-label">Comentario (opcional)</label>
+                            <textarea class="form-control" id="comentario-reporte"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="modal-reportar-btn">Reportar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Gestión de Registros -->
+        <section id="gestion-registros" class="d-none">
+            <h2 class="text-center bg-success text-white py-3 rounded">Gestión de Registros</h2>
+            <form id="gestion-form" class="row g-3">
+                <div class="col-md-6">
+                    <label for="nombre-paciente" class="form-label">Nombre del Paciente:</label>
+                    <input type="text" class="form-control" id="nombre-paciente" name="nombre" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="rut-paciente" class="form-label">RUT:</label>
+                    <input type="text" class="form-control" id="rut-paciente" name="rut" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="correo-paciente" class="form-label">Correo Electrónico:</label>
+                    <input type="email" class="form-control" id="correo-paciente" name="correo" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="celular-paciente" class="form-label">Celular:</label>
+                    <input type="text" class="form-control" id="celular-paciente" name="celular" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="servicio-paciente" class="form-label">Servicio:</label>
+                    <input type="text" class="form-control" id="servicio-paciente" name="servicio" required>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success w-100">Agregar Registro</button>
+                </div>
+            </form>
+            <table class="table" id="lista-registros">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>RUT</th>
+                        <th>Correo Electrónico</th>
+                        <th>Celular</th>
+                        <th>Servicio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Filas de registros -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Sección de Inicio -->
+        <section id="home-view" class="d-none">
+            <h2 class="text-center bg-success text-white py-3 rounded">Inicio</h2>
+            <p class="text-center">Bienvenido al sistema de gestión de solicitudes del recepcionista.</p>
+        </section>
+    </main>
 
     <footer>
       <%- include('partials/footer') %>
@@ -302,5 +246,5 @@
 
     <script src="/public/js/scripts_recep.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+</body>
 </html>
