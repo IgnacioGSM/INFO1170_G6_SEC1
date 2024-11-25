@@ -34,7 +34,7 @@ module.exports = (io) => {
         */
 
         // Este botón es solo para pruebas
-        socket.on('botontestToast', (test) => {
+        /*socket.on('botontestToast', (test) => {
             console.log("Botón de test de toast presionado");
             db.query("SELECT * FROM Notificacion", (err, result) => {
                 if (err) {
@@ -44,7 +44,7 @@ module.exports = (io) => {
                     io.to(userid).emit('testnotif', result[0]);
                 }
             });
-        });
+        });*/
 
         socket.on('disconnect', () => {
             console.log('Usuario desconectado');

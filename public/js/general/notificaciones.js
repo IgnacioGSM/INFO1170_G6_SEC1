@@ -109,11 +109,6 @@ function socketConfig(socket) {
             })
             .catch(error => console.error("Error en el fetch:", error));
     });
-
-    // Test de toast con el botoncito
-    document.getElementById("testoast").addEventListener("click", () => {
-        socket.emit('botontestToast', 'test');
-    });
 }
 
 async function obtenerIdUsuarioySocket() {
