@@ -68,6 +68,10 @@ fetch("/mapdata") // obtiene los datos de los hospitales
             marker.bindPopup("<b>" + hospitales_cargados[i].nombre + "</b>");
 
             marker.on('click', function(marker){    // Lo que ocurre al clickear un marcador del mapa
+
+                document.getElementById("idseccion-form").value = "";
+
+
                 document.getElementById("index-hospital-name").innerHTML = hospitales_cargados[i].nombre;
 
                 let secciones_table_body = document.getElementById("index-secciones-lista");
@@ -103,8 +107,13 @@ fetch("/mapdata") // obtiene los datos de los hospitales
 
                         for (let k = 0; k < hospitales_cargados[i].secciones.length; k++) {          // busca el numero de fila correspondiente a la seccion seleccionada
 
-                            // Si la seccion seleccionada es igual a la seccion en la lista de secciones, muestra la cantidad de personas en la fila de esa seccion
+                            // Si la seccion seleccionada es igual a una seccion en la lista de secciones...
                             if (hospitales_cargados[i].secciones[k].nombreseccion == this.textContent) {
+
+                                // Agrega el id de la seccion al formulario
+                                document.getElementById("idseccion-form").value = hospitales_cargados[i].secciones[k].idseccion;
+
+                                // Muestra la cantidad de personas en la fila de la seccion seleccionada
                                 document.getElementById("index-filas-cantidad").textContent = hospitales_cargados[i].secciones[k].fila + " personas";
                             }
                         }
