@@ -57,9 +57,9 @@ router.post('/cambiarcorreo', (req, res) => {
             db.query('UPDATE Usuario SET correoelectronico = ? WHERE idusuario = ?', [nuevoCorreo, userId], (error) =>{
                 if (error) {
                     console.error('A ocurrido un error en el servidor', error);
-                    return res.render('cambiar telefono', {userId, error: 'Error al actualizar el correo', success: null});
+                    return res.render('cambiarcorreo', {userId, error: 'Error al actualizar el correo', success: null});
                 }
-                res.render('cambiarcorreo', {userId, error: null, success: 'Tu correo ha sido actualizado'})
+                res.render('cambiarcorreo', {userId, error: null, success: 'Tu correo ha sido actualizado'});
             });
         });
     });
@@ -82,10 +82,10 @@ router.post('/cambiartelefono', (req, res) => {
 
             db.query('UPDATE Usuario SET numerotelefono = ? WHERE idusuario = ?', [nuevoTelefono, userId], (error) =>{
                 if (error) {
-                    console.error('Error por parte del servidor', error)
+                    console.error('Error por parte del servidor', error);
                     return res.render('cambiartelefono', {userId, error: 'Error al actualizar el numero telefonico', success: null});
                 }
-                res.render('cambiartelefono', {userId, error: null, success: 'tu numero de telefono se ha actualizado'});
+                res.render('cambiartelefono', {userId, error: null, success: 'Tu numero de telefono se ha actualizado'});
             });
         });
     });
@@ -98,7 +98,7 @@ router.post('/cambiarcontrasenia', (req, res) => {
     if (nuevaContraseña == confirmarContraseña) {  // Primero se revisa que se haya ingresado la misma contraseña nueva
         db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
             if (error) return res.status(500).send('Error en el servidor');
-            if (results.length === 0) return res.status(404),send('Usuario no encontrado')
+            if (results.length === 0) return res.status(404).send('Usuario no encontrado');
     
             const storedPassword = results[0].contrasenia;
             bcrypt.compare(contraseñaActual, storedPassword, (err, isMatch) => {    // Luego se revisa que la contraseña actual esté correcta
