@@ -26,8 +26,8 @@
                     <li class="list-group-item solicitud" value="<%= solicitudes[i].idsolicitud %>">                        <!-- Una solicitud -->
                         <ul class="list-group list-group-horizontal">   <!-- Datos de la solicitud -->
                             <div class="list-group list-group-horizontal col-9">
-                                <li class="list-group-item w-25 text-bg-light">Hospital: Hospital 3</li>
-                                <li class="list-group-item w-25 text-bg-light">Sección: Emergencia</li>
+                                <li class="list-group-item w-25 text-bg-light">Hospital: <%= solicitudes[i].nombrehospital %></li>
+                                <li class="list-group-item w-25 text-bg-light">Sección: <%= solicitudes[i].nombreseccion %></li>
                                 <li class="list-group-item w-25 text-bg-light">Fecha: <%= ("0" + solicitudes[i].horasolicitud.getDate()).slice(-2) + "/" + ("0" + (solicitudes[i].horasolicitud.getMonth() + 1)).slice(-2) + "/" + solicitudes[i].horasolicitud.getFullYear() %></li>
                                 <li class="list-group-item w-25 text-bg-light">Hora: <%= ("0" + solicitudes[i].horasolicitud.getHours()).slice(-2) + ":" + ("0" + solicitudes[i].horasolicitud.getMinutes()).slice(-2) %></li>
                             </div>
@@ -51,8 +51,8 @@
                     <li class="list-group-item solicitud" value="<%= solicitudes[i].idsolicitud %>">                        <!-- Una solicitud -->
                         <ul class="list-group list-group-horizontal">   <!-- Datos de la solicitud -->
                             <div class="list-group list-group-horizontal col-9">
-                                <li class="list-group-item w-25 text-bg-light">Hospital: Hospital 3</li>
-                                <li class="list-group-item w-25 text-bg-light">Sección: Emergencia</li>
+                                <li class="list-group-item w-25 text-bg-light">Hospital: <%= solicitudes[i].nombrehospital %></li>
+                                <li class="list-group-item w-25 text-bg-light">Sección: <%= solicitudes[i].nombreseccion %></li>
                                 <li class="list-group-item w-25 text-bg-light">Fecha: <%= ("0" + solicitudes[i].horasolicitud.getDate()).slice(-2) + "/" + ("0" + (solicitudes[i].horasolicitud.getMonth() + 1)).slice(-2) + "/" + solicitudes[i].horasolicitud.getFullYear() %></li>
                                 <li class="list-group-item w-25 text-bg-light">Hora: <%= ("0" + solicitudes[i].horasolicitud.getHours()).slice(-2) + ":" + ("0" + solicitudes[i].horasolicitud.getMinutes()).slice(-2) %></li>
                             </div>

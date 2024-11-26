@@ -4,7 +4,11 @@ const db = require('../database.js');
 
 router.get('/', (req, res) => { // /mis_solicitudes
     if (req.session.usuario) {
-      let querySolicitudes = "SELECT * FROM Solicitud WHERE idusuario = ?";
+      let querySolicitudes = "SELECT soli.*, sec.nombreseccion, cen.nombre AS nombrehospital \
+                              FROM Solicitud soli \
+                              INNER JOIN Seccion sec ON soli.idseccion = sec.idseccion \
+                              INNER JOIN CentroSalud cen ON cen.idcentro = sec.idcentro \
+                              WHERE soli.idusuario = ?";
       db.query(querySolicitudes, [req.session.usuario.idusuario], (err, result) => {
         if (err) {
           console.log(err);

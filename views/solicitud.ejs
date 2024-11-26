@@ -39,10 +39,35 @@
             </tbody>
         </table>
         <% if (solicitud.estado == "pendiente") { %>
-            <a class="btn btn-danger" href="<%= '/mis_solicitudes/cancelarsolicitud?idsoli=' + encodeURIComponent(solicitud.idsolicitud) %>">Cancelar Solicitud</a>
-            <h1 class="text-bg-dark rounded mb-4">Respuesta pendiente</h1>
+            <button type="button" id="report-button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#cancelarModal">Cancelar Solicitud</button>
+            <br>
+            <br>
+            <div class="alert alert-secondary">
+                <p>Respuesta pendiente, se le notificará cuando se reciba una respuesta</p>
+            </div>
+
+            <div class="modal fade" id="cancelarModal" data-bd-backdrop="static" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Cancelar Solicitud</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                      <h1>¿Está seguro de que quiere cancelar esta solicitud?</h1>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <a class="btn btn-danger" href="<%= '/mis_solicitudes/cancelarsolicitud?idsoli=' + encodeURIComponent(solicitud.idsolicitud) %>">Sí</a>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
         <% } else { %>
             <% if (respuesta) { %>
+            <br>
+            <br>
 
             <h1 class="text-bg-dark rounded mb-4">Respuesta Recibida:</h1>
 
