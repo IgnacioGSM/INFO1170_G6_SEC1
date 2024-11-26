@@ -1,36 +1,68 @@
-<div class="container-fluid shadow-lg pb-1 mb-4 bg-success bg-gradient">
-    <div class="container">
-    <header class="d-flex flex-wrap justify-content-center align-items-center py-3 mb-4 border-bottom">
-        <img src="/imagenes/logo.png" class="me-auto" height="80px" alt="logo">
-        
-        <ul class="nav nav-pills">
-            <% if (user) { %> <!-- Revisa si la variable usuario existe (user se entrega desde el servidor con render) -->
-                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/perfilUsuario"><img class="me-2" width="30px" height="30px" src="/imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
-                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/mis_solicitudes">Mis solicitudes</a></li>
+<div class="container-fluid shadow-lg px-0 mb-4 bg-success bg-gradient">
+    <div class="container-fluid px-0">
+        <header class="d-flex flex-wrap justify-content-around align-items-center p-3 border-bottom mb-3">
+            <img src="/imagenes/logo.png" height="80px" alt="logo">
+            
+            <ul class="nav nav-pills">
+                <% if (user) { %> <!-- Revisa si la variable usuario existe (user se entrega desde el servidor con render) -->
+                    <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg <%= currentPage == 'perfil' ? 'active' : '' %>" href="/perfilUsuario"><img class="me-2" width="30px" height="30px" src="/imagenes/default_profile.png" id="profile-icon" alt="pfp">Perfil</a></li>
+                    <li class="nav-item"><div class="dropdown">
+                        <button class="btn btn-outline-light me-3 btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown">Notificaciones</button>
+                        <ul class="dropdown-menu" id="header-notifs-menu">
+                            <!-- Aquí van las notificaciones -->
+                        </ul>
+                    </div></li>
 
+                    <!-- Botón común para todos los usuarios logueados -->
+                    <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/logout">Cerrar Sesión</a></li>
+
+                <% } else { %>
+                    <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg <%= currentPage == 'login' ? 'active' : '' %>" role="button" href="/login">Iniciar Sesión</a></li>
+                    <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg <%= currentPage == 'registro' ? 'active' : '' %>" href="/registro">Registrarse</a></li>
+                <% } %>
+            </ul>
+        </header>
+        <ul class="nav nav-tabs d-flex justify-content-center">
+            <% if (user) { %>
+                <li class="nav-item">
+                    <a class="nav-link <%= currentPage == 'mis_solicitudes' ? 'active' : 'text-light' %>" href="/mis_solicitudes">Mis solicitudes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= currentPage == 'index' ? 'active' : 'text-light' %>" href="/">Mapa</a>
+                </li>
                 <!-- Mostrar solo para admin -->
                 <% if (user.tipousuario == 'admin') { %>
-                    <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/admin">Panel de administrador</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentPage == 'admin' ? 'active' : 'text-light' %>" href="/admin">Panel de administrador</a>
+                    </li>
                 <% } %>
-
                 <!-- Mostrar solo para recepcionista -->
                 <% if (user.tipousuario == 'recepcionista') { %>
-                    <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/recepcionista">Panel de recepcionista</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= currentPage == 'recepcionista' ? 'active' : 'text-light' %>" href="/recepcionista">Panel de recepcionista</a>
+                    </li>
                 <% } %>
-
-                <!-- Botón común para todos los usuarios logueados -->
-                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/logout">Cerrar Sesión</a></li>
-
             <% } else { %>
-                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" role="button" href="/login">Iniciar Sesión</a></li>
-                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/registro">Registrarse</a></li>
-            <% } %>
-
-            <% if (!index) { %>     <!-- Si index es false (no se llamó este partial desde index) se mostrará un boton para volver al inicio -->
-                <li class="nav-item"><a class="btn btn-outline-light me-3 btn-lg" href="/">Inicio</a></li>
+                <li class="nav-item">
+                    <a class="nav-link <%= currentPage == 'index' ? 'active' : 'text-light' %>" href="/">Mapa</a>
+                </li>
             <% } %>
         </ul>
-    
-    </header>
     </div>
 </div>
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="notifToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header bg-success-subtle">
+        <strong class="me-auto">Nueva Notificación</strong>
+        <small class="text-muted">Ahora</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body d-flex align-items-center gap-2 py-2" id="toast-body">
+        <!-- Aquí va el contenido del toast -->
+    </div>
+    </div>
+</div>
+<!-- Por ahora las notificaciones solo afectan elementos del header, para que elementos del body usen sockets
+ sería necesario crear otro javascript (que use la conexión definida en general/notificaciones) -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/general/notificaciones.js"></script>

@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
             if (err) {
                 return res.status(500).send(err);
             }
-            res.render('recepcionista', { solicitudes: result });
+            res.render('recepcionista', { solicitudes: result , currentPage: 'recepcionista'});
         });
     });
 });
