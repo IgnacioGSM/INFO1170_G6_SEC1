@@ -6,6 +6,8 @@ const path = require('path');
 const db = require('../database.js');
 const fs = require('fs');
 const { error } = require('console');
+const { render } = require('ejs');
+const { send } = require('process');
 
 // Configuración de multer
 const storage = multer.diskStorage({
@@ -43,15 +45,21 @@ router.post('/cambiarcorreo', (req, res) => {
 
     db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
         if (error) return res.status(500).send('Error en el servidor');
+        if (results.length === 0) return res.status(404).send('usuario no encontrado');
 
         const storedPassword = results[0].contrasenia;
         bcrypt.compare(confirmarCorreo, storedPassword, (err, isMatch) => {
             if (err) return res.status(500).send('Error en el servidor');
-            if (!isMatch) return res.status(400).send('Contraseña incorrecta');
+            if (!isMatch) {
+                return res.render('cambiarcorreo', {userId, error: 'Contraseña incorrecta', success: null});
+            }
 
             db.query('UPDATE Usuario SET correoelectronico = ? WHERE idusuario = ?', [nuevoCorreo, userId], (error) =>{
-                if (error) return res.status(500).send('Error al actualizar el correo');
-                res.send('Correo actualizado');
+                if (error) {
+                    console.error('A ocurrido un error en el servidor', error);
+                    return res.render('cambiar telefono', {userId, error: 'Error al actualizar el correo', success: null});
+                }
+                res.render('cambiarcorreo', {userId, error: null, success: 'Tu correo ha sido actualizado'})
             });
         });
     });
@@ -63,15 +71,21 @@ router.post('/cambiartelefono', (req, res) => {
 
     db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
         if (error) return res.status(500).send('Error en el servidor');
+        if (results.length === 0) return res.status(404).send('Usuario no encontrado');
 
         const storedPassword = results[0].contrasenia;
         bcrypt.compare(confirmarTelefono, storedPassword, (err, isMatch) => {
             if (err) return res.status(500).send('Error en el servidor');
-            if (!isMatch) return res.status(400).send('Contraseña incorrecta');
+            if (!isMatch) {
+                return res.render('cambiartelefono', {userId, error: 'Contraseña incorrecta', success: null});
+            }
 
             db.query('UPDATE Usuario SET numerotelefono = ? WHERE idusuario = ?', [nuevoTelefono, userId], (error) =>{
-                if (error) return res.status(500).send('Error al actualizar el telefono');
-                res.send('Telefono actualizado');
+                if (error) {
+                    console.error('Error por parte del servidor', error)
+                    return res.render('cambiartelefono', {userId, error: 'Error al actualizar el numero telefonico', success: null});
+                }
+                res.render('cambiartelefono', {userId, error: null, success: 'tu numero de telefono se ha actualizado'});
             });
         });
     });
@@ -84,17 +98,22 @@ router.post('/cambiarcontrasenia', (req, res) => {
     if (nuevaContraseña == confirmarContraseña) {  // Primero se revisa que se haya ingresado la misma contraseña nueva
         db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
             if (error) return res.status(500).send('Error en el servidor');
+            if (results.length === 0) return res.status(404),send('Usuario no encontrado')
     
             const storedPassword = results[0].contrasenia;
             bcrypt.compare(contraseñaActual, storedPassword, (err, isMatch) => {    // Luego se revisa que la contraseña actual esté correcta
                 if (err) return res.status(500).send('Error en el servidor');
-                if (!isMatch) return res.status(400).send('Contraseña actual incorrecta');
+                if (!isMatch) {
+                    return res.render('cambiarcontrasenia', {userId, error: 'Tu contraseña actual es incorrecta', success: null});
+                }
 
                 bcrypt.hash(nuevaContraseña, 10, (err, hash) => {                   // Se encripta la nueva contraseña y se actualiza en la base de datos
                     if (err) return res.status(500).send('Error en el servidor');
                     db.query('UPDATE Usuario SET contrasenia = ? WHERE idusuario = ?', [hash, userId], (error) =>{
-                        if (error) return res.status(500).send('Error al actualizar la contraseña');
-                        res.send('Contraseña actualizada');
+                        if (error) {
+                            return res.render('cambiarcontrasenia', {userId, error: 'Error al actualizar la contraseña', success: null});
+                        }
+                        res.render('cambiarcontrasenia', {userId, error: null, success: 'tu contraseña se ha actualizado'});
                     });
                 });
             });
