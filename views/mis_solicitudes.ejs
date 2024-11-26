@@ -20,16 +20,16 @@
         <h2>Solicitudes pendientes</h2>
         <ul class="list-group">
             <% for (let i = 0; i < solicitudes.length; i++) { %>
-                <% if (solicitudes[i].Estado == "pendiente") { %>
-                    <li class="list-group-item solicitud" value="<%= solicitudes[i].IdSolicitud %>">                        <!-- Una solicitud -->
+                <% if (solicitudes[i].estado == "pendiente") { %>
+                    <li class="list-group-item solicitud" value="<%= solicitudes[i].idsolicitud %>">                        <!-- Una solicitud -->
                         <ul class="list-group list-group-horizontal">   <!-- Datos de la solicitud -->
                             <div class="list-group list-group-horizontal col-9">
                                 <li class="list-group-item w-25 text-bg-light">Hospital: Hospital 3</li>
                                 <li class="list-group-item w-25 text-bg-light">Sección: Emergencia</li>
-                                <li class="list-group-item w-25 text-bg-light">Fecha: <%= ("0" + solicitudes[i].HoraSolicitud.getDate()).slice(-2) + "/" + ("0" + (solicitudes[i].HoraSolicitud.getMonth() + 1)).slice(-2) + "/" + solicitudes[i].HoraSolicitud.getFullYear() %></li>
-                                <li class="list-group-item w-25 text-bg-light">Hora: <%= ("0" + solicitudes[i].HoraSolicitud.getHours()).slice(-2) + ":" + ("0" + solicitudes[i].HoraSolicitud.getMinutes()).slice(-2) %></li>
+                                <li class="list-group-item w-25 text-bg-light">Fecha: <%= ("0" + solicitudes[i].horasolicitud.getDate()).slice(-2) + "/" + ("0" + (solicitudes[i].horasolicitud.getMonth() + 1)).slice(-2) + "/" + solicitudes[i].horasolicitud.getFullYear() %></li>
+                                <li class="list-group-item w-25 text-bg-light">Hora: <%= ("0" + solicitudes[i].horasolicitud.getHours()).slice(-2) + ":" + ("0" + solicitudes[i].horasolicitud.getMinutes()).slice(-2) %></li>
                             </div>
-                            <li class="list-group-item col-3 bg-warning-subtle">Estado: <%= solicitudes[i].Estado %></li>
+                            <li class="list-group-item col-3 bg-warning-subtle">Estado: <%= solicitudes[i].estado %></li>
                         </ul>
                     </li>
                 <% } %>
@@ -40,19 +40,19 @@
         <h2>Solicitudes pasadas</h2>
         <ul class="list-group">
             <% for (let i = 0; i < solicitudes.length; i++) { %>
-                <% if (solicitudes[i].Estado != "pendiente") { %>
-                    <li class="list-group-item solicitud" value="<%= solicitudes[i].IdSolicitud %>">                        <!-- Una solicitud -->
+                <% if (solicitudes[i].estado != "pendiente") { %>
+                    <li class="list-group-item solicitud" value="<%= solicitudes[i].idsolicitud %>">                        <!-- Una solicitud -->
                         <ul class="list-group list-group-horizontal">   <!-- Datos de la solicitud -->
                             <div class="list-group list-group-horizontal col-9">
                                 <li class="list-group-item w-25 text-bg-light">Hospital: Hospital 3</li>
                                 <li class="list-group-item w-25 text-bg-light">Sección: Emergencia</li>
-                                <li class="list-group-item w-25 text-bg-light">Fecha: <%= ("0" + solicitudes[i].HoraSolicitud.getDate()).slice(-2) + "/" + ("0" + (solicitudes[i].HoraSolicitud.getMonth() + 1)).slice(-2) + "/" + solicitudes[i].HoraSolicitud.getFullYear() %></li>
-                                <li class="list-group-item w-25 text-bg-light">Hora: <%= ("0" + solicitudes[i].HoraSolicitud.getHours()).slice(-2) + ":" + ("0" + solicitudes[i].HoraSolicitud.getMinutes()).slice(-2) %></li>
+                                <li class="list-group-item w-25 text-bg-light">Fecha: <%= ("0" + solicitudes[i].horasolicitud.getDate()).slice(-2) + "/" + ("0" + (solicitudes[i].horasolicitud.getMonth() + 1)).slice(-2) + "/" + solicitudes[i].horasolicitud.getFullYear() %></li>
+                                <li class="list-group-item w-25 text-bg-light">Hora: <%= ("0" + solicitudes[i].horasolicitud.getHours()).slice(-2) + ":" + ("0" + solicitudes[i].horasolicitud.getMinutes()).slice(-2) %></li>
                             </div>
-                            <% if (solicitudes[i].Estado == "aceptada") { %>
-                                <li class="list-group-item col-3 bg-success-subtle">Estado: <%= solicitudes[i].Estado %></li>
+                            <% if (solicitudes[i].estado == "aceptada") { %>
+                                <li class="list-group-item col-3 bg-success-subtle">Estado: <%= solicitudes[i].estado %></li>
                             <% } else { %>
-                                <li class="list-group-item col-3 bg-danger-subtle">Estado: <%= solicitudes[i].Estado %></li>
+                                <li class="list-group-item col-3 bg-danger-subtle">Estado: <%= solicitudes[i].estado %></li>
                             <% } %>
                         </ul>
                     </li>

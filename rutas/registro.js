@@ -68,7 +68,7 @@ router.get('/', (req, res) => {
     } else {
         // La validación de contraseña se realiza en el frontend
         const rutError = {Text: '', Display: 'none'};
-        res.render('registro', {user: 0, rutError});
+        res.render('registro', {user: 0, rutError, currentPage: 'registro'});
     }
 });
 
@@ -87,7 +87,7 @@ router.post('/', (req, res) => {
             if (result.length === 0) {
                 console.log("Rut no encontrado");
                 rutError = {Text: 'Rut no encontrado', Display: 'block'};
-                res.render('registro', {user: 0, rutError});
+                res.render('registro', {user: 0, rutError, currentPage: 'registro'});
             } else {
                 // Si el rut está en la tabla Persona, se verifica que no esté en la tabla Usuario
                 let query = "SELECT * FROM Usuario WHERE rut = ?";
@@ -102,7 +102,7 @@ router.post('/', (req, res) => {
                     } else {
                         console.log("Rut ya registrado");
                         rutError = {Text: 'Este Rut ya está registrado', Display: 'block'};
-                        res.render('registro', {user: 0, rutError});
+                        res.render('registro', {user: 0, rutError, currentPage: 'registro'});
                     }
                 });
             }

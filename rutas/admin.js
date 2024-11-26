@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
                     console.log('Error en la consulta:', err);
                     return res.status(500).send('Error en la consulta');
                 }
-                res.render('admin', { hospitales, user: req.session.usuario });
+                res.render('admin', { hospitales, user: req.session.usuario, currentPage: 'admin' });
             });
         }
     }
@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 // Ruta para mostrar el formulario de agregar hospital
 router.get('/agregar_hospital', (req, res) => {
     if (req.session.usuario && req.session.usuario.tipousuario === 'admin') {
-      res.render('agregar_hospital', { user: req.session.usuario, error: null, success: null });
+      res.render('agregar_hospital', { user: req.session.usuario, error: null, success: null, currentPage: 'admin' });
     } else {
       res.redirect('/');
     }
@@ -36,9 +36,9 @@ router.post('/agregar_hospital', (req, res) => {
     db.query(query, [Latitud, Longitud, Nombre], (err, result) => {
         if (err) {
             console.error('Error al insertar en la tabla CentroSalud:', err);
-            res.render('agregar_hospital', { user: req.session.usuario, error: 'Error al crear el centro de salud', success: null });
+            res.render('agregar_hospital', { user: req.session.usuario, error: 'Error al crear el centro de salud', success: null, currentPage: 'admin' });
         } else {
-            res.render('agregar_hospital', { user: req.session.usuario, error: null, success: 'Centro de salud creado exitosamente' });
+            res.render('agregar_hospital', { user: req.session.usuario, error: null, success: 'Centro de salud creado exitosamente', currentPage: 'admin' });
         }
     });
   });
@@ -69,7 +69,7 @@ router.get('/editar_hospital/:id', (req, res) => {
         return res.status(404).send('Hospital no encontrado');
       }
       const hospital = results[0];
-      res.render('editar_hospital', { hospital, user: req.session.usuario }); 
+      res.render('editar_hospital', { hospital, user: req.session.usuario, currentPage: 'admin' }); 
     });
   });
 

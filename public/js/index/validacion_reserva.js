@@ -2,9 +2,15 @@ function validarForm() {
 
     // Mas adelante se necesitará revisión de estos campos en el backend
 
+    let idseccion = document.getElementById("idseccion-form").value;
     // let rut = document.getElementById("rut").value;
     let correo = document.getElementById("correo").value;
     // let motivo_consulta = document.getElementById("motivo-consulta").value;
+
+    if (idseccion === "") {
+        alert("Seleccione una sección");
+        return false;
+    }
 
     let regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     // Email debe comenzar con letras, números, puntos, guiones bajos o guiones, seguido de un @, 
@@ -14,7 +20,8 @@ function validarForm() {
         return false;
     }
 
-    return true;
+    console.log(idseccion)
+    return false;
 }
 
 function formatearRUT(input) {
