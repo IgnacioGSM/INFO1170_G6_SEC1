@@ -1,53 +1,66 @@
 module.exports = (io) => {
-    const db = require('./database');
+    const db = require('./database/db_hospitrack_v4.sql'); // Conexión a la base de datos
 
     io.on('connection', (socket) => {
-        const userid = socket.handshake.query.userid;   // Recibe el id (como string) del usuario autenticado
-        console.log('Usuario conectado: ', userid);
+        const userid = socket.handshake.query.userid; // Recibe el ID del usuario autenticado
+        console.log('Usuario conectado:', userid);
 
-        if (userid != 'false') {   // Si el usuario está autenticado
-            socket.join(userid);    // Se une a una sala con el id del usuario
-            console.log("obteniendo notificaciones de usuario: ", userid);
+        if (userid && userid !== 'false') { // Validar usuario autenticado
+            socket.join(userid); // Unir al usuario a su sala
+            console.log(`Obteniendo notificaciones para el usuario ${userid}`);
 
-            // Al conectarse, se obtienen las notificaciones del usuario
-            db.query("SELECT * FROM Notificacion WHERE idusuario = ? ORDER BY idnoti DESC", [userid], (err, result) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("Notificaciones obtenidas");
-                    io.to(userid).emit('updatenotifs', result);
+            // Obtener notificaciones del usuario al conectar
+            db.query(
+                "SELECT * FROM Notificacion WHERE idusuario = ? ORDER BY idnoti DESC",
+                [userid],
+                (err, result) => {
+                    if (err) {
+                        console.error("Error al obtener notificaciones:", err);
+                    } else {
+                        console.log("Notificaciones obtenidas:", result);
+                        io.to(userid).emit('updatenotifs', result); // Emitir las notificaciones
+                    }
                 }
+            );
+
+            // Evento: Recepción de una nueva notificación (ejemplo)
+            socket.on('respuestanotif', (notif) => {
+                const { idusuario, mensaje } = notif; // Extraer información
+                if (idusuario && mensaje) {
+                    db.query(
+                        "INSERT INTO Notificacion (idusuario, mensaje, leido, fecha) VALUES (?, ?, 0, NOW())",
+                        [idusuario, mensaje],
+                        (err, result) => {
+                            if (err) {
+                                console.error("Error al insertar notificación:", err);
+                            } else {
+                                console.log("Notificación enviada a:", idusuario);
+                                io.to(idusuario).emit('newnotif', notif); // Notificar al usuario objetivo
+                            }
+                        }
+                    );
+                } else {
+                    console.error("Datos de notificación incompletos:", notif);
+                }
+            });
+
+            // Evento: Test de notificaciones (para pruebas)
+            socket.on('botontestToast', () => {
+                console.log("Botón de prueba presionado");
+                db.query("SELECT * FROM Notificacion LIMIT 1", (err, result) => {
+                    if (err) {
+                        console.error("Error en prueba de notificaciones:", err);
+                    } else if (result && result.length > 0) {
+                        console.log("Notificación de prueba enviada");
+                        io.to(userid).emit('testnotif', result[0]);
+                    }
+                });
             });
         }
-        // Cuando el recepcionista responde una solicitud, debería emitir una señal además de modificar la base de datos
-        // Acá se recibe y se envía la notificación al usuario correspondiente (el usuario objetivo estará en alguna parte de lo que envía el recepcionista)
-        /* ejemplo
-        
-        socket.on('respuestanotif', (notif) => {
-            blablabla...
-            io.to(notif.idusuario).emit('newnotif', notif);
-            consulta de notificaciones...{
-                io.to(notif.idusuario).emit('updatenotifs', result);
-            }
-        });
 
-        */
-
-        // Este botón es solo para pruebas
-        /*socket.on('botontestToast', (test) => {
-            console.log("Botón de test de toast presionado");
-            db.query("SELECT * FROM Notificacion", (err, result) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("Notificacion de prueba obtenida");
-                    io.to(userid).emit('testnotif', result[0]);
-                }
-            });
-        });*/
-
+        // Evento: Desconexión
         socket.on('disconnect', () => {
-            console.log('Usuario desconectado');
+            console.log(`Usuario desconectado: ${userid}`);
         });
     });
-}
+};
