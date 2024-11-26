@@ -19,8 +19,10 @@
         <h1 class="text-bg-dark rounded mb-4">Mis Solicitudes</h1>
         <h2>Solicitudes pendientes</h2>
         <ul class="list-group">
+            <% let pendientes = false; %>
             <% for (let i = 0; i < solicitudes.length; i++) { %>
                 <% if (solicitudes[i].estado == "pendiente") { %>
+                    <% pendientes = true; %>
                     <li class="list-group-item solicitud" value="<%= solicitudes[i].idsolicitud %>">                        <!-- Una solicitud -->
                         <ul class="list-group list-group-horizontal">   <!-- Datos de la solicitud -->
                             <div class="list-group list-group-horizontal col-9">
@@ -34,13 +36,18 @@
                     </li>
                 <% } %>
             <% } %>
+            <% if (!pendientes) { %>
+                <li class="list-group-item">No hay solicitudes pendientes</li>
+            <% } %>
         </ul>
             
         <br>
         <h2>Solicitudes pasadas</h2>
         <ul class="list-group">
+            <% let pasadas = false; %>
             <% for (let i = 0; i < solicitudes.length; i++) { %>
                 <% if (solicitudes[i].estado != "pendiente") { %>
+                    <% pasadas = true; %>
                     <li class="list-group-item solicitud" value="<%= solicitudes[i].idsolicitud %>">                        <!-- Una solicitud -->
                         <ul class="list-group list-group-horizontal">   <!-- Datos de la solicitud -->
                             <div class="list-group list-group-horizontal col-9">
@@ -58,17 +65,24 @@
                     </li>
                 <% } %>
             <% } %>
+            <% if (!pasadas) { %>
+                <li class="list-group-item">No hay solicitudes pasadas</li>
+            <% } %>
         </ul>
     </main>
 
     <%- include('partials/footer') %>
     
     <script>
-        let solicitudes_pendientes = document.getElementsByClassName("solicitud");
-        for (let i = 0; i < solicitudes_pendientes.length; i++) {       // Agregar evento a cada solicitud
-            solicitudes_pendientes[i].addEventListener("click", function() {
-                window.location.href = `/mis_solicitudes/solicitud?idsoli=${encodeURIComponent(solicitudes_pendientes[i].value)}`;  // Cambiar a la pagina de la solicitud
+        let solicitud = document.getElementsByClassName("solicitud");
+        for (let i = 0; i < solicitud.length; i++) {       // Agregar evento de click a cada solicitud
+            solicitud[i].addEventListener("click", function() {
+                window.location.href = `/mis_solicitudes/solicitud?idsoli=${encodeURIComponent(solicitud[i].value)}`;  // Cambiar a la pagina de la solicitud
             });
+        }
+        // Cambiar el cursor al pasar sobre las solicitudes
+        for (let i = 0; i < solicitud.length; i++) {
+            solicitud[i].style.cursor = "pointer";
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
