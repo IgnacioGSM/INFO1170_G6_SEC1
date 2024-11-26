@@ -19,7 +19,10 @@ router.get('/userid', (req, res) => {   // Solo para obtener el id del usuario
 });
 
 router.post('/submit_solicitud', (req, res) => {
+    console.log("solicitud recibida");
     console.log(req.body);
+
+    // Datos para la solicitud en la base de datos
     let idSeccion = req.body.idseccion;
     let date = new Date();
     let hora_solicitud = date.getFullYear() + '/' +
@@ -30,6 +33,7 @@ router.post('/submit_solicitud', (req, res) => {
       ('0' + date.getSeconds()).slice(-2);
     let estado = 'pendiente';
 
+    // Datos recibidos del formulario
     let rut = req.body.rut.replace(/[^\dkK]/g, ''); // Quita puntos y guión recibidos en el rut
     let correo = req.body.correo;
     let motivo_consulta = req.body.motivo_consulta;
@@ -38,19 +42,21 @@ router.post('/submit_solicitud', (req, res) => {
     db.query(queryUser, [rut], (err, result) => {
         if (err) {
             console.log(err);
+            res.json({error: "Error en la base de datos"});
         }
         if (result.length === 0) {
             console.log("Usuario no encontrado");
-            res.send("Usuario no encontrado");
+            res.json({error: "Usuario no encontrado"});
         } else {
             let idUsuario = result[0].idusuario;
             let querySolicitud = "INSERT INTO Solicitud (idusuario, idseccion, mensaje, horasolicitud, estado) VALUES (?, ?, ?, ?, ?)";
             db.query(querySolicitud, [idUsuario, idSeccion, motivo_consulta, hora_solicitud, estado], (err, result) => {
                 if (err) {
                     console.log(err);
+                    res.json({error: "Error al enviar la solicitud"});
                 } else {
                     console.log("Solicitud enviada");
-                    res.redirect('/');
+                    res.json({success: "Solicitud enviada"});
                 }
             });
         }

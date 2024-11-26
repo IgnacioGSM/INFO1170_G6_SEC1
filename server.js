@@ -1,5 +1,5 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser'); ya no se usa, express tiene su propio body parser
 const bcrypt = require('bcrypt');
 const http = require('http');
 const path = require('path');
@@ -19,7 +19,8 @@ socketconf(io);
 const db = require('./database');
 
 // Configuraciones de la app
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(session({
   secret: 'clave-super-secreta',
@@ -64,6 +65,7 @@ app.use('/perfilUsuario', perfilRouter);
 
 // Ruta recepcionista
 const recepcionistaRouter = require('./rutas/recepcionista');
+const exp = require('constants');
 app.use('/recepcionista', recepcionistaRouter);
 
 

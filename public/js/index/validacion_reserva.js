@@ -1,14 +1,20 @@
-function validarForm() {
-
+document.getElementById("index-reservacion-form").addEventListener("submit", function(event) {
+    
+    event.preventDefault();
     // Mas adelante se necesitará revisión de estos campos en el backend
 
     let idseccion = document.getElementById("idseccion-form").value;
-    // let rut = document.getElementById("rut").value;
+    let rut = document.getElementById("rut").value;
     let correo = document.getElementById("correo").value;
-    // let motivo_consulta = document.getElementById("motivo-consulta").value;
+    let motivo_consulta = document.getElementById("motivo-consulta").value;
 
     if (idseccion === "") {
         alert("Seleccione una sección");
+        return false;
+    }
+
+    if (rut === "") {
+        alert("Ingrese un RUT");
         return false;
     }
 
@@ -20,9 +26,36 @@ function validarForm() {
         return false;
     }
 
-    console.log(idseccion)
-    return false;
-}
+    if (motivo_consulta === "") {
+        alert("Ingrese un motivo de consulta");
+        return false;
+    }
+
+
+    fetch("/submit_solicitud", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idseccion: idseccion,
+            rut: rut,
+            correo: correo,
+            motivo_consulta: motivo_consulta,
+            })
+        })
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+            if (data.error) {
+                alert("Error al enviar la solicitud: " + data.error);
+            } else {
+                alert("Solicitud enviada");
+            }
+        });
+});
 
 function formatearRUT(input) {
     let rut = input.value.replace(/[^\dkK]/g, ''); // Elimina caracteres no permitidos
