@@ -38,6 +38,7 @@ function socketConfig(socket) {
                 fetch('/mis_solicitudes/id-soli-from-respuesta?idrespuesta=' + notif.idrespuesta)
                     .then(response => response.json())
                     .then(data => {
+                        // Crear un elemento de lista con un enlace a la solicitud correspondiente
                         console.log("Data obtenida:", data);
                         console.log("Notificación:", notif);
                         let idSoli = data.idsoli;
@@ -47,19 +48,43 @@ function socketConfig(socket) {
                         notif_link.href = "/mis_solicitudes/solicitud?idsoli=" + idSoli;
 
                         if (notif.leido == 1) { 
-                        notif_link.innerHTML = notif.mensaje;
+                            notif_link.innerHTML = notif.mensaje;
                         } else if (notif.leido == 0) {
-                        notif_link.innerHTML = 
-                            notif.mensaje +
-                            "<span class='d-inline-block bg-success rounded-circle p-1'></span>";
+                            notif_link.classList.add("no-leida");
+                            notif_link.innerHTML = 
+                                notif.mensaje +
+                                "<span class='d-inline-block bg-success rounded-circle p-1'></span>";
                         } else {
                         console.log("Valor inesperado para 'leido':", notif.leido);
                         }
 
                         notif_element.appendChild(notif_link);
                         notificaciones_list.appendChild(notif_element);
+
+                        // Ahora el dropdown con notificaciones está listo
+                        // Al hacer click en una notificación, además de llevar a la solicitud se marca como leída
+                        notif_link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            if (notif_link.classList.contains("no-leida")) {
+                                fetch('/mis_solicitudes/marcar-leida?idnoti=' + notif.idnoti)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.error) {
+                                            console.error("Error al marcar notificación como leída:", data.error);
+                                        } else {
+                                            console.log("Notificación marcada como leída:", data);
+                                            window.location.href = notif_link.href;
+                                        }
+                                    })
+                                    .catch(error => console.error("Error al marcar notificación como leída:", error));
+                            } else {
+                                console.log("Notificación ya leída");
+                                window.location.href = notif_link.href;
+                            }
+                        });
+
                     })
-                    .catch(error => console.error("Error en el fetch:", error));
+                    .catch(error => console.error("Error al obtener las notificaciones:", error));
             }
         }
     });
@@ -75,6 +100,7 @@ function socketConfig(socket) {
 
 
     // Notificación al presionar el botón de test
+    /*  Esto no se usa, era solo para probar el envío de notificaciones
     socket.on('testnotif', (notif) => {
         console.log("Nueva notificación recibida");
         console.log(notif);
@@ -108,7 +134,7 @@ function socketConfig(socket) {
                 activarToast(notif.mensaje, idSoli);
             })
             .catch(error => console.error("Error en el fetch:", error));
-    });
+    });*/
 }
 
 async function obtenerIdUsuarioySocket() {

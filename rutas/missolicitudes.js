@@ -29,6 +29,20 @@ router.get('/id-soli-from-respuesta', (req, res) => { // /mis_solicitudes/id-sol
     }
   });
 });
+
+// Marcar una notificación como leida
+router.get('/marcar-leida', (req, res) => { // /mis_solicitudes/marcar-leida
+  let respuesta = req.query.idnoti;
+  let queryLeida = "UPDATE Notificacion SET leido = 1 WHERE idnoti = ?";
+  db.query(queryLeida, [respuesta], (err, result) => {
+    if (err) {
+      res.json({error: 'error al actualizar la base de datos'});
+    } else {
+      res.json({success: 'notificación marcada como leída'});
+    }
+  });
+});
+
   
 router.get('/solicitud', (req, res) => {    // /mis_solicitudes/solicitud
   console.log("Entrando a la solicitud: " + req.query.idsoli);  // asi se recibe el id de la solicitud enviado desde la url
