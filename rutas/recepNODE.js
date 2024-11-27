@@ -3,8 +3,12 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const path = require('path');
+const http = require('http'); // Necesario para usar socket.io con Express
+const { Server } = require('socket.io'); // Importar Socket.IO
 
 const app = express();
+const server = http.createServer(app); // Crear servidor HTTP
+const io = new Server(server); // Vincular Socket.IO con el servidor HTTP
 
 // Configuración del motor de plantillas EJS
 app.set('view engine', 'ejs');
@@ -30,6 +34,46 @@ connection.connect((err) => {
     }
     console.log('Conectado a la base de datos MySQL');
 });
+
+// ** Configuración de Socket.IO **
+
+// Mapeo para asociar usuarios con sus sockets
+const users = new Map();
+
+io.on('connection', (socket) => {
+    // Obtener ID del usuario de la consulta al conectar
+    const userid = socket.handshake.query.userid;
+    console.log(`Usuario conectado con ID: ${userid}`);
+    
+    // Asociar el socket al usuario
+    users.set(userid, socket);
+
+    // Manejar desconexión del usuario
+    socket.on('disconnect', () => {
+        console.log(`Usuario con ID ${userid} desconectado`);
+        users.delete(userid); // Eliminar usuario del mapeo
+    });
+});
+
+// Función para enviar notificaciones a un usuario específico
+function enviarNotificacion(userid, mensaje, idrespuesta) {
+    const socket = users.get(userid);
+    if (socket) {
+        socket.emit('respuestanotif', { mensaje, idrespuesta });
+        console.log(`Notificación enviada a usuario ${userid}`);
+    } else {
+        console.log(`Usuario con ID ${userid} no está conectado`);
+    }
+}
+
+// Ruta de ejemplo para probar notificaciones
+app.get('/notificar', (req, res) => {
+    const { userid, mensaje, idrespuesta } = req.query;
+    enviarNotificacion(userid, mensaje, idrespuesta);
+    res.send(`Notificación enviada a usuario ${userid}`);
+});
+
+// ** Rutas existentes **
 
 // Ruta para la página principal (perfil del usuario)
 app.get('/', (req, res) => {
@@ -73,7 +117,8 @@ app.post('/cambiarcorreo', (req, res) => {
     });
 });
 
-// Iniciar el servidor
-app.listen(3000, () => {
-    console.log('Servidor corriendo en http://localhost:3000');
+// Iniciar el servidor (modificado para usar `server` en lugar de `app.listen`)
+const PORT = 3000;
+server.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
