@@ -84,10 +84,10 @@
                             <button type="submit" class="btn">Enviar valoracion</button>
                         </form>
                     </div>
+                    <br>
+                    <h3>Valoracion Promedio</h3>
                 </section>
-                <br>
-                <h3>Valoracion Promedio</h3>
-                <p><%= promedio %> / 5</p>
+
 
                 <section id="contenidoConfCuenta" class="ContenidoDinamico" style="display:none;">
                     <h2 class="mt-4">Configuracion de tu Cuenta</h2>
@@ -186,8 +186,8 @@
                                                 const epxItem = document.createElement('div');
                                                 epxItem.innerHTML = `
                                                     <p>${exp.nombre_archivo}</p>
-                                                    <button onclick="descargarExpediente(${exp.idexpediente})">Descargar</button>
-                                                    <button onclick="eliminarExpediente(${exp.idexpediente})">Eliminar</button>
+                                                    <button onclick="descargarExp(${exp.idexpediente})">Descargar</button>
+                                                    <button onclick="eliminarExp(${exp.idexpediente})">Eliminar</button>
                                                 `;
                                                 listaExp.appendChild(epxItem);
                                             });

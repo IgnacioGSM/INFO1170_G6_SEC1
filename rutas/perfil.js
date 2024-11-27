@@ -9,6 +9,10 @@ const { error } = require('console');
 const { render } = require('ejs');
 const { send } = require('process');
 
+// Verificar y crear la carpeta 'uploads' si no existe
+if (!fs.existsSync('uploads')){
+    fs.mkdirSync('uploads');
+}
 // Configuración de multer
 const storage = multer.diskStorage({
     destination: (req, file, cb)=>{
@@ -23,7 +27,7 @@ const upload = multer({ storage: storage });
 router.get('/', (req,res) =>{
     const userId = req.session.usuario.idusuario;
 
-    const query = 'SELECT nombre, apellido, correoelectronico, rut, numerotelefono FROM Usuario WHERE idusuario = ?';
+    const query = 'SELECT nombre, apellido, correoelectronico, rut, numerotelefono FROM usuario WHERE idusuario = ?';
 
     db.query(query, [userId], (err, result) =>{
         if (err){
@@ -32,7 +36,11 @@ router.get('/', (req,res) =>{
         }
 
         if (result.length > 0){
-            res.render('perfilUsuario', {user:req.session.usuario ,usuario: result[0], currentPage: 'perfil'});
+            res.render('perfilUsuario', {
+                user:req.session.usuario ,
+                usuario: result[0], 
+                currentPage: 'perfil'
+            });
         }else{
             res.status(404).send('Usuario no encontrado');
         }
@@ -43,7 +51,7 @@ router.post('/cambiarcorreo', (req, res) => {
     const {nuevoCorreo, confirmarCorreo} = req.body;
     const userId = req.session.usuario.idusuario;
 
-    db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
+    db.query('SELECT contrasenia FROM usuario WHERE idusuario = ?', [userId], (error, results) => {
         if (error) return res.status(500).send('Error en el servidor');
         if (results.length === 0) return res.status(404).send('usuario no encontrado');
 
@@ -51,15 +59,15 @@ router.post('/cambiarcorreo', (req, res) => {
         bcrypt.compare(confirmarCorreo, storedPassword, (err, isMatch) => {
             if (err) return res.status(500).send('Error en el servidor');
             if (!isMatch) {
-                return res.render('cambiarcorreo', {userId, error: 'Contraseña incorrecta', success: null});
+                return res.render('cambiarcorreo', {user: userId, error: 'Contraseña incorrecta', success: null});
             }
 
-            db.query('UPDATE Usuario SET correoelectronico = ? WHERE idusuario = ?', [nuevoCorreo, userId], (error) =>{
+            db.query('UPDATE usuario SET correoelectronico = ? WHERE idusuario = ?', [nuevoCorreo, userId], (error) =>{
                 if (error) {
                     console.error('A ocurrido un error en el servidor', error);
-                    return res.render('cambiarcorreo', {userId, error: 'Error al actualizar el correo', success: null});
+                    return res.render('cambiarcorreo', {user: userId, error: 'Error al actualizar el correo', success: null});
                 }
-                res.render('cambiarcorreo', {userId, error: null, success: 'Tu correo ha sido actualizado'});
+                res.render('cambiarcorreo', {user: userId, error: null, success: 'Tu correo ha sido actualizado'});
             });
         });
     });
@@ -69,7 +77,7 @@ router.post('/cambiartelefono', (req, res) => {
     const {nuevoTelefono, confirmarTelefono} = req.body;
     const userId = req.session.usuario.idusuario;
 
-    db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
+    db.query('SELECT contrasenia FROM usuario WHERE idusuario = ?', [userId], (error, results) => {
         if (error) return res.status(500).send('Error en el servidor');
         if (results.length === 0) return res.status(404).send('Usuario no encontrado');
 
@@ -77,15 +85,15 @@ router.post('/cambiartelefono', (req, res) => {
         bcrypt.compare(confirmarTelefono, storedPassword, (err, isMatch) => {
             if (err) return res.status(500).send('Error en el servidor');
             if (!isMatch) {
-                return res.render('cambiartelefono', {userId, error: 'Contraseña incorrecta', success: null});
+                return res.render('perfilUsuario', {user: userId, error: 'Contraseña incorrecta', currentPage: 'perfil', success: null});
             }
 
-            db.query('UPDATE Usuario SET numerotelefono = ? WHERE idusuario = ?', [nuevoTelefono, userId], (error) =>{
+            db.query('UPDATE usuario SET numerotelefono = ? WHERE idusuario = ?', [nuevoTelefono, userId], (error) =>{
                 if (error) {
                     console.error('Error por parte del servidor', error);
-                    return res.render('cambiartelefono', {userId, error: 'Error al actualizar el numero telefonico', success: null});
+                    return res.render('perfilUsuario', {user: userId, error: 'Error al actualizar el numero telefonico', currentPage: 'perfil', success: null});
                 }
-                res.render('cambiartelefono', {userId, error: null, success: 'Tu numero de telefono se ha actualizado'});
+                res.render('perfilUsuario', {user: userId, error: null, currentPage: 'perfil', success: 'Tu numero de telefono se ha actualizado'});
             });
         });
     });
@@ -96,7 +104,7 @@ router.post('/cambiarcontrasenia', (req, res) => {
     const userId = req.session.usuario.idusuario;
 
     if (nuevaContraseña == confirmarContraseña) {  // Primero se revisa que se haya ingresado la misma contraseña nueva
-        db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
+        db.query('SELECT contrasenia FROM usuario WHERE idusuario = ?', [userId], (error, results) => {
             if (error) return res.status(500).send('Error en el servidor');
             if (results.length === 0) return res.status(404).send('Usuario no encontrado');
     
@@ -104,16 +112,16 @@ router.post('/cambiarcontrasenia', (req, res) => {
             bcrypt.compare(contraseñaActual, storedPassword, (err, isMatch) => {    // Luego se revisa que la contraseña actual esté correcta
                 if (err) return res.status(500).send('Error en el servidor');
                 if (!isMatch) {
-                    return res.render('cambiarcontrasenia', {userId, error: 'Tu contraseña actual es incorrecta', success: null});
+                    return res.render('cambiarcontrasenia', {user: userId, error: 'Tu contraseña actual es incorrecta', currentPage: 'perfil', success: null});
                 }
 
                 bcrypt.hash(nuevaContraseña, 10, (err, hash) => {                   // Se encripta la nueva contraseña y se actualiza en la base de datos
                     if (err) return res.status(500).send('Error en el servidor');
-                    db.query('UPDATE Usuario SET contrasenia = ? WHERE idusuario = ?', [hash, userId], (error) =>{
+                    db.query('UPDATE usuario SET contrasenia = ? WHERE idusuario = ?', [hash, userId], (error) =>{
                         if (error) {
-                            return res.render('cambiarcontrasenia', {userId, error: 'Error al actualizar la contraseña', success: null});
+                            return res.render('cambiarcontrasenia', {user: userId, error: 'Error al actualizar la contraseña', currentPage: 'perfil', success: null});
                         }
-                        res.render('cambiarcontrasenia', {userId, error: null, success: 'tu contraseña se ha actualizado'});
+                        res.render('cambiarcontrasenia', {user: userId, error: null, currentPage: 'perfil', success: 'tu contraseña se ha actualizado'});
                     });
                 });
             });
@@ -132,7 +140,7 @@ router.post('/envexp', upload.array('archivo[]'), (req, res) => {
     }
 
     archivos.forEach((archivo)=>{
-        const query = 'INSERT INTO ExpedienteMedico(idusuario, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)';
+        const query = 'INSERT INTO expedienteMedico(idusuario, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)';
         db.query(query, [userId, archivo.originalname, archivo.path], (err) => {
             if(err){
                 console.error('Error al guardar el archivo en la base de datos', err);
@@ -147,7 +155,7 @@ router.post('/envexp', upload.array('archivo[]'), (req, res) => {
 router.get('/listarExp', (req, res) => {
     const userId = req.session.usuario.idusuario;
 
-    const query = 'SELECT idexpediente, nombre_archivo, ruta_archivo FROM ExpedienteMedico WHERE idusuario = ?';
+    const query = 'SELECT idexpediente, nombre_archivo, ruta_archivo FROM expedienteMedico WHERE idusuario = ?';
     db.query(query, [userId], (err, results) => {
         if(err){
             console.error('Error al obtener el expediente', err);
@@ -161,7 +169,7 @@ router.get('/listarExp', (req, res) => {
 router.get('/descargarExp/:id', (req, res) =>{
     const expedienteId = req.params.id;
 
-    const query = 'SELECT ruta_archivo FROM ExpedienteMedico WHERE idexpediente = ?';
+    const query = 'SELECT ruta_archivo FROM expedienteMedico WHERE idexpediente = ?';
     db.query(query, [expedienteId], (err, results) => {
         if(err || results.length === 0){
             console.error('Error al obtener el archivo', err);
@@ -176,7 +184,7 @@ router.get('/descargarExp/:id', (req, res) =>{
 router.delete('/eliminarExp/:id', (req, res) => {
     const expedienteId = req.params.id;
 
-    const query = 'SELECT ruta_archivo FROM ExpedienteMedico WHERE idexpediente = ?';
+    const query = 'SELECT ruta_archivo FROM expedienteMedico WHERE idexpediente = ?';
     db.query(query, [expedienteId], (err, results) => {
         if(err || results.length === 0) {
             console.error('Error al obtener el archivo a eliminar', err);
@@ -190,7 +198,7 @@ router.delete('/eliminarExp/:id', (req, res) => {
                 return res.status(500).send('Error al eliminar el archivo');
             }
 
-            const deleteQuery = 'DELETE FROM ExpedienteMedico WHERE idexpediente = ?';
+            const deleteQuery = 'DELETE FROM expedienteMedico WHERE idexpediente = ?';
             db.query(deleteQuery, [expedienteId], (err) => {
                 if (err) {
                     console.error('Error al elinar el archivo de la bd', err);
