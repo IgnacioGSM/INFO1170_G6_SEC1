@@ -27,7 +27,7 @@ const upload = multer({ storage: storage });
 router.get('/', (req,res) =>{
     const userId = req.session.usuario.idusuario;
 
-    const query = 'SELECT nombre, apellido, correoelectronico, rut, numerotelefono FROM usuario WHERE idusuario = ?';
+    const query = 'SELECT nombre, apellido, correoelectronico, rut, numerotelefono FROM Usuario WHERE idusuario = ?';
 
     db.query(query, [userId], (err, result) =>{
         if (err){
@@ -51,7 +51,7 @@ router.post('/cambiarcorreo', (req, res) => {
     const {nuevoCorreo, confirmarCorreo} = req.body;
     const userId = req.session.usuario.idusuario;
 
-    db.query('SELECT contrasenia FROM usuario WHERE idusuario = ?', [userId], (error, results) => {
+    db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
         if (error) return res.status(500).send('Error en el servidor');
         if (results.length === 0) return res.status(404).send('usuario no encontrado');
 
@@ -62,7 +62,7 @@ router.post('/cambiarcorreo', (req, res) => {
                 return res.render('cambiarcorreo', {user: userId, error: 'Contraseña incorrecta', success: null});
             }
 
-            db.query('UPDATE usuario SET correoelectronico = ? WHERE idusuario = ?', [nuevoCorreo, userId], (error) =>{
+            db.query('UPDATE Usuario SET correoelectronico = ? WHERE idusuario = ?', [nuevoCorreo, userId], (error) =>{
                 if (error) {
                     console.error('A ocurrido un error en el servidor', error);
                     return res.render('cambiarcorreo', {user: userId, error: 'Error al actualizar el correo', success: null});
@@ -77,7 +77,7 @@ router.post('/cambiartelefono', (req, res) => {
     const {nuevoTelefono, confirmarTelefono} = req.body;
     const userId = req.session.usuario.idusuario;
 
-    db.query('SELECT contrasenia FROM usuario WHERE idusuario = ?', [userId], (error, results) => {
+    db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
         if (error) return res.status(500).send('Error en el servidor');
         if (results.length === 0) return res.status(404).send('Usuario no encontrado');
 
@@ -88,7 +88,7 @@ router.post('/cambiartelefono', (req, res) => {
                 return res.render('perfilUsuario', {user: req.session.usuario, error: 'Contraseña incorrecta', currentPage: 'perfil', success: null});
             }
 
-            db.query('UPDATE usuario SET numerotelefono = ? WHERE idusuario = ?', [nuevoTelefono, userId], (error) =>{
+            db.query('UPDATE Usuario SET numerotelefono = ? WHERE idusuario = ?', [nuevoTelefono, userId], (error) =>{
                 if (error) {
                     console.error('Error por parte del servidor', error);
                     return res.render('perfilUsuario', {user: req.session.usuario, error: 'Error al actualizar el numero telefonico', currentPage: 'perfil', success: null});
@@ -104,7 +104,7 @@ router.post('/cambiarcontrasenia', (req, res) => {
     const userId = req.session.usuario.idusuario;
 
     if (nuevaContraseña == confirmarContraseña) {  // Primero se revisa que se haya ingresado la misma contraseña nueva
-        db.query('SELECT contrasenia FROM usuario WHERE idusuario = ?', [userId], (error, results) => {
+        db.query('SELECT contrasenia FROM Usuario WHERE idusuario = ?', [userId], (error, results) => {
             if (error) return res.status(500).send('Error en el servidor');
             if (results.length === 0) return res.status(404).send('Usuario no encontrado');
     
@@ -117,7 +117,7 @@ router.post('/cambiarcontrasenia', (req, res) => {
 
                 bcrypt.hash(nuevaContraseña, 10, (err, hash) => {                   // Se encripta la nueva contraseña y se actualiza en la base de datos
                     if (err) return res.status(500).send('Error en el servidor');
-                    db.query('UPDATE usuario SET contrasenia = ? WHERE idusuario = ?', [hash, userId], (error) =>{
+                    db.query('UPDATE Usuario SET contrasenia = ? WHERE idusuario = ?', [hash, userId], (error) =>{
                         if (error) {
                             return res.render('cambiarcontrasenia', {user: userId, error: 'Error al actualizar la contraseña', currentPage: 'perfil', success: null});
                         }
@@ -140,7 +140,7 @@ router.post('/envexp', upload.array('archivo[]'), (req, res) => {
     }
 
     archivos.forEach((archivo)=>{
-        const query = 'INSERT INTO expedienteMedico(idusuario, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)';
+        const query = 'INSERT INTO ExpedienteMedico(idusuario, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)';
         db.query(query, [userId, archivo.originalname, archivo.path], (err) => {
             if(err){
                 console.error('Error al guardar el archivo en la base de datos', err);
@@ -155,7 +155,7 @@ router.post('/envexp', upload.array('archivo[]'), (req, res) => {
 router.get('/listarExp', (req, res) => {
     const userId = req.session.usuario.idusuario;
 
-    const query = 'SELECT idexpediente, nombre_archivo, ruta_archivo FROM expedienteMedico WHERE idusuario = ?';
+    const query = 'SELECT idexpediente, nombre_archivo, ruta_archivo FROM ExpedienteMedico WHERE idusuario = ?';
     db.query(query, [userId], (err, results) => {
         if(err){
             console.error('Error al obtener el expediente', err);
@@ -169,7 +169,7 @@ router.get('/listarExp', (req, res) => {
 router.get('/descargarExp/:id', (req, res) =>{
     const expedienteId = req.params.id;
 
-    const query = 'SELECT ruta_archivo FROM expedienteMedico WHERE idexpediente = ?';
+    const query = 'SELECT ruta_archivo FROM ExpedienteMedico WHERE idexpediente = ?';
     db.query(query, [expedienteId], (err, results) => {
         if(err || results.length === 0){
             console.error('Error al obtener el archivo', err);
@@ -184,7 +184,7 @@ router.get('/descargarExp/:id', (req, res) =>{
 router.delete('/eliminarExp/:id', (req, res) => {
     const expedienteId = req.params.id;
 
-    const query = 'SELECT ruta_archivo FROM expedienteMedico WHERE idexpediente = ?';
+    const query = 'SELECT ruta_archivo FROM ExpedienteMedico WHERE idexpediente = ?';
     db.query(query, [expedienteId], (err, results) => {
         if(err || results.length === 0) {
             console.error('Error al obtener el archivo a eliminar', err);
@@ -198,7 +198,7 @@ router.delete('/eliminarExp/:id', (req, res) => {
                 return res.status(500).send('Error al eliminar el archivo');
             }
 
-            const deleteQuery = 'DELETE FROM expedienteMedico WHERE idexpediente = ?';
+            const deleteQuery = 'DELETE FROM ExpedienteMedico WHERE idexpediente = ?';
             db.query(deleteQuery, [expedienteId], (err) => {
                 if (err) {
                     console.error('Error al elinar el archivo de la bd', err);
@@ -258,7 +258,7 @@ router.post('/upload', upload.single('perfilFot'), (req, res) => {
 
     const fotoURL = `/uploads/${req.file.filename}`;
 
-    db.query('UPDATE Usuario SET fotoURL = ? WHERE idusuario = ?', [fotoURL, userId], (err, result) => {
+    db.query('UPDATE Usuario SET fotourl = ? WHERE idusuario = ?', [fotoURL, userId], (err, result) => {
         if(err){
             console.error('Error al subir la foto', err);
             return res.status(500).send('Error en el servidor');
@@ -270,7 +270,7 @@ router.post('/upload', upload.single('perfilFot'), (req, res) => {
 //falta revision
 router.get('/perfilUsuario', (req, res) => {
     const userId = req.session.usuario.idusuario;
-    db.query('SELECT fotoURL FROM Usuario WHERE id = ?', [userId], (err, results) => {
+    db.query('SELECT fotourl FROM Usuario WHERE id = ?', [userId], (err, results) => {
         if(err) throw err;
         res.render('perfilUsuario', {user: results[0]});
     });
