@@ -87,7 +87,13 @@ app.post('/forgot-password', async (req, res) => {
 });
 
 
-// Escuchar en el puerto 3000
-server.listen(3000, () => {
-  console.log('Servidor escuchando en el puerto 3000 http://localhost:3000');
+//apelaciones.
+// Rutas
+// Rutas
+//app.use("/rutas/apelaciones", apelaciones);
+
+// Server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
