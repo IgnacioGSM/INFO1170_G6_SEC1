@@ -17,30 +17,42 @@ router.get('/', (req, res) => {
     }
 });
 
-// Ruta para buscar usuarios
+// Ruta para buscar usuarios por tipo de usuario y RUT
 router.get('/buscar_usuarios', (req, res) => {
-    if (req.session.usuario && req.session.usuario.tipousuario === 'admin') {
-        const query = req.query.query;
-        const searchQuery = "SELECT * FROM Usuario WHERE nombre LIKE ? OR correoelectronico LIKE ?";
-        
-        db.query(searchQuery, [`%${query}%`, `%${query}%`], (err, usuarios) => {
-            if (err) {
-                console.error('Error al buscar usuarios:', err);
-                return res.status(500).send('Error al buscar usuarios');
-            }
+  if (req.session.usuario && req.session.usuario.tipousuario === 'admin') {
+      const { rut, tipousuario } = req.query;
+      let searchQuery = "SELECT * FROM Usuario WHERE 1=1";
+      const params = [];
 
-            db.query('SELECT * FROM CentroSalud', (err, hospitales) => {
-                if (err) {
-                    console.log('Error en la consulta:', err);
-                    return res.status(500).send('Error en la consulta');
-                }
-                res.render('admin', { hospitales, usuarios, user: req.session.usuario });
-            });
-        });
-    } else {
-        res.redirect('/');
-    }
+      if (rut && rut.trim() !== "") {
+          searchQuery += " AND rut LIKE ?";
+          params.push(`%${rut}%`);
+      }
+
+      if (tipousuario && tipousuario.trim() !== "") {
+          searchQuery += " AND tipousuario = ?";
+          params.push(tipousuario);
+      }
+
+      db.query(searchQuery, params, (err, usuarios) => {
+          if (err) {
+              console.error('Error al buscar usuarios:', err);
+              return res.status(500).send('Error al buscar usuarios');
+          }
+
+          db.query('SELECT * FROM CentroSalud', (err, hospitales) => {
+              if (err) {
+                  console.log('Error en la consulta:', err);
+                  return res.status(500).send('Error en la consulta');
+              }
+              res.render('admin', { hospitales, usuarios, user: req.session.usuario });
+          });
+      });
+  } else {
+      res.redirect('/');
+  }
 });
+
 
 // Ruta para suspender un usuario
 router.post('/suspender_usuario/:id', (req, res) => {
