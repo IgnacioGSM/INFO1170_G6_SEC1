@@ -85,15 +85,15 @@ router.post('/cambiartelefono', (req, res) => {
         bcrypt.compare(confirmarTelefono, storedPassword, (err, isMatch) => {
             if (err) return res.status(500).send('Error en el servidor');
             if (!isMatch) {
-                return res.render('perfilUsuario', {user: userId, error: 'Contraseña incorrecta', currentPage: 'perfil', success: null});
+                return res.render('perfilUsuario', {user: req.session.usuario, error: 'Contraseña incorrecta', currentPage: 'perfil', success: null});
             }
 
             db.query('UPDATE usuario SET numerotelefono = ? WHERE idusuario = ?', [nuevoTelefono, userId], (error) =>{
                 if (error) {
                     console.error('Error por parte del servidor', error);
-                    return res.render('perfilUsuario', {user: userId, error: 'Error al actualizar el numero telefonico', currentPage: 'perfil', success: null});
+                    return res.render('perfilUsuario', {user: req.session.usuario, error: 'Error al actualizar el numero telefonico', currentPage: 'perfil', success: null});
                 }
-                res.render('perfilUsuario', {user: userId, error: null, currentPage: 'perfil', success: 'Tu numero de telefono se ha actualizado'});
+                res.render('perfilUsuario', {user: req.session.usuario, error: null, currentPage: 'perfil', success: 'Tu numero de telefono se ha actualizado'});
             });
         });
     });
