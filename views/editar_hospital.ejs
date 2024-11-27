@@ -14,6 +14,7 @@
             <h2 class="text-center mb-4">Editar Hospital</h2>
             <div class="card shadow-sm">
                 <div class="card-body">
+                    <!-- Formulario para editar el hospital -->
                     <form action="/admin/editar_hospital/<%= hospital.idcentro %>" method="POST">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre del Hospital</label>
@@ -37,11 +38,25 @@
 
                     <hr class="my-4">
 
+                    <!-- Formulario para eliminar hospital -->
                     <form action="/admin/eliminar_hospital/<%= hospital.idcentro %>" method="POST" onsubmit="return confirm('¿Está seguro de que desea eliminar este hospital?');">
                         <div class="text-end">
                             <button type="submit" class="btn btn-danger">Eliminar Hospital</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nueva tarjeta para redirigir a la edición de secciones -->
+        <section id="editar-secciones" class="mt-4 p-4 bg-light rounded shadow" style="max-width: 600px; margin: 0 auto;">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-3">Gestionar Secciones</h3>
+                    <p class="card-text text-center">Administra las secciones asociadas a este hospital.</p>
+                    <div class="text-center">
+                        <a href="/admin/editar_seccion/<%= hospital.idcentro %>" class="btn btn-primary">Editar Secciones</a>
+                    </div>
                 </div>
             </div>
         </section>

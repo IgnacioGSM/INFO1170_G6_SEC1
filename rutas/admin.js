@@ -178,4 +178,78 @@ router.post('/editar_hospital/:id', (req, res) => {
   });
 });
 
+// Ruta para mostrar las secciones de un hospital
+router.get('/editar_seccion/:idcentro', (req, res) => {
+  const idcentro = req.params.idcentro;
+
+  if (req.session.usuario && req.session.usuario.tipousuario === 'admin') {
+      const queryHospital = 'SELECT * FROM CentroSalud WHERE idcentro = ?';
+      const querySecciones = 'SELECT * FROM Seccion WHERE idcentro = ?';
+
+      db.query(queryHospital, [idcentro], (err, hospitalResults) => {
+          if (err || hospitalResults.length === 0) {
+              console.error('Error al obtener el hospital:', err);
+              return res.status(500).send('Error al obtener el hospital');
+          }
+
+          db.query(querySecciones, [idcentro], (err, secciones) => {
+              if (err) {
+                  console.error('Error al obtener las secciones:', err);
+                  return res.status(500).send('Error al obtener las secciones');
+              }
+
+              res.render('editar_seccion', {
+                  hospital: hospitalResults[0],
+                  secciones,
+                  user: req.session.usuario
+              });
+          });
+      });
+  } else {
+      res.redirect('/');
+  }
+});
+
+// Ruta para agregar una nueva sección
+router.post('/agregar_seccion', (req, res) => {
+  const { idcentro, nombreseccion, idusuario } = req.body;
+  const query = 'INSERT INTO Seccion (idcentro, nombreseccion, idusuario) VALUES (?, ?, ?)';
+
+  db.query(query, [idcentro, nombreseccion, idusuario || null], (err) => {
+      if (err) {
+          console.error('Error al agregar la sección:', err);
+          return res.status(500).send('Error al agregar la sección');
+      }
+      res.redirect(`/admin/editar_seccion/${idcentro}`);
+  });
+});
+
+// Ruta para editar una sección
+router.post('/editar_seccion/:idseccion', (req, res) => {
+  const idseccion = req.params.idseccion;
+  const { nombreseccion, idusuario } = req.body;
+  const query = 'UPDATE Seccion SET nombreseccion = ?, idusuario = ? WHERE idseccion = ?';
+
+  db.query(query, [nombreseccion, idusuario || null, idseccion], (err) => {
+      if (err) {
+          console.error('Error al editar la sección:', err);
+          return res.status(500).send('Error al editar la sección');
+      }
+      res.redirect('back');
+  });
+});
+
+// Ruta para eliminar una sección
+router.post('/eliminar_seccion/:idseccion', (req, res) => {
+  const idseccion = req.params.idseccion;
+  const query = 'DELETE FROM Seccion WHERE idseccion = ?';
+
+  db.query(query, [idseccion], (err) => {
+      if (err) {
+          console.error('Error al eliminar la sección:', err);
+          return res.status(500).send('Error al eliminar la sección');
+      }
+      res.redirect('back');
+  });
+});
 module.exports = router;
