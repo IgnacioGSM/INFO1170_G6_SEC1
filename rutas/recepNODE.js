@@ -59,7 +59,7 @@ io.on('connection', (socket) => {
 function enviarNotificacion(userid, mensaje, idrespuesta) {
     const socket = users.get(userid);
     if (socket) {
-        socket.emit('newnotif', { mensaje, idrespuesta });
+        socket.emit('respuestanotif', { mensaje, idrespuesta });
         console.log(`Notificación enviada a usuario ${userid}`);
     } else {
         console.log(`Usuario con ID ${userid} no está conectado`);

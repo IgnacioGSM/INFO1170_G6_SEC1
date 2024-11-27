@@ -1,5 +1,5 @@
 module.exports = (io) => {
-    const db = require('./database/db_hospitrack_v4.sql'); // Conexión a la base de datos
+    const db = require('./database'); // Conexión a la base de datos
 
     io.on('connection', (socket) => {
         const userid = socket.handshake.query.userid; // Recibe el ID del usuario autenticado
