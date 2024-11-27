@@ -80,14 +80,14 @@ app.post('/forgot-password', async (req, res) => {
 
 //apelaciones.
 // Rutas
-app.use('/apelaciones', apelacionesRoutes);
+// Rutas
+app.use("/rutas/apelaciones", apelaciones);
 
+// Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
-
-
 // -------- PERFIL DE USUARIO --------
 
 /*app.post('/envexp', upload.array('archivo', 5), (req, res) =>{

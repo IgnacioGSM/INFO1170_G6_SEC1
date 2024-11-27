@@ -277,6 +277,17 @@ CREATE TABLE `Usuario` (
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+CREATE TABLE Apelaciones (
+  idapelacion INT AUTO_INCREMENT PRIMARY KEY,
+  idsolicitud INT NOT NULL,
+  idusuario INT NOT NULL,
+  mensaje VARCHAR(300) NOT NULL,
+  fechaapelacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+  estado VARCHAR(20) DEFAULT 'pendiente',
+  FOREIGN KEY (idsolicitud) REFERENCES Solicitud(idsolicitud) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (idusuario) REFERENCES Usuario(idusuario) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 --
 -- Dumping data for table `Usuario`
 --

@@ -1,82 +1,61 @@
+const express = require("express");
+const router = express.Router();
+const db = require("../db/connection");
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const bcrypt = require('bcryptjs');
-
-
-
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'hospitrack'
+// Obtener todas las apelaciones
+router.get("/", async (req, res) => {
+    try {
+        const query = "SELECT * FROM Solicitud WHERE estado = 'pendiente'";
+        db.query(query, (err, results) => {
+            if (err) throw err;
+            res.status(200).json(results);
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Error al obtener apelaciones", error });
+    }
 });
 
-
-const app = express();
-app.use(bodyParser.json());
-
-// Mostrar la cantidad de solicitudes pendientes al seleccionar una sección en el mapa
-app.get('/seccion/:id/pending', async (req, res) => {
-  const seccionId = req.params.id;
-  
-  try {
-    const [rows] = await db.query(
-      'SELECT COUNT(*) AS pendingCount FROM Solicitud WHERE idseccion = ? AND estado = "pendiente"',
-      [seccionId]
-    );
-    res.json({ pendingCount: rows[0].pendingCount });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error al obtener las solicitudes pendientes.' });
-  }
+// Agregar una nueva apelación
+router.post("/", async (req, res) => {
+    const { idusuario, mensaje } = req.body;
+    try {
+        const query = "INSERT INTO Solicitud (idusuario, mensaje, estado, horasolicitud) VALUES (?, ?, 'pendiente', NOW())";
+        db.query(query, [idusuario, mensaje], (err, results) => {
+            if (err) throw err;
+            res.status(201).json({ message: "Apelación creada exitosamente", id: results.insertId });
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Error al agregar la apelación", error });
+    }
 });
 
-// Sistema de apelación de baneos
-app.post('/apelar', async (req, res) => {
-  const { idusuario, mensaje } = req.body;
-
-  if (!idusuario || !mensaje) {
-    return res.status(400).json({ message: 'ID de usuario y mensaje son requeridos.' });
-  }
-
-  try {
-    const [result] = await db.query(
-      'INSERT INTO ReporteUsuario (idusuario, tiporeporte, mensaje, descripcion, fechareporte) VALUES (?, "Apelación", ?, "Apelación de baneo", NOW())',
-      [idusuario, mensaje]
-    );
-
-    res.status(201).json({ message: 'Apelación registrada con éxito.', idReporte: result.insertId });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error al registrar la apelación.' });
-  }
+// Actualizar una apelación existente
+router.put("/:id", async (req, res) => {
+    const { id } = req.params;
+    const { mensaje } = req.body;
+    try {
+        const query = "UPDATE Solicitud SET mensaje = ? WHERE idsolicitud = ?";
+        db.query(query, [mensaje, id], (err) => {
+            if (err) throw err;
+            res.status(200).json({ message: "Apelación actualizada correctamente" });
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Error al actualizar la apelación", error });
+    }
 });
 
-// Sistema de apelación de baneos
-//router.post('/', async (req, res) => {
-//     const { idusuario, mensaje } = req.body;
-
-  //   if (!idusuario || !mensaje) {
-  //       return res.status(400).json({ message: 'ID de usuario y mensaje son requeridos.' });
-  //   }
-
-  //   try {
-  //      const query = 'INSERT INTO ReporteUsuario (idusuario, tiporeporte, mensaje, descripcion, fechareporte) VALUES (?, "Apelación", ?, "Apelación de baneo", NOW())';
-   //      db.query(query, [idusuario, mensaje], (err, result) => {
-   //          if (err) {
-      //           console.error('Error al registrar la apelación:', err);
-     //            return res.status(500).json({ message: 'Error al registrar la apelación.' });
-      //       }
-
-     //        res.status(201).json({ message: 'Apelación registrada con éxito.', idReporte: result.insertId });
-    //     });
-    // } catch (error) {
-    //     console.error('Error al registrar la apelación:', error);
-   //      res.status(500).json({ message: 'Error al registrar la apelación.' });
- //    }
-// });
+// Eliminar una apelación
+router.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const query = "DELETE FROM Solicitud WHERE idsolicitud = ?";
+        db.query(query, [id], (err) => {
+            if (err) throw err;
+            res.status(200).json({ message: "Apelación eliminada correctamente" });
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Error al eliminar la apelación", error });
+    }
+});
 
 module.exports = router;
-
-
