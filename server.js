@@ -94,6 +94,6 @@ app.post('/forgot-password', async (req, res) => {
 
 // Server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
