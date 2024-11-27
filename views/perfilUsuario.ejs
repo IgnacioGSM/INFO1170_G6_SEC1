@@ -53,9 +53,17 @@
                             <button type="submit" class="btn">Actualizar Nombre</button>
                         </form>
                     </div>
+                    <h3>Cambia tu foto de perfil</h3>
+                    <div class="cambiarFoto">
+                        <form id="uploadForm" method="post" action="/upload" enctype="multipart/form-data">
+                            <input type="file" name="perfilFot" accept="image/*" required>
+                            <button type="submit">Cambiar foto de perfil</button>
+                        </form>
+                    </div>
+
                     <h3>Valora HospiTrack</h3>
                     <div class="valoracion">
-                        <form id="valor" method="post" action="/perfilUsuario/enviarvaloracion">
+                        <form id="valor" method="post" action="/perfilUsuario/enviarVal">
                             <label for="rating">Valora nuestro servicio</label>
                             <div class="estrellas">
                                 <input type="radio" name="rating" id="estrella5" value="5">
@@ -76,7 +84,10 @@
                             <button type="submit" class="btn">Enviar valoracion</button>
                         </form>
                     </div>
+                    <br>
+                    <h3>Valoracion Promedio</h3>
                 </section>
+
 
                 <section id="contenidoConfCuenta" class="ContenidoDinamico" style="display:none;">
                     <h2 class="mt-4">Configuracion de tu Cuenta</h2>
@@ -150,46 +161,60 @@
                     <h2>Expedientes Medicos</h2>
                     <div class="MedExp">
                         <h3>Sube tus expedientes aqui</h3>
-                        <form id="formulario" method="post" action="/perfilUsuario/envexp">
+                        <form id="formulario" method="post" action="/perfilUsuario/envexp" enctype="multipart/form-data">
                             <label for="archivo">Seleccione un archivo:</label>
-                            <input type="file" id="archivo" accept=".pdf, .doc" multiple required>
+                            <input type="file" id="archivo" name="archivo[]" accept=".pdf, .doc" multiple required>
                             <br><br>
                             <button type="submit">Subir archivo</button>
                         </form>
 
-                        <div id="resultado"></div>
-                        <button id="borrar" style="display: none;">Borrar Archivos</button>
+                        <h3>Archivos subidos</h3>
+                        <div id="listaExpedientes"></div>
+                        
 
                         <script>
-                            document.getElementById('formulario').addEventListener('submit', function(event){
-                                event.preventDefault();
+                            //funcion para cargar la lista de expedientes
+                            function cargarexp(){
+                                fetch('/perfilUsuario/listarExp')
+                                    .then(response => response.json())
+                                    .then(expedientes =>{
+                                        const listaExp = document.getElementById('listaExpedientes');
+                                        listaExp.innerHTML = '';
 
-                                const archivoInput = document.getElementById('archivo');
-                                const archivos = archivoInput.files;
-                                const resultadoDiv = document.getElementById('resultado')
-                                const botonDel = document.getElementById('borrar')
+                                        if(expedientes.length > 0){
+                                            expedientes.forEach(exp => {
+                                                const epxItem = document.createElement('div');
+                                                epxItem.innerHTML = `
+                                                    <p>${exp.nombre_archivo}</p>
+                                                    <button onclick="descargarExp(${exp.idexpediente})">Descargar</button>
+                                                    <button onclick="eliminarExp(${exp.idexpediente})">Eliminar</button>
+                                                `;
+                                                listaExp.appendChild(epxItem);
+                                            });
+                                        } else {
+                                            listaExp.innerHTML = '<p>No hay expedientes subidos</p>';
+                                        }
+                                    })
+                                    .catch(error => console.error('Error al cargar el archivo:', error));
+                            }
 
-                                if (archivos.length > 0){
-                                    if (!resultadoDiv.innerHTML){
-                                        resultadoDiv.innerHTML = '<h3>Archivos subidos:</h3><ul>';
-                                    }
-                                    for (let i = 0; i < archivos.length; i++){
-                                        resultadoDiv.innerHTML += `<li>${archivos[i].name}</li>`;
-                                    }
-                                    resultadoDiv.innerHTML += '</ul>';
+                            function descargarExp(id){
+                                window.location.href = `/perfilUsuario/descargarExp/${id}`;
+                            }
+                            
+                            function eliminarExp(id){
+                                fetch(`/perfilUsuario/eliminarExp/${id}`, {
+                                    method: 'DELETE'
+                                })
+                                .then(response => response.text())
+                                .then(message =>{
+                                    alert(message);
+                                    cargarexp();
+                                })
+                                .catch(error => console.error('Error al eliminar el archivo', error));
+                            }
 
-                                    botonDel.style.display = 'block';
-
-                                }else{
-                                    resultadoDiv.innerHTML += '<p>no se seleccionaron archivos</p>'
-                                }
-                            });
-
-                            document.getElementById('borrar').addEventListener('click', function(){
-                                document.getElementById('resultado').innerHTML = '';
-                                document.getElementById('archivo').value = '';
-                                this.style.display = 'none';
-                            });
+                            document.addEventListener('DOMContentLoaded', cargarexp);
                         </script>
 
                     </div>
